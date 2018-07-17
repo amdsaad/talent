@@ -100,8 +100,7 @@ router.post('/', (req, res) => {
   new Cv (newCv)
     .save()
     .then(cv => {
-      //res.redirect(`/stories/show/${story.id}`);
-      res.send(cv);
+      res.redirect(`/cvs`);
     });
 });
 

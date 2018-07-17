@@ -3,15 +3,15 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const CvSchema = new Schema({
-  fullName: { type: String, required: true },
+  fullName: { type: String },
   userId: { type: String },// FB userID coming form Manychat
   photo: { type: String },
-  phone: { type: String, required: true },
-  email: { type: String, required: true },
-  location: { type: String, required: true },
-  currentRole: { type: String, required: true },
-  desiredRole: { type: String, required: true },
-  description: { type: String, required: true },
+  phone: { type: String },
+  email: { type: String },
+  location: { type: String },
+  currentRole: { type: String },
+  desiredRole: { type: String },
+  description: { type: String },
   videoResumeUri: { type: String },
   specialisms: { type: String },
   education: { type: String },
