@@ -1,0 +1,29 @@
+<h1>Job Seeker Resume</h1>
+<div class="row">
+  {{#each cvs}}
+  <div class="col s12 m4">
+    <div class="card">
+      <div class="card-content center-align">
+        <div class="card-imag">
+          <img src="{{photo}}">
+        </div>
+        <h5>{{fullName}}</h5>
+        <p>Current Location: {{location}}</p>
+        <p>Current Role: {{currentRole}}</p>
+        <p>Looking For: {{desiredRole}}</p>
+        <br>
+        <h5>About Me</h5>
+        <p class="left-align">{{stripTags (truncate description 150)}}</p>
+        <br>
+      </div>
+      <div class="card-action center-align">
+        <a class="btn grey" href="/stories/show/{{id}}">Read More</a>
+      </div>
+    </div>
+  </div>
+
+  {{else}}
+  <p> No stories found</p>
+  {{/each}}
+
+</div>

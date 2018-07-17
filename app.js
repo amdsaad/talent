@@ -12,6 +12,7 @@ const passport = require('passport');
 //load models
 require('./models/User');
 require('./models/Story');
+require('./models/Cv');
 
 //passport config
 require('./config/passport')(passport);
@@ -20,6 +21,7 @@ require('./config/passport')(passport);
 const index = require('./routes/index');
 const auth = require('./routes/auth');
 const stories = require('./routes/stories');
+const cvs = require('./routes/cvs');
 
 //load keys
 const keys = require('./config/keys');
@@ -88,6 +90,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', index);
 app.use('/auth', auth);
 app.use('/stories', stories);
+app.use('/cvs', cvs);
 
 const port = process.env.PORT || 5000;
 
