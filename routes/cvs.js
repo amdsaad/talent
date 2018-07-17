@@ -89,18 +89,16 @@ router.post('/', (req, res) => {
     specialisms: req.body.specialisms,
     education: req.body.education,
     yearsOfExperiance: req.body.yearsOfExperiance,
-    //experiances: req.body.experiances,
     languages: req.body.languages,
     skills: req.body.skills,
     hoppies: req.body.hoppies,
-    status: req.body.status,
+    status: req.body.status
   }
-
   // Create Story
   new Cv (newCv)
     .save()
     .then(cv => {
-      res.redirect(`/cvs`);
+      res.status(200).json(cv);
     });
 });
 

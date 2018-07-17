@@ -16,18 +16,12 @@ const CvSchema = new Schema({
   specialisms: { type: String },
   education: { type: String },
   yearsOfExperiance: { type: Number },
-/*   experiances: [{
-    title: { type: String },
-    companyName: { type: String },
-    datePeriod: { from: { type: Date }, to: { type: Date } },
-  }], */
   languages: { type: String },
   skills: { type: String },
   hoppies: { type: String },
   status: { type: String, default: 'public' },
   date: { type: Date, default: Date.now }
-  //allowContact: { type: Boolean, default: true },
 })
 
 //create collection and add schema
-mongoose.model('cvs', CvSchema, 'cvs');
+mongoose.model('cvs', CvSchema);
