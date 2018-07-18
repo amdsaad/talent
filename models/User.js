@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const UserSchema = new Schema({
-  facebookID: { type: String, required: true },
-  email: { type: String, required: true },
-  firstName: { type: String },
-  lastName: { type: String },
-  image: { type: String }
+  email: { type: String, unique: true, lowercase: true },
+  facebook: String,
+  tokens: Array,
+  name: { type: String },
+  picture: { type: String }
 })
 
 //create collection and add schema

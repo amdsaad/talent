@@ -1,79 +1,12 @@
+const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const mongoose = require('mongoose');
 const keys = require('./keys');
+
 //losad user moel
 const User = mongoose.model('users');
 
 module.exports = function (passport) {
-  /* passport.use(
-    new GoogleStrategy({
-      clientID: keys.googleClientID,
-      clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback',
-      proxy: true
-    }, (accessToken, refreshToken, profile, done) => {
-      //console.log(accessToken);
-      //console.log(profile);
-
-      const image = profile.photos[0].value.substring(0, profile.photos[0].value.indexOf('?'));
-
-      const newUser = {
-        googleID: profile.id,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-        email: profile.emails[0].value,
-        image: image
-      }
-
-      //check for existing user
-      User.findOne({
-        googleID: profile.id
-      }).then(user => {
-        if (user) {
-          //Return user
-          done(null, user);
-        } else {
-          //create user
-          new User(newUser)
-            .save()
-            .then(user => done(null, user));
-        }
-      })
-    })
-  );
- */
-  passport.use(
-    new FacebookStrategy({
-      clientID: keys.facebookClientID,
-      clientSecret: keys.facebookClientSecret,
-      callbackURL: 'https://serieux-saucisson-90839.herokuapp.com/auth/facebook/callback'
-    }, (accessToken, refreshToken, profile, done) => {
-     // console.log(accessToken);
-      console.log(profile);
-
-      const newUser = {
-        facebookID: profile.id,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-        email: profile.emails[0].value
-      }
-
-      //check for existing user
-      User.findOne({
-        facebookID: profile.id
-      }).then(user => {
-        if (user) {
-          //Return user
-          done(null, user);
-        } else {
-          //create user
-          new User(newUser)
-            .save()
-            .then(user => done(null, user));
-        }
-      })
-    })
-  );
 
   passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -83,5 +16,29 @@ module.exports = function (passport) {
     User.findById(id).then(user => done(null, user));
   });
 
+  passport.use(new FacebookStrategy({
+    clientID: keys.facebook.clientID,
+    clientSecret: keys.facebook.clientSecret,
+    callbackURL: keys.facebook.callbackURL,
+    profileFields: ['id', 'displayName', 'photos', 'email']
+  },
+    (req, token, refreshToken, profile, done) => {
+      User.findOne({ facebook: profile.id }, function (err, user) {
+        if (user) {
+          return done(null, user)
+        } else {
+          const newUser = new User();
+          newUser.email = profile._json.email;
+          newUser.facebook = profile.id;
+          newUser.tokens.push({ kind: 'facebook', token: token });
+          newUser.name = profile.displayName;
+          newUser.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
 
+          newUser.save(function (err) {
+            if (err) throw err;
+            return done(null, newUser);
+          });
+        }
+      });
+    }));
 }
