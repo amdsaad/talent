@@ -3,16 +3,13 @@ const router = express.Router();
 const passport = require('passport');
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/facebook', passport.authenticate('facebook'));
 
 router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     res.redirect('/dashboard');
   });
-  router.get('/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/',
-  failureRedirect: '/facebook' }));
+
 
 router.get('/verify', (req, res)=>{
   if(req.user){

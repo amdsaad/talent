@@ -1,5 +1,4 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
 const mongoose = require('mongoose');
 const keys = require('./keys');
 //losad user moel
@@ -13,8 +12,6 @@ module.exports = function (passport) {
       callbackURL: '/auth/google/callback',
       proxy: true
     }, (accessToken, refreshToken, profile, done) => {
-      //console.log(accessToken);
-      //console.log(profile);
 
       const image = profile.photos[0].value.substring(0, profile.photos[0].value.indexOf('?'));
 
@@ -29,39 +26,6 @@ module.exports = function (passport) {
       //check for existing user
       User.findOne({
         googleID: profile.id
-      }).then(user => {
-        if (user) {
-          //Return user
-          done(null, user);
-        } else {
-          //create user
-          new User(newUser)
-            .save()
-            .then(user => done(null, user));
-        }
-      })
-    })
-  );
-
-  passport.use(
-    new FacebookStrategy({
-      clientID: keys.facebookClientID,
-      clientSecret: keys.facebookClientSecret,
-      callbackURL: '/auth/facebook/callback'
-    }, (accessToken, refreshToken, profile, done) => {
-     // console.log(accessToken);
-      console.log(profile);
-
-      const newUser = {
-        facebookID: profile.id,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-        email: profile.emails[0].value
-      }
-
-      //check for existing user
-      User.findOne({
-        facebookID: profile.id
       }).then(user => {
         if (user) {
           //Return user
