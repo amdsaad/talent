@@ -5,7 +5,7 @@ const passport = require('passport');
 router.get('/facebook', passport.authenticate('facebook'));
 
 router.get('/facebook/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  passport.authenticate('facebook', { failureRedirect: '/' }),
   (req, res) => {
     res.redirect('/dashboard');
   });
