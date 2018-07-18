@@ -48,34 +48,31 @@ module.exports = function (passport) {
       clientID: keys.facebookClientID,
       clientSecret: keys.facebookClientSecret,
       callbackURL: '/auth/facebook/callback'
-    }, async (accessToken, refreshToken, profile, done) => {
-      //console.log(accessToken);
-      //console.log(profile);
-      async (accessToken, refreshToken, profile, done) => {
-        try {
-          console.log('profile', profile);
-          console.log('accessToken', accessToken);
-          console.log('refreshToken', refreshToken);
-          
-          const existingUser = await User.findOne({ "facebook.id": profile.id });
-          if (existingUser) {
-            return done(null, existingUser);
-          }
-      
-          const newUser = new User({
-            facebookID: profile.id,
-            firstName: profile.name.givenName,
-            lastName: profile.name.familyName,
-            email: profile.emails[0].value
+    }, (accessToken, refreshToken, profile, done) => {
+      console.log(accessToken);
+      console.log(profile);
 
-          });
-      
-          await newUser.save();
-          done(null, newUser);
-        } catch(error) {
-          done(error, false, error.message);
-        }
+      const newUser = {
+        facebookID: profile.id,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        email: profile.emails[0].value
       }
+
+      //check for existing user
+      User.findOne({
+        facebookID: profile.id
+      }).then(user => {
+        if (user) {
+          //Return user
+          done(null, user);
+        } else {
+          //create user
+          new User(newUser)
+            .save()
+            .then(user => done(null, user));
+        }
+      })
     })
   );
 
