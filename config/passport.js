@@ -1,4 +1,3 @@
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const mongoose = require('mongoose');
 const keys = require('./keys');
@@ -6,7 +5,7 @@ const keys = require('./keys');
 const User = mongoose.model('users');
 
 module.exports = function (passport) {
-  passport.use(
+  /* passport.use(
     new GoogleStrategy({
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
@@ -42,12 +41,12 @@ module.exports = function (passport) {
       })
     })
   );
-
+ */
   passport.use(
     new FacebookStrategy({
       clientID: keys.facebookClientID,
       clientSecret: keys.facebookClientSecret,
-      callbackURL: '/auth/facebook/callback'
+      callbackURL: 'https://serieux-saucisson-90839.herokuapp.com/auth/facebook/callback'
     }, (accessToken, refreshToken, profile, done) => {
      // console.log(accessToken);
       console.log(profile);
