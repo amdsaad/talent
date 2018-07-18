@@ -49,7 +49,7 @@ module.exports = function (passport) {
       clientSecret: keys.facebookClientSecret,
       callbackURL: '/auth/facebook/callback'
     }, (accessToken, refreshToken, profile, done) => {
-      console.log(accessToken);
+     // console.log(accessToken);
       console.log(profile);
 
       const newUser = {
