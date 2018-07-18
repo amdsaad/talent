@@ -24,7 +24,9 @@ router.get('/show/:userId', (req, res) => {
   })
   .then(cv => {
     if(cv.status == 'public'){
-      res.render('cvs/show');
+      res.render('cvs/show',{
+        cv:cv
+      })
     }
   });
 });
@@ -34,7 +36,7 @@ router.get('/user/:userId', (req, res) => {
   Cv.find({user: req.params.userId, status: 'public'})
     .populate('user')
     .then(cvs => {
-      res.render('stories/index', {
+      res.render('cvs/index', {
         cvs:cvs
       });
     });

@@ -2,25 +2,23 @@
 <div class="row">
   {{#each cvs}}
   <div class="col s12 m4">
-    <div class="card">
-      <div class="card-content center-align">
-        <div class="card-imag">
-          <img src="{{photo}}">
-        </div>
-        <h5>{{fullName}}</h5>
-        <p>Current Location: {{location}}</p>
-        <p>Current Role: {{currentRole}}</p>
-        <p>Looking For: {{desiredRole}}</p>
-        <br>
-        <h5>About Me</h5>
-       <p class="left-align">{{description}}</p>
-        <br>
+    <div class="card horizontal">
+      <div class="card-image">
+        <h5 class="header">{{fullName}}</h5>
+        <img src="{{photo}}" class="cv-image">
       </div>
-      <div class="card-action center-align">
-        <a class="btn grey" href="/stories/show/{{id}}">Read More</a>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>{{description}}</p>
+        </div>
+        <div class="card-action">
+          <a href="/cvs/show/{{userId}}">This is a link</a>
+        </div>
       </div>
     </div>
   </div>
+
+
 
   {{else}}
   <p> No stories found</p>
