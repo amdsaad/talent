@@ -57,7 +57,7 @@ module.exports = function (passport) {
         facebookID: profile.id,
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
-        email: profile.emails[0].value,
+        email: profile.emails[0].value
       }
 
       //check for existing user
