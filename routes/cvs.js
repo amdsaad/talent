@@ -95,7 +95,6 @@ router.post('/', (req, res) => {
     skills: req.body.skills,
     hoppies: req.body.hoppies,
     status: req.body.status,
-    user: req.user.id
   }
   // Create Story
   new Cv (newCv)
