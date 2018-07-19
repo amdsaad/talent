@@ -19,6 +19,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/users/:email', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
   User.findOne({ email: req.params.email })
     .then(user => {
       res.status(200).json({
