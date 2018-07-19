@@ -82,9 +82,40 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
     }
   });
 });
-
-// Process Add Story
+// Process Add from web messangerStory
 router.post('/', (req, res) => {
+  let allowComments;
+
+  if(req.body.allowComments){
+    allowComments = true;
+  } else {
+    allowComments = false;
+  }
+
+  const newStory = {
+    title: req.body.title,
+    body: req.body.body,
+    status: req.body.status,
+    allowComments:allowComments,
+    user:{
+      userID: req.body.userID,
+      email: req.body.email,
+      facebook: req.body.facebook,
+      name: req.body.name,
+      picture: req.body.picture
+    }
+
+  }
+  // Create Story
+  new Story(newStory)
+    .save()
+    .then(story => {
+      res.redirect(`/stories/show/${story.id}`);
+    });
+});
+
+// Process Add from FB messangerStory
+router.post('/fb', (req, res) => {
   let allowComments;
 
   if(req.body.allowComments){
