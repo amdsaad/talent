@@ -10,7 +10,7 @@ router.get('/', ensureGuest, (req, res) => {
 });
 
 router.get('/dashboard', ensureAuthenticated, (req, res) => {
-  Story.find({ user: req.user.id })
+  Story.find({ 'user.userID': req.user.id })
     .then(stories => {
       res.render('index/dashboard', {
         stories: stories
@@ -30,7 +30,23 @@ router.get('/users/:email', (req, res) => {
               "action": "set_field_value",
               "field_name": "_userID",
               "value": user.id
-            }]
+            },
+            {
+              "action": "set_field_value",
+              "field_name": "facebook",
+              "value": user.facebook
+            },
+            {
+              "action": "set_field_value",
+              "field_name": "name",
+              "value": user.name
+            },
+            {
+              "action": "set_field_value",
+              "field_name": "picture",
+              "value": user.picture
+            }
+          ]
         }
       });
     });

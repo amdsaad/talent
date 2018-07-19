@@ -9,7 +9,7 @@
       <ul class="right hide-on-small-only">
         {{#if user}}
         <li>
-          <a href="/dashboard">Welcome {{user.firstName}}</a>
+          <a href="/dashboard">Welcome {{user.name}}</a>
         </li>
         <li>
           <a href="/auth/logout">
@@ -27,8 +27,8 @@
         {{#if user}}         
         {{else}}
         <li>
-          <a class="btn red darken-1" href="/auth/google">
-            <i class="fa fa-google left"></i> Login With Google</a>
+          <a class="btn blue darken-1" href="/auth/facebook">
+            <i class="fa fa-facebook left"></i> Login With FB</a>
         </li>
         {{/if}}
         <li><a href="/stories"><i class="fa fa-book"></i> Public Stories</a>

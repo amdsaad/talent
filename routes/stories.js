@@ -8,7 +8,6 @@ const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 // Stories Index
 router.get('/', (req, res) => {
   Story.find({status:'public'})
-    .populate('user')
     .sort({date:'desc'})
     .then(stories => {
       res.render('stories/index', {
@@ -22,8 +21,6 @@ router.get('/show/:id', (req, res) => {
   Story.findOne({
     _id: req.params.id
   })
-  .populate('user')
-  .populate('comments.commentUser')
   .then(story => {
     if(story.status == 'public'){
       res.render('stories/show', {
@@ -47,8 +44,7 @@ router.get('/show/:id', (req, res) => {
 
 // List stories from a user
 router.get('/user/:userId', (req, res) => {
-  Story.find({userID: req.params.userId, status: 'public'})
-    .populate('user')
+  Story.find({'user.userID': req.params.userId, status: 'public'})
     .then(stories => {
       res.render('stories/index', {
         stories:stories
@@ -58,7 +54,7 @@ router.get('/user/:userId', (req, res) => {
 
 // Logged in users stories
 router.get('/my', ensureAuthenticated, (req, res) => {
-  Story.find({userID: req.user.id})
+  Story.find({'user.userID': req.user.id})
     .then(stories => {
       res.render('stories/index', {
         stories:stories
@@ -102,9 +98,15 @@ router.post('/', (req, res) => {
     body: req.body.body,
     status: req.body.status,
     allowComments:allowComments,
-    userID: req.body.userID
-  }
+    user:{
+      userID: req.body.userID,
+      email: req.body.email,
+      facebook: req.body.facebook,
+      name: req.body.name,
+      picture: req.body.picture
+    }
 
+  }
   // Create Story
   new Story(newStory)
     .save()
