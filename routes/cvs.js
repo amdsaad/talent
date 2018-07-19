@@ -94,7 +94,8 @@ router.post('/', (req, res) => {
     languages: req.body.languages,
     skills: req.body.skills,
     hoppies: req.body.hoppies,
-    status: req.body.status
+    status: req.body.status,
+    user: req.user.id
   }
   // Create Story
   new Cv (newCv)
@@ -103,6 +104,7 @@ router.post('/', (req, res) => {
       res.status(200).json(cv);
     });
 });
+
 
 /* // Edit Form Process
 router.put('/:id', (req, res) => {
