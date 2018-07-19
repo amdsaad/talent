@@ -76,7 +76,7 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 
 // Process Add Story
 router.post('/', (req, res) => {
- 
+
   const newCv = {
     fullName: req.body.fullName,
     userId: req.body.userId,// FB userID coming form Manychat
@@ -97,6 +97,7 @@ router.post('/', (req, res) => {
     status: req.body.status,
   }
   // Create Story
+
   new Cv (newCv)
     .save()
     .then(cv => {

@@ -18,10 +18,9 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
     });
 });
 
-router.get('/finduser', (req, res) => {
-  User.findOne({ user: req.body.email })
+router.get('/users/:email', (req, res) => {
+  User.findOne({ email: req.params.email })
     .then(user => {
-      _userID = user.id;
       res.status(200).json({
         "version": "v2",
         "content": {
@@ -29,12 +28,13 @@ router.get('/finduser', (req, res) => {
             {
               "action": "set_field_value",
               "field_name": "_userID",
-              "value": _userID
+              "value": user.id
             }]
         }
       });
     });
-})
+});
+
 
 router.get('/about', (req, res) => {
   res.render('index/about');
