@@ -99,11 +99,11 @@ router.post('/', (req, res) => {
     status: req.body.status,
     allowComments:allowComments,
     user:{
-      userID: req.body.userID,
-      email: req.body.email,
-      facebook: req.body.facebook,
-      name: req.body.name,
-      picture: req.body.picture
+      userID: req.body.user.userID,
+      email: req.body.user.email,
+      facebook: req.body.user.facebook,
+      name: req.body.user.name,
+      picture: req.body.user.picture
     }
 
   }
