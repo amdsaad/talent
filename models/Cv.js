@@ -20,8 +20,9 @@ const CvSchema = new Schema({
   skills: { type: String },
   hoppies: { type: String },
   status: { type: String, default: 'public' },
+  user: { type: Schema.Types.ObjectId, ref: 'users' },
   date: { type: Date, default: Date.now }
 })
 
 //create collection and add schema
-mongoose.model('cvs', CvSchema);
+mongoose.model('cvs', CvSchema, 'cvs');
