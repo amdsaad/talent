@@ -38,11 +38,6 @@ router.get('/users/:email', (req, res) => {
             },
             {
               "action": "set_field_value",
-              "field_name": "name",
-              "value": user.name
-            },
-            {
-              "action": "set_field_value",
               "field_name": "picture",
               "value": user.picture
             }
