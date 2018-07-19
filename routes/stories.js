@@ -47,7 +47,7 @@ router.get('/show/:id', (req, res) => {
 
 // List stories from a user
 router.get('/user/:userId', (req, res) => {
-  Story.find({user: req.params.userId, status: 'public'})
+  Story.find({userID: req.params.userId, status: 'public'})
     .populate('user')
     .then(stories => {
       res.render('stories/index', {
@@ -58,8 +58,7 @@ router.get('/user/:userId', (req, res) => {
 
 // Logged in users stories
 router.get('/my', ensureAuthenticated, (req, res) => {
-  Story.find({user: req.user.id})
-    .populate('user')
+  Story.find({userID: req.user.id})
     .then(stories => {
       res.render('stories/index', {
         stories:stories
@@ -103,7 +102,7 @@ router.post('/', (req, res) => {
     body: req.body.body,
     status: req.body.status,
     allowComments:allowComments,
-    user: req.user.id
+    userID: req.body.userID
   }
 
   // Create Story
