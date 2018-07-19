@@ -18,9 +18,9 @@ router.get('/', (req, res) => {
 });
 
 // Show Single Story
-router.get('/show/:userId', (req, res) => {
+router.get('/show/:id', (req, res) => {
   Cv.findOne({
-    userId: req.params.userId
+    _id: req.params.id
   })
   .then(cv => {
     if(cv.status == 'public'){
