@@ -1,0 +1,82 @@
+<div id="highlighted" class="bg-black">
+  <div class="overlay overlay-gradient overlay-op-8 text-left py-5 pt-lg-10" data-animate="fadeIn" data-bg-img="https://source.unsplash.com/collection/385548/1600X900">
+    <div class="container pt-6" data-scroll="scrollax">
+      <h2 class="display-4 text-white mb-3" data-animate="fadeIn" data-animate-delay="0.2">
+        Find your
+        <span class="font-weight-bold">dream job!</span>
+      </h2>
+      <form action="/jobs" method="GET" class="row mb-2 w-auto w-lg-80 pos-relative align-items-center">
+        <div class="col-lg-9 mb-3">
+          <i class="fa fa-search text-white icon-2x pos-absolute pos-l mt-2 ml-3 d-none d-lg-block"></i>
+          <input name="search" class="form-control form-control-lg form-control-transparent form-control-dark text-center text-lg-left pl-lg-5"
+            type="text" placeholder="Job title ie. Web Developer">
+          <hr class="hr-inverse hr-lg mx-auto mt-1 mb-0" />
+        </div>
+        <div class="col-lg-3">
+          <input type="submit" value="Search" class="btn btn-dark btn-lg btn-rounded px-5">
+        </div>
+      </form>
+      <div id="jobSearch">
+        <h5 id="jobCount" class="text-grey my-0 font-weight-normal" data-animate="fadeIn" data-animate-delay="0.6">
+          Currently listing
+          <span class="font-weight-bold">{{count}} jobs</span>.
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9 pull-lg-3 mb-3">
+      <div class="p-3">
+        {{#if noMatch}}
+        <h5 class="text-primary">{{noMatch}}</h5>
+        {{/if}}
+      </div>
+      <div id="page">
+        {{#each jobs}}
+        <div class="list-group">
+          <div class="card px-3 py-4 mb-2 row-hover pos-relative">
+            <div class="row align-items-center ">
+              <div class="col-md-2">
+                <img src="{{this.company.logo}}" alt="RRT Productions" class="img-fluid d-none d-md-block" />
+              </div>
+              <div class="col-md-8">
+                <h4 class="mb-0">
+                  {{this.title}}
+                </h4>
+                <p class="text-muted text-uppercase text-xs mb-1">
+                  <span class="text-primary">{{formatDate this.date 'MMMM YYYY'}}</span>
+                </p>
+                <p class="text-muted mb-2 text-sm">@
+                  <a href="#" class="font-weight-bold text-muted">{{this.company.name}}</a> ({{this.level}} level)</p>
+                <p class="text-muted mb-2 text-sm">
+                  <span class="d-block d-md-inline">
+                    <i class="fa fa-map-marker-alt"></i> {{this.address}}</span>
+                  <span class="d-block d-md-inline">
+                    <i class="far fa-money-bill-alt ml-md-3"></i> {{this.salary}} / {{this.currency}}</span>
+                </p>
+              </div>
+              <div class="col-md-2 text-md-center">
+                <a href="#" class="btn btn-danger text-uppercase font-weight-bold d-lg-block">Apply</a>
+                <a href="#" class="text-muted text-xs op-7">
+                  <i class="fa fa-heart"></i> Shortlist</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      <nav aria-label=...>
+        <ul class="pagination">
+          <li class="page-item" id="previous-page">
+            <a class="page-link" href="javascript:void(0)" aria-label=Previous>
+              <span aria-hidden=true>&laquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

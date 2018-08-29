@@ -1,0 +1,70 @@
+<div class="container-fluid">
+    <div class="jumbotron text-center">
+    <h3>Edit Resume</h3>
+  </div>
+</div>
+<div class="container">
+  <form action="/candidate-resume/{{resume.id}}?_method=PUT" method="post">
+    <input type="hidden" name="_method" value="PUT">
+    <div class="form-group row">
+      <label for="status">Resume Status</label>
+      <select class="custom-select d-block w-100" name="status" >
+        <option value="public">Public</option>
+        <option value="private">Private</option>
+      </select>
+    </div>
+    <div class="form-group row">
+      <label for="fullName">Full name</label>
+      <input name="fullName" type="text" class="form-control" value="{{resume.fullName}}" >
+    </div>
+    <div class="form-group row">
+      <label for="email">Email Address</label>
+      <input name="email" type="email" class="form-control" value="{{resume.email}}" >
+    </div>
+    <div class="form-group row">
+      <label for="location">Location</label>
+      <input class="form-control" type="text" name="location" id="search_term" value="{{resume.location}}">
+    </div>
+    <div class="form-group row">
+      <label for="contactNumber">Contact Number</label>
+      <input name="contactNumber" type="text" class="form-control" value="{{resume.contactNumber}}" >
+    </div>
+    <div class="form-group row">
+      <label for="picture">Image Link</label>
+      <input name="picture" type="text" class="form-control" value="{{resume.picture}}" >
+    </div>
+    <div class="form-group row">
+      <label for="jobTitle">Job Title</label>
+      <input name="jobTitle" type="text" class="form-control" value="{{resume.jobTitle}}" >
+    </div>
+    <div class="form-group row">
+      <label for="specialisms">Specialisms / Sectors </label>
+      <select class="custom-select d-block w-100" name="specialisms" >
+        <option value="">Please select.......</option>
+        <option value="hospitality and restaurants">Hospitality & Restaurants</option>
+        <option value="customer service">Customer Service</option>
+        <option value="accounting">Accounting</option>
+        <option value="Airlines and Aviation">Airlines & Aviation</option>
+        <option value="architecture & interior design">Architecture & Interior Design</option>
+        <option value="art & entertainment">Art & Entertainment</option>
+        <option value="banking & finance">Banking & Finance</option>
+        <option value="business development">Business Development</option>
+        <option value="engineering">Engineering</option>
+        <option value="hr & recruitment">HR & Recruitment</option>
+      </select>
+    </div>
+    <div class="form-group row">
+      <label for="skills">Skills</label>
+      <input name="skills" type="text" class="form-control" value="{{resume.skills}}">
+      <small>Add , between your skills</small>
+    </div>
+
+    <div class="form-group row editor-row">
+      <label for="bio">About you</label>
+      <textarea class="form-control" name="bio" rows="3" id="editor">{{resume.bio}}</textarea>
+    </div>
+    <div class="form-group row ">
+      <input type="submit" value="UPdate" class="btn btn-primary w-100 p-2">
+    </div>
+  </form>
+</div>

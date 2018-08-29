@@ -1,33 +1,184 @@
-<h1>Welcome {{user.name}}</h1>
-<h4>Your Stories</h4>
-{{#if stories}}
-  <table class="striped">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each stories}}
-        <tr>
-          <td><a href="/stories/show/{{id}}">{{title}}</a></td>
-          <td>{{formatDate data 'MMMM do YYYY'}}</td>
-          <td><span class="dash-status">{{status}}</span></td>
-          <td>
-            <a class="btn left-align" href="/stories/edit/{{id}}"><i class="fa fa-pencil"></i> Edit</a>
+<script>
+  setInterval("my_function();", 5000);
+  function my_function() {
+    $('#recentJobs').load(location.href + ' #recentjobList');
+  };
+</script>
+<div class="container-fluid pt-3">
+  <div class="container">
+    <div id="msgs"></div>
+    <div class="row ">
+      <div class="tab-content py-3">
+        <div class="tab-pane active show menu-tab-1" role="tabpanel">
+          <div class="row justify-content-md-center text-center">
+            <div class="col-lg-5 py-2 cursor" id="jobWanted">
+              <i class="fas fa-bullhorn text-success icon-3x op-6"></i>
+              <h5 class="mt-2 mb-2"> New Challange
+                <span class="text-danger">?</span>
+              </h5>
+              <p class="text-sm mb-0">Looking for
+                <span class="text-info">New Challange ?</span> make an announcement to
+                <strong>Employers</strong> and show your Talent
+                <i class="em em-muscle"></i>
+              </p>
+            </div>
+            <div class="col-lg-5 py-2">
+              <i class="fas fa-graduation-cap text-success icon-3x op-6"></i>
+              <h5 class="mt-2">
+                Tips & Resources
+              </h5>
+              <p class="text-sm mb-0">Abbas aliquam esse exputo nobis praesent saluto sino valde volutpat.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="hr-grey mb-5 mt-2">
+    <div class="new-job-wanted" id="jwanted">
+      <div class="row justify-content-md-center">
+        <div class="col-md-10">
+          <div class="card bg-primary text-white text-center shadow-sm">
+            <div class="card-header">
+              <h5>Add Job Wanted Announcement
+                <i class="fas fa-bullhorn text-white "></i>
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="p-3">
+                <form method="post" action="/job-wanted" id="add-job-wanted">
+                  <div class="form-group row">
+                    <input type="text" class="form-control " placeholder="Title" name="title" required />
+                  </div>
+                  <div class="form-group row">
+                    <textarea class="form-control" name="body" rows="4" required>{{resume.bio}}</textarea>
+                  </div>
+                  <div class="form-group row">
+                    <input type="submit" class="btn btn-blue-dark btn-shadow" />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="hr-grey mb-5 mt-2">
+    </div>
+  </div>
+</div>
 
-            <form action="/stories/{{id}}?_method=DELETE" method="post" id="delete-form">
-            <input type="hidden" name="_method" value="DELETE">
-              <button type="submit" class="btn red"><i class="fa fa-remove"></i> Delete</button>
-            </form>
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-{{else}}
-  <p>You have not created any stories yet</p>
-{{/if}}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 bg-op-1 bg-light pt-3 pb-3">
+      {{#if jobSpecialisms}}
+      <div>
+        <h6>Recent Matching Jobs for
+          <span class="text-pink">{{user.name}}</span>
+        </h6>
+
+        <div id="recentJobs" class="mt-3">
+          {{#each jobSpecialisms}}
+
+          <div id="recentjobList">
+            <div class="card p-2 row-hover pos-relative">
+              <div class="row">
+                <div class="col-md-9">
+                  <h5 class="mb-2 text-blue-dark ">
+                    <a class="text-blue-dark" href="/jobs/view/{{id}}">{{this.title}}</a>
+                  </h5>
+                  <p class="text-green text-sm">
+                    <i class="fa fa-map-marker-alt"></i> {{this.address}}
+                  </p>
+                  <p class="text-muted text-xs">{{{stripTags (truncate description 100)}}}</p>
+                </div>
+                <div class="col-md-3 text-center">
+                  <small class="text-primary mb-2">{{formatDate this.date 'Do MMM'}}</small>
+                  <img src="{{this.company.logo}}" alt="RRT Productions" class="img-fluid d-none d-md-block" />
+                  <p class="text-muted mb-2 text-sm">
+                    <a href="#" class="font-weight-bold text-muted">{{this.company.name}}</a>
+                  </p>
+                </div>
+                <div class="col-12 ">
+                  <a href="/jobs/view/{{this._id}}" class="mb-2 btn btn-primary btn-shadow text-uppercase font-weight-bold">View</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+        <div>
+          <a class="text-blue" href="/jobs/my-maching-jobs">
+            <i class="fas fa-glasses mr-2"></i>All Matching Jobs</a>
+        </div>
+      </div>
+      {{else}}
+      <h6>You dont have any resume</h6>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal Add Company -->
+<div class="modal fade p-2" id="compModal" tabindex="-1" role="dialog" aria-labelledby="compModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg " role="document">
+    <div class="modal-content p-5">
+      <h4 class="text-center">Company Informaton</h4>
+      <div class="p-3">
+        <form method="post" action="/company">
+          <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">Company Name </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Company Name" name="name" required />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="logo" class="col-sm-2 col-form-label">Company Logo link</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="http://website.com/logo..." name="logo" required />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="specialisms" class="col-sm-2 col-form-label">Specialisms / Sectors </label>
+            <div class="col-sm-10">
+              <select class="custom-select d-block w-100" name="specialisms" required>
+                <option value="">Please select.......</option>
+                <option value="hospitality and restaurants">Hospitality & Restaurants</option>
+                <option value="travel and tourism">Travel & Tourism</option>
+                <option value="sales">Sales</option>
+                <option value="secretarial‬">Secretarial‬</option>
+                <option value="customer service">Customer Service</option>
+                <option value="accounting">Accounting</option>
+                <option value="Airlines and Aviation">Airlines & Aviation</option>
+                <option value="architecture interior design">Architecture & Interior Design</option>
+                <option value="art entertainment">Art & Entertainment</option>
+                <option value="banking finance">Banking & Finance</option>
+                <option value="business development">Business Development</option>
+                <option value="engineering">Engineering</option>
+                <option value="hr recruitment">HR & Recruitment</option>
+                <option value="legal services">Legal Services</option>
+                <option value="logistics distribution">Logistics & Distribution</option>
+                <option value="marketing advertising">Marketing & Advertising</option>
+                <option value="Media">Media</option>
+                <option value="public relations">Public Relations</option>
+                <option value="medical healthcare">Medical & Healthcare</option>
+                <option value="oil gas energy">Oil, Gas & Energy</option>
+                <option value="real estate">Real Estate</option>
+                <option value="safety and security‬">Safety & Security</option>
+                <option value="transportation">Transportation</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="form-group row">
+            <label for="description" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+              <textarea id="editor" class="form-control form-control-rounded" placeholder="Company Description" name="description"></textarea>
+            </div>
+          </div>
+          <input type="submit" class="btn btn-info btn-block mt-4" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

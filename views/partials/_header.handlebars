@@ -1,48 +1,44 @@
-<nav class="grey darken-3">
-  <div class="container">
-    <div class="nav-wrapper">
-      <a href="/" class="brand-logo center">StoryBooks</a>
-      <a href="#" data-target="main-menu" class="sidenav-trigger show-on-larg">
-        <i class="fa fa-bars"></i>
-      </a>
-      <!-- Right Nav -->
-      <ul class="right hide-on-small-only">
-        {{#if user}}
-        <li>
-          <a href="/dashboard">Welcome {{user.name}}</a>
-        </li>
-        <li>
-          <a href="/auth/logout">
-            <i class="fa fa-sign-out"></i>Logout</a>
-        </li>
+<div id="header">
+  <div data-toggle="sticky">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-primary border-op-4 sticky-bg-dark sticky-bg-op-9 header-dark">
+      <div class="container header-inner">
+          <div class="header-brand">
+            <a class="header-brand-text" href="/" title="Home">
+              <h1 class="h2">
+                <span class="header-brand-text-alt">Talent</span>Liken<span class="header-brand-text-alt">.</span>
+              </h1>
+            </a>
+            <div class="header-divider d-none d-lg-block"></div>
+            <div class="header-slogan d-none d-lg-block text-light">Connecting Talents</div>
+          </div>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-        {{else}}
-        <a href="/stories">
-          <i class="fa fa-book"></i> Public Stories</a>
-
-        {{/if}}
-      </ul>
-      <!-- Side Menu -->
-      <ul class="sidenav" id="main-menu">
-        {{#if user}}         
-        {{else}}
-        <li>
-          <a class="btn blue darken-1" href="/auth/facebook">
-            <i class="fa fa-facebook left"></i> Login With FB</a>
-        </li>
-        {{/if}}
-        <li><a href="/stories"><i class="fa fa-book"></i> Public Stories</a>
-        </li>
-        {{#if user}}
-        <li class="divider"></li>
-        <li><a href="/dashboard"><i class="fa fa-cog"></i> Dashboard</a>
-        </li>
-        <li><a href="/stories/my"><i class="fa fa-user"></i> My Stories</a>
-        </li>
-        <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> Logout</a>
-        </li>
-        {{/if}}
-      </ul>
-    </div>
+        <div class="navbar-collapse collapse" id="navbarsExample07" style="">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/posts">Talent's Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="/candidate-resume">Find Talent</a>
+            </li>
+            <li class="nav-item">
+              {{#if user}}
+              <a class="nav-link btn btn-danger" href="/auth/logout">Logout</a>
+              {{else}}
+              <a class="nav-link btn btn-success ml-2" href="/auth/login">login</a>
+              {{/if}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   </div>
-</nav>
+</div>

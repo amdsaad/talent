@@ -1,0 +1,96 @@
+<div id="highlighted" class="bg-black">
+  <div class="overlay overlay-gradient overlay-op-8 text-left py-5 pt-lg-10" data-animate="fadeIn" data-bg-img="https://source.unsplash.com/collection/385548/1600X900">
+    <div data-scroll="scrollax" class="container px-3" data-animate="fadeInUp" data-animate-delay="0.4">
+      <h2 class="display-4 text-white font-weight-bold">
+        Talent's blog
+      </h2>
+      <h5 class="text-white font-weight-normal">
+        What's hot, what's not this winter, and we don't mean the weather!
+      </h5>
+      {{#if user}}
+      <div>
+        <button class="btn btn-primary btn-lg" id="add-post-btn">New Post</button>
+      </div>
+      {{else}}
+      <div>
+        <a href="/auth/login" class="btn btn-primary btn-lg">New Post ? Please Login</a>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
+<div class="container px-3 post-new-area mt-3 mb-3 p-3 bg-op-5 bg-blue-dark">
+  <div class="col">
+    <form action="/posts" method="post" id="new-post-form">
+      <div class="form-group row">
+        <input type="text" class="form-control" id="inputTitle" placeholder="Post Title" name="title" required>
+      </div>
+      <div class="form-group row">
+        <textarea name="body" class="form-control" rows="3" required></textarea>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-4">
+          <label class="mr-2" for="inputStatus">Privet Post</label>
+          <input name="status" type="checkbox" data-toggle="switch" value="private" data-size="small">
+        </div>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="inputImage" placeholder="Image link" name="image">
+        </div>
+        <div class="col-sm-4 ">
+          <input id="submit" type="submit" value="Save" class="float-right btn btn-primary">
+        </div>
+      </div>
+    </form>
+  </div>
+  <br>
+</div>
+<div class="container-fluid">
+  <div class="row pt-4">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 col-sm-12" >
+      <div id="page">
+        {{#each posts}}
+        <div class="list-group" id="post-list">
+          <div class="col-md-12" >
+            <div class="card product-card post-card">
+              <!-- Content -->
+              <div class="card-body p-3 pos-relative row">
+                <!-- Image content -->
+                <div class="col-md-4 mb-2 mb-md-0">
+                  <img class="rounded img-fluid image-post" src="{{image}}" alt="Card image cap">
+                </div>
+                <!-- Product details -->
+                <div class="col-md-8 d-flex flex-column">
+                  <h4 class="card-title mb-2">
+                    <a href="/posts/show/{{id}}" class="text-grey-dark">{{title}}</a>
+                  </h4>
+                  <p class="text-muted text-uppercase text-s mb-2">
+                    <span class="text-primary">Author</span> : {{this.user.name}}
+                    <span>
+                      <img class="rounded-circle ml-1 small-image" src="{{user.picture}}" alt="">
+                    </span>
+                  </p>
+                  <p class="text-muted text-uppercase text-xs mb-2">
+                    <span class="text-primary">{{formatDate date 'MMMM YYYY'}}</span>
+                  </p>
+                  <p class="text-muted text-s">{{{stripTags (truncate body 200)}}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      <nav aria-label=...>
+        <ul class="pagination">
+          <li class="page-item" id="previous-page">
+            <a class="page-link" href="javascript:void(0)" aria-label=Previous>
+              <span aria-hidden=true>&laquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

@@ -1,9 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,100,900);
+
 body {
   display: flex;
   min-height: 100vh;
-  flex-direction: column;
+  flex-direction: column; 
 }
-
 main {
   flex: 1 0 auto;
 }
@@ -30,4 +31,249 @@ footer{
 .cv-image{
   max-height: 150px;
   padding: 10px
+}
+.logo{
+  height: 50px;
+}
+
+.modal-body {
+
+  text-align: center;
+}
+
+/* .card {
+  display: block; 
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border-radius: 2px;    transition: box-shadow .25s; 
+}
+.card:hover {
+
+background-color: rgba(211, 211, 211, 0.172)
+}
+.img-card {
+  width: 100%;
+  height:200px;
+  border-top-left-radius:2px;
+  border-top-right-radius:2px;
+  display:block;
+    overflow: hidden;
+}
+.img-card img{
+  width: 100%;
+  height: 200px;
+  object-fit:cover; 
+  transition: all .25s ease;
+} 
+.card-content {
+  padding:15px;
+  text-align:left;
+}
+.card-title {
+  margin-top:0px;
+  font-weight: 700;
+  font-size: 1.5em;
+}
+.card-title-cv {
+  margin-top:0px;
+  font-weight: 700;
+  font-size: 1.1em;
+  line-height: 1.5;
+}
+.card-title a {
+  color: #000;
+  text-decoration: none !important;
+  text-transform: capitalize
+}
+.card-read-more {
+  border-top: 1px solid #D4D4D4;
+}
+.card-read-more a {
+  text-decoration: none !important;
+  padding:10px;
+  font-weight:600;
+  text-transform: uppercase
+} */
+.small-image{
+  width: 20px;
+}
+.user-profile{
+display: block;
+text-align: center;
+width: 100%;
+}
+.user-profile-dashboard{
+  display: inline-block;
+text-align: center;
+width: 100%;
+margin-top: 50px;
+min-height: 200px;
+
+}
+.edit{
+float: right;
+margin-top: -30px;
+font-size: 20px;
+text-decoration: none;
+}
+.bg_dashboard{
+  background-size: cover;
+  margin-right: -15px;
+  margin-left: -15px;
+  background-position: right 35% bottom 70%;
+  height: 80vh;
+  background-image:linear-gradient(#645f632c, #d136318c),url(../img/irina-219832-unsplash.jpg);
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+}
+.content_dashboard{
+  margin-top: -50vh;
+
+}
+.cv-profile-dashboard{
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin-top: -50px;
+  }
+  .card-dashboard {
+    display: block; 
+      margin-bottom: 20px;
+      line-height: 1.42857143;
+      background-color: #f8f9fab0;
+      border-radius: 2px;
+      box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12); 
+      transition: box-shadow .25s;
+  }
+  input#inputTitle {
+    border-bottom: 1px solid #d2dadb48 !important;
+    border: none;
+    border-radius: 0px;
+    background-color: white
+  }
+  input#inputTitle:focus{
+    box-shadow: none;
+  }
+  .divider-dashboard{
+    border-bottom: 1px solid rgb(230, 228, 228)
+  }
+.fa-dashboard{
+  color: #28a745d6
+}
+.fa-alert{
+  font-size: 20px;
+  color: #28a745;
+}
+.img-resume-form{
+  width: 150px;
+}
+.em{
+  height: 1.5em !important;
+}
+
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 5px;
+  margin-bottom: 1px;
+  background-color: #fff;
+  border: none;
+}
+
+.fas{
+  line-height: 0
+}
+.post-new-area{
+  display: none;
+}
+.exp-new-area{
+  display: none;
+}
+.educ-new-area{
+  display: none;
+}
+.new-job-wanted{
+  display: none;
+}
+.edit-exp-form{
+  display: none;
+}
+.edit-educ-form{
+  display: none;
+}
+.bg-img, .bg-img-cover {
+  background-size: cover;
+  background-position: center
+}
+.blog-header{
+  min-height: 100vh
+}
+@media (min-width: 992px){
+  .pt-lg-10 {
+    padding-top: 20.5rem !important;
+}
+}
+.image-post{
+  height: 200px;
+  width: 100%;
+  max-width: 100%;
+}
+.post-card{
+  min-height: 200px;
+}
+.img-post{
+  width: 100%;
+  max-height: 250px
+}
+.image-post-carousel{
+  height: 200px;
+  widows: 100%;
+}
+.cursor{
+  cursor: pointer;
+}
+
+
+/* Single Resume Page */
+#resume-side img{
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+.top-line{
+  padding: 2px;
+  width: 100%;
+  background-color: #2ECC71 
+}
+#candidate-name{
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+#resume-profile{
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 2px;
+  text-transform: uppercase
+}
+#resume-experience{
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 2px;
+  text-transform: uppercase
+}
+#candidate-jobTitle{
+  font-size: 18px
+}
+.exp-icon{
+  line-height: 3;
+}
+#rounded{
+  border-radius: 0px 5px 5px 0px
+}
+#rounded2{
+  border-radius: 5px 0px 0px 5px
 }

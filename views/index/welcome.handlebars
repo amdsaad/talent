@@ -1,7 +1,103 @@
-<h1>Welcome</h1>
-<p>Welcome to StoryBooks 1.0.0</p>
-<p>Post stories from the best and worst of your life and choose for them to be read by the worls or completley private as your own personal diray</p>
-{{#if user}}
-{{else}}
-<a class="btn blue darken-1" href="/auth/facebook"> <i class="fa fa-facebook left"></i> Login With Facebook</a>
-{{/if}}
+<div id="highlighted">
+  <div class="slider-wrapper rev_slider_wrapper fullscreen-container bg-black" data-page-class="slider-appstrap-theme">
+    <div class="rev_slider fullscreenbanner" data-toggle="slider-rev" data-settings='{"startwidth":1100, "startheight":620, "delay":10000}'>
+      <ul>
+        <!-- SLIDE 1 -->
+        <li class="slide overlay overlay-op-4 overlay-gradient" data-transition="fadethroughdark" data-slotamount="7" data-hideafterloop="0"
+          data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="assets/img/slides/app_bg.jpg"
+          data-rotate="0" data-saveperformance="off" data-title="Slide" data-link="shop-list.html">
+          <img src="assets/img/slide-dummy.png" data-lazyload="assets/img/slides/app_bg.jpg" alt="background image" data-bgposition="center top"
+            data-bgfit="cover" data-bgparallax="off" class="rev-slidebg" data-no-retina />
+          <!-- SLIDE 1 Content-->
+          <div class="slide-content container" style="z-index: 10;">
+            <!--elements within .slide-content are pushed below navbar on "behind"-->
+            <!-- Layer 1 -->
+            <div class="tp-caption text-grey" data-x="['left','left','left','left']" data-hoffset="['0','0','0','40']" data-y="['bottom','bottom','bottom','bottom']"
+              data-voffset="['120','120','120','120']" data-fontsize="['52','52','52','52']" data-lineheight="['52','52','52','52']"
+              data-width="420" data-height="none" data-whitespace="normal" data-type="text" data-basealign="slide" data-responsive_offset="on"
+              data-frames='[{"from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","speed":1200,"to":"o:1;","delay":1300,"ease":"Power3.easeInOut"},{"delay":"wait","speed":1000,"to":"opacity:0;","ease":"nothing"}]'
+              data-textAlign="left">
+              <span class="font-weight-bold text-uppercase text-white">Welcome to TalentLiken</span>
+            </div>
+            <!-- Layer 3 -->
+            <div class="tp-caption text-grey" data-x="['left','left','left','left']" data-hoffset="['0','0','0','40']" data-y="['bottom','bottom','bottom','bottom']"
+              data-voffset="['60','60','60','60']" data-fontsize="['20','20','20','30']" data-width="none" data-height="none"
+              data-whitespace="nowrap" data-type="text" data-basealign="slide" data-responsive_offset="on" data-frames='[{"delay":0,"speed":1200,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","delay":1400},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+              data-textAlign="['center','center','center','center']"> A real crowd-pleaser of a Bootstrap 4 Theme
+            </div>
+            <!-- Layer 3 -->
+            <div class="tp-caption rs-parallaxlevel-8" data-frames='[{"from":"o:0;sX:3;sY:3;","speed":2000,"to":"o:0.20;sX:3;sY:3;","delay":1800,"ease":"default"},{"delay":"wait","speed":1200,"to":"x:[100%];","ease":"Power3.easeInOut"}]'
+              data-x="left" data-y="bottom" data-hoffset="-200" data-voffset="0" data-width="none" data-height="none" data-type="image"
+              data-basealign="slide">
+              <i class="fa fa-bullseye icon-20x icon-bg op-1 text-white"></i>
+            </div>
+            <!-- Layer 4 -->
+            <div class="tp-caption tp-resizeme bg-primary-bright" data-frames='[{"from":"x:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","speed":1500,"to":"o:1;","delay":500,"ease":"Power3.easeInOut"},{"delay":"wait","speed":1000,"to":"x:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power3.easeInOut"}]'
+              data-x="['left','left','left','left']" data-hoffset="['0','0','0','40']" data-y="bottom" data-voffset="100" data-width="380"
+              data-height="4" data-basealign="slide"></div>
+          </div>
+        </li>
+        <!-- SLIDE 3 -->
+        <li class="slide overlay overlay-op-2" data-index="rs-3007" data-transition="fadethroughdark" data-slotamount="default" data-hideafterloop="0"
+          data-hideslideonmobile="off" data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000"
+          data-thumb="assets/img/slides/office_cover-100x50.jpg" data-rotate="0" data-saveperformance="off" data-title="Office">
+          <!-- MAIN IMAGE -->
+          <img src="assets/img/slides/office_cover.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgparallax="10"
+            class="rev-slidebg" data-no-retina />
+          <!-- LAYERS -->
+          <!-- BACKGROUND VIDEO LAYER -->
+          <div class="rs-background-video-layer" data-forcerewind="on" data-volume="mute" data-videowidth="100%" data-videoheight="100%"
+            data-videomp4="assets/img/slides/Working-Space.mp4" data-videopreload="auto" data-videoloop="loopandnoslidestop"
+            data-forceCover="1" data-aspectratio="16:9" data-autoplay="true" data-autoplayonlyfirsttime="false"></div>
+          <!-- Layer 1 -->
+          <div class="tp-caption text-white" data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+            data-voffset="['-30','-30','-30','-20']" data-fontsize="['70','70','70','70']" data-lineheight="['70','70','70','60']"
+            data-width="none" data-height="none" data-whitespace="nowrap" data-type="text" data-basealign="slide" data-responsive_offset="off"
+            data-frames='[{"from":"z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;","speed":1500,"to":"o:1;","delay":1000,"split":"chars","splitdelay":0.05,"ease":"Power3.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
+            data-textAlign="['left','left','left','left']" data-paddingtop="[10,10,10,10]" data-paddingright="[0,0,0,0]" data-paddingbottom="[10,10,10,10]"
+            data-paddingleft="[0,0,0,0]">Pack with features!</div>
+          <!-- Layer 2 -->
+          <div class="tp-caption text-grey" data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+            data-voffset="['22','22','22','0']" data-fontsize="['20','20','20','20']" data-lineheight="['20','20','20','20']"
+            data-width="none" data-height="none" data-whitespace="nowrap" data-type="text" data-basealign="slide" data-responsive_offset="off"
+            data-frames='[{"from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","speed":2000,"to":"o:1;","delay":1300,"ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
+            data-textAlign="['left','left','left','left']">Kickstart your next web project with AppStrap!</div>
+          <!-- Layer 3 -->
+          <div class="tp-caption" data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+            data-voffset="['122','122','60','30']" data-width="none" data-height="none" data-whitespace="nowrap" data-basealign="slide"
+            data-responsive_offset="off" data-responsive="on" data-frames='[{"from":"y:100px;rX:90deg;opacity:0;","speed":1500,"to":"o:1;","delay":700,"ease":"Power4.easeOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"}]'>
+            <a href="https://wrapbootstrap.com/theme/appstrap-responsive-website-template-WB0C6D0H4?ref=tme" class="btn btn-primary btn-rounded btn-xlg d-none d-md-block">Get AppStrap</a>
+            <a href="https://wrapbootstrap.com/theme/appstrap-responsive-website-template-WB0C6D0H4?ref=tme" class="btn btn-primary btn-rounded btn-sm d-md-none">Get AppStrap</a>
+          </div>
+        </li>
+      </ul>
+      <div class="tp-bannertimer tp-bottom"></div>
+    </div>
+    <!--end of tp-banner-->
+  </div>
+</div>
+
+<!--Posts carousel -->
+<div id="projects" class="container p-3 py-lg-6" data-toggle="magnific-popup" data-magnific-popup-settings='{"delegate": "a.project", "gallery":{"enabled":true}}'>
+  <hr class="hr-lg mt-0 mb-3 w-10 mx-auto hr-primary" />
+  <h2 class="text-center text-uppercase font-weight-bold my-0">
+    Latest Posts
+  </h2>
+  <h5 class="text-center font-weight-light mt-2 mb-0 text-muted">
+    See Talent Posts!
+  </h5>
+  <hr class="mb-5 w-50 mx-auto">
+  <div class="mt-4 owl-nav-over owl-nav-over-lg owl-dots-center" data-toggle="owl-carousel" data-owl-carousel-settings='{"responsive":{"0":{"items":1, "nav":false, "dots":true}, "600":{"items":2, "dots":true}, "940":{"items":3, "nav":true, "dots":true}}, "margin":1, "nav":true, "dots":false}'>
+
+    {{#each latestPosts}}
+    <a href="/posts/show/{{id}}" class="overlay-hover image-post-carousel">
+      <h5>{{title}}</h5>
+      <p class="text-muted text-s">{{{stripTags (truncate body 200)}}}</p>
+      <span class="overlay-hover-content">
+        <i class="fa fa-arrow-circle-right icon-3x text-white"></i>
+        <span class="h5 mt-4">{{title}}</span>
+      </span>
+    </a>
+    {{/each}}
+  </div>
+</div>

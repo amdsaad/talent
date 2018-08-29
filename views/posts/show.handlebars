@@ -1,0 +1,88 @@
+<div id="content">
+  <div class="container">
+    <div class="mb-2">
+      <small>
+        <a href="/posts">
+          <i class="fa fa-arrow-left"></i> Back to Blog</a>
+      </small>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row blog-post">
+          <div class="col-md-2 date-md">
+            <!-- Date desktop -->
+            <div class="date-wrapper">
+              <span class="date-m bg-primary">{{formatDate story.date 'MMMM'}}</span>
+              <span class="date-d">{{formatDate story.date 'Do'}}</span>
+            </div>
+            <!-- Meta details desktop -->
+            <p class="text-muted text-xs">
+              <i class="fa fa-user"></i>
+              <a href="/posts/user/{{post.user.id}}">{{post.user.name}}</a>
+            </p>
+          </div>
+          <div class="col-md-10">
+            <div class="media-body">
+              <h3 class="title media-heading"> {{{post.title}}} </h3>
+            </div>
+            <ul class="list-inline meta text-muted">
+              <li class="list-inline-item">
+                <i class="fa fa-calendar"></i> {{formatDate story.date 'MMMM Do YYYY'}}</li>
+              <li class="list-inline-item">
+                <i class="fa fa-user"></i>
+                <a href="/posts/user/{{post.user.id}}">{{post.user.name}}</a>
+              </li>
+            </ul>
+            <div class="blog-content">
+              <div class="blog-media">
+                <img src="{{post.image}}" alt="Picture of frog by Ben Fredericson" class="img-fluid img-post" />
+              </div>
+              <br>
+              <p>{{{post.body}}}</p>
+            </div>
+            {{#if post.allowComments}}
+            <div class="comments">
+              <span class="card-title">Comments</span>
+              {{#each post.comments}}
+              <ul class="list-unstyled" id="comment-list">
+                <li class="media mb-3 pos-relative">
+                  <a href="/posts/user/{{commentUser.id}}">
+                    <img src="{{commentUser.picture}}" alt="Picture of Tim Rice" class="d-flex mr-3 img-thumbnail img-fluid" />
+                  </a>
+                  <div class="media-body">
+                    <ul class="list-inline blog-meta text-muted">
+                      <li class="list-inline-item">
+                        <i class="fa fa-calendar"></i> {{formatDate date 'dd Do MMM YYYY'}}</li>
+                      <li class="list-inline-item">
+                        <i class="fa fa-user"></i>
+                        <a href="/posts/user/{{commentUser.id}}">{{commentUser.name}}</a>
+                      </li>
+                    </ul>
+                    <p class="mb-1">{{commentBody}}</p>
+                  </div>
+                </li>
+              </ul>
+              {{/each}} {{/if}} {{#if user}}
+              {{#unless post.comments}}
+              <hr>
+              {{/unless}}
+              <form method="post" action="/posts/comment/{{post.id}}" class="comment-form" id="post-add-comment">
+                <h5> Add Comment </h5>
+                <input type="hidden" name="id" value="{{post.id}}">
+                <div class="form-group">
+                  <label class="sr-only" for="comment-comment">Comment</label>
+                  <textarea rows="2" class="form-control" name="commentBody" placeholder="Comment"></textarea>
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary">
+              </form>
+              {{else}}
+              <p>Please
+                <a href="/auth/login">log</a> in to leave a comment</p>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

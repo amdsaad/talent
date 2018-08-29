@@ -1,0 +1,752 @@
+<div class="container-fluid bg-light" id="resumes">
+  <div class="row ">
+    <div class="col-md-2">
+      <ul class="list-group  p-2" id="edit-resume">
+        <li class="list-group-item  mt-3 bg-light">
+          <a class=" btn btn-primary btn-lg rounded btn-shadow w-100" href="/candidate-resume/{{resume.handle}}">View your resume</a>
+        </li>
+        <li class="list-group-item mb-3 mt-3 text-white bg-op-7 bg-grey-dark p-2 rounded">
+          {{#if published}}
+          <p>Your resume is
+            <span class="text-warning">Published</span>
+          </p>
+          <form method="post" action="/candidate-resume/{{resume.id}}" class="published-resume-form">
+            <input type="hidden" name="resume[published]" value="false">
+            <input type="submit" value="Un-Publish" class="btn btn-primary w-100" />
+          </form>
+          {{else}}
+          <p>Your resume is not yet
+            <span class="text-warning">Published</span> , please published your resume once it is complated</p>
+          <form method="post" action="/candidate-resume/{{resume.id}}" class="published-resume-form">
+            <input type="hidden" name="resume[published]" value="true">
+            <input type="submit" value="Publish" class="btn btn-primary w-100" />
+          </form>
+          {{/if}}
+        </li>
+        <li class="list-group-item mt-1 text-white bg-op-7 bg-grey-dark p-2 rounded text-center">
+          <h6>Change Resume Style</h6>
+          <form method="post" action="/candidate-resume/{{resume.id}}" class="style-resume-form">
+            <div class="form-group">
+              <div>
+                <a href="https://unsplash.it/1200/768.jpg?image=250" data-toggle="lightbox" data-title="A random title" data-footer="A custom footer text">
+                  <img src="https://unsplash.it/600.jpg?image=250" class="img-fluid">
+                </a>
+              </div>
+              {{#if resumeDefualt}}
+              <input id="disabledInput" type="" value="Current Style" class="btn btn-warning" disabled/> {{else}}
+              <input type="hidden" name="resume[style]" value="default"> 
+              <input type="submit" value="Select" class="btn btn-primary" /> {{/if}}
+            </div>
+            <div class="form-group">
+              <div>
+                <a href="https://unsplash.it/1200/768.jpg?image=20" data-toggle="lightbox" data-title="A random title" data-footer="A custom footer text">
+                  <img src="https://unsplash.it/600.jpg?image=20" class="img-fluid">
+                </a>
+              </div>
+              {{#if resumeOneCol}}
+              <input id="disabledInput" type="" value="Current Style" class="btn btn-warning" disabled/> {{else}}
+              <input type="hidden" name="resume[style]" value="oneCol"> 
+              <input type="submit" value="Select" class="btn btn-primary" /> {{/if}}
+            </div>
+          </form>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-8" id="resume-lists">
+      {{#if resumeDefualt}}
+      <div class="row bg-grey ">
+        <div class="col-md-4 col-lg-3" id="resume-side">
+          <div class="d-flex rounded-top">
+            <img class="rounded-top" src="{{resume.picture}}" alt="">
+          </div>
+          <div class="resume-title ">
+            <div class="top-line"></div>
+            <div class="p-1 bg-blue-dark text-white text-center rounded-bottom">
+              <h4 class="display-4" id="candidate-name">{{resume.fullName}}</h4>
+              <h6 class="display-4" id="candidate-jobTitle">{{resume.jobTitle}}</h6>
+            </div>
+          </div>
+          <br> {{!-- Skills Start --}}
+          <div class="row no-gutters d-none d-md-flex d-lg-flex">
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+              <div class="bg-green-bright text-center" id="rounded2">
+                <i class="fas fa-cogs icon-2x pt-4 pb-4"></i>
+              </div>
+            </div>
+            <div class="col-9 col-sm-9 col-md-9 col-lg-9">
+              <div class="bg-blue-dark text-center" id="rounded">
+                <h5 class="display-4 text-white p-2" id="resume-profile">Skills</h5>
+              </div>
+            </div>
+            {{#each resume.skills}}
+            <span class="badge badge-success p-2 ml-2 mt-3">
+              <h5></h5>{{this}}</span>
+            {{/each}}
+          </div>
+          {{!-- Skills End --}}
+        </div>
+        <div class="col-md-8 col-lg-9">
+          {{!-- Profile Start --}}
+          <div class="row no-gutters">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+              <div class="bg-green-bright text-center" id="rounded2">
+                <i class="far fa-user icon-2x p-2"></i>
+              </div>
+            </div>
+            <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+              <div class="bg-blue-dark text-center" id="rounded">
+                <h5 class="display-4 text-white p-2" id="resume-profile">Profile</h5>
+              </div>
+            </div>
+            <div class="text-grey-dark">
+              <p>{{resume.bio}}</p>
+            </div>
+          </div>
+          {{!-- Profile End --}} {{!-- Start of Experience --}}
+          <div class="row no-gutters">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+              <div class="bg-green-bright text-center exp-icon" id="rounded2">
+                <i class="fas fa-briefcase icon-2x p-2"></i>
+              </div>
+            </div>
+            <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+              <div class="bg-blue-dark text-center" id="rounded">
+                <h4 class="display-4 text-white p-2" id="resume-experience">Experience
+                  <span class="float-right">
+                    <button type="button" class="btn btn-primary btn-sm" id="add-exp-btn"> Add Experiance</button>
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          {{!-- add Exp --}}
+          <div class="row">
+            <div class="col-md-12">
+              <div id="experience">
+                <div class="exp-new-area shadow bg-op-1 bg-blue-dark">
+                  <div class="p-3">
+                    <form method="post" action="/candidate-resume/experience" id="add-exp">
+                      <div class="form-group row">
+                        <div class="col-md-4">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Job Title" name="title" required />
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Company" name="company" required />
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-5">
+                          <h6>From Date</h6>
+                          <input type="date" class="form-control border-op-8 border-grey" name="from" />
+                        </div>
+                        <div class="col-md-7">
+                          <h6>To Date</h6>
+                          <div class="row">
+                            <div class="col-md-7 to-date-exp">
+                              <input type="date" class="form-control border-op-8 border-grey" name="to" />
+                            </div>
+                            <div class="col-md-5 ">
+                              <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                                <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-exp" />
+                                <label class="form-check-label" for="current">Current Job</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <textarea class="form-control border-op-8 border-grey" placeholder="Some of your responsabilities, Job description" name="description"></textarea>
+                        </div>
+                      </div>
+                      <input type="submit" value="Save" class="btn btn-info" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{!-- end Add Exp --}} {{!-- Exp List Start --}}
+          <ul class="list-group" id="exp-list">
+            {{#each experiance}}
+            <li class="list-group-item mt-3">
+              {{!-- Edit - Update Form --}}
+              <form method="POST" action="/candidate-resume/experience/{{this.id}}" class="edit-exp-form">
+                <div class="form-group row">
+                  <div class="col-md-4">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.title}}" name="exper[title]" required />
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.company}}" name="exper[company]" required />
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="exper[location]" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-5">
+                    <h6>From Date</h6>
+                    <input type="date" class="form-control border-op-8 border-grey" name="exper[from]" />
+                  </div>
+                  <div class="col-md-7">
+                    <h6>To Date</h6>
+                    <div class="row">
+                      <div class="col-md-7 to-date-exp">
+                        <input type="date" class="form-control border-op-8 border-grey" name="exper[to]" />
+                      </div>
+                      <div class="col-md-5 ">
+                        <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                          <input class="form-check-input" type="checkbox" name="exper[current]" value="Till Now" id="current-exp-edit" />
+                          <label class="form-check-label" for="current">Current Job</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <textarea class="form-control border-op-8 border-grey">{{this.description}}</textarea>
+                  </div>
+                </div>
+                <input type="submit" value="Update" class="btn btn-info" />
+              </form>
+              {{!-- End of Edit Form --}}
+              <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient">
+                <div class="col-sm-9 col-md-8 col-lg-8">
+                  <div class=" text-left pt-2 pb-2">
+                    <h5>{{title}} @
+                      <span class="text-blue  ">{{company}} - {{location}}</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-4">
+                  <div class="float-right pt-2 pb-2">
+                    {{#if this.to}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                    {{else}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="text-grey-dark">
+                    <p>{{this.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
+                <form style="display: inline" method="POST" action="/candidate-resume/experience/{{this.id}}" class="delete-exp-form">
+                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+          {{!-- Exp List End --}} {{!-- End of Experience --}} {{!-- Start of Education --}}
+          <div class="row no-gutters">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+              <div class="bg-green-bright text-center exp-icon" id="rounded2">
+                <i class="fas fa-briefcase icon-2x p-2"></i>
+              </div>
+            </div>
+            <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+              <div class="bg-blue-dark text-center" id="rounded">
+                <h4 class="display-4 text-white p-2" id="resume-experience">Education
+                  <span class="float-right">
+                    <button type="button" class="btn btn-primary btn-sm" id="add-educ-btn"> Add Education</button>
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          {{!-- add Education --}}
+          <div class="row">
+            <div class="col-md-12">
+              <div id="education">
+                <div class="educ-new-area shadow bg-op-1 bg-blue-dark">
+                  <div class="p-3">
+                    <form method="post" action="/candidate-resume/education" id="add-educ">
+                      <div class="form-group row">
+                        <div class="col-md-3">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="School / collage" name="school" required />
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Degree" name="degree" required />
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Field of study" name="fieldofstudy" />
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-5">
+                          <h6>From Date</h6>
+                          <input type="date" class="form-control border-op-8 border-grey" name="from" />
+                        </div>
+                        <div class="col-md-7">
+                          <h6>To Date</h6>
+                          <div class="row">
+                            <div class="col-md-7 to-date-educ">
+                              <input type="date" class="form-control border-op-8 border-grey" name="to" />
+                            </div>
+                            <div class="col-md-5 ">
+                              <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                                <input class="form-check-input educ-check" type="checkbox" name="current" value="Till Now" id="current-educ" />
+                                <label class="form-check-label" for="current">Current Job</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <textarea class="form-control border-op-8 border-grey" placeholder="Description" name="description"></textarea>
+                        </div>
+                      </div>
+                      <input type="submit" value="Save" class="btn btn-info" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{!-- end Add Exp --}} {{!-- Exp List Start --}}
+          <ul class="list-group" id="educ-list">
+            {{#each education}}
+            <li class="list-group-item mt-3">
+              {{!-- Edit - Update Form --}}
+              <form method="POST" action="/candidate-resume/education/{{this.id}}" class="edit-educ-form">
+                <div class="form-group row">
+                  <div class="col-md-3">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.school}}" name="education[school]" required
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.degree}}" name="education[degree]" required
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.fieldofstudy}}" name="education[fieldofstudy]"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="education[location]" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-5">
+                    <h6>From Date</h6>
+                    <input type="date" class="form-control border-op-8 border-grey" name="education[from]" />
+                  </div>
+                  <div class="col-md-7">
+                    <h6>To Date</h6>
+                    <div class="row">
+                      <div class="col-md-7 to-date-educ-edit">
+                        <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
+                      </div>
+                      <div class="col-md-5 ">
+                        <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                          <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ-edit" />
+                          <label class="form-check-label" for="current">Current Job</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <textarea class="form-control border-op-8 border-grey">{{this.description}}</textarea>
+                  </div>
+                </div>
+                <input type="submit" value="Update" class="btn btn-info" />
+              </form>
+              {{!-- End of Edit Form --}}
+              <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient">
+                <div class="col-sm-9 col-md-8 col-lg-8">
+                  <div class=" text-left pt-2 pb-2">
+                    <h5>{{school}}
+                      <span class="text-blue  ">{{degree}} - {{fieldofstudy}}- {{location}}</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-4">
+                  <div class="float-right pt-2 pb-2">
+                    {{#if this.to}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                    {{else}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="text-grey-dark">
+                    <p>{{this.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
+                <form style="display: inline" method="POST" action="/candidate-resume/education/{{this.id}}" class="delete-educ-form">
+                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+
+          {{!-- end of Education --}}
+        </div>
+      </div>
+      {{else}}
+      <div class="row bg-grey ">
+        <div class="col-md-4 col-lg-3" id="resume-side">
+          <div class="d-flex rounded-top">
+            <img class="rounded-top" src="{{resume.picture}}" alt="">
+          </div>
+        </div>
+        <div class="col-md-8 col-lg-9">
+          <div class="resume-title ">
+            <div class="p-1 bg-blue text-white text-center rounded-bottom">
+              <h4 class="display-4" id="candidate-name">{{resume.fullName}}</h4>
+              <h6 class="display-4" id="candidate-jobTitle">{{resume.jobTitle}}</h6>
+            </div>
+          </div>
+          {{!-- Profile Start --}}
+          <div class="row no-gutters mt-3">
+            <div class="text-grey-dark">
+              <p>{{resume.bio}}</p>
+            </div>
+          </div>
+          {{!-- Profile End --}}
+        </div>
+        <div class="col-md-12">
+          {{!-- Start of Experience --}}
+          <div class="row no-gutters">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+              <div class="bg-green-bright text-center exp-icon" id="rounded2">
+                <i class="fas fa-briefcase icon-2x p-2"></i>
+              </div>
+            </div>
+            <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+              <div class="bg-blue-dark text-center" id="rounded">
+                <h4 class="display-4 text-white p-2" id="resume-experience">Experience
+                  <span class="float-right">
+                    <button type="button" class="btn btn-primary btn-sm" id="add-exp-btn"> Add Experiance</button>
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          {{!-- add Exp --}}
+          <div class="row">
+            <div class="col-md-12">
+              <div id="experience">
+                <div class="exp-new-area shadow bg-op-1 bg-blue-dark">
+                  <div class="p-3">
+                    <form method="post" action="/candidate-resume/experience" id="add-exp">
+                      <div class="form-group row">
+                        <div class="col-md-4">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Job Title" name="title" required />
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Company" name="company" required />
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-5">
+                          <h6>From Date</h6>
+                          <input type="date" class="form-control border-op-8 border-grey" name="from" />
+                        </div>
+                        <div class="col-md-7">
+                          <h6>To Date</h6>
+                          <div class="row">
+                            <div class="col-md-7 to-date-exp">
+                              <input type="date" class="form-control border-op-8 border-grey" name="to" />
+                            </div>
+                            <div class="col-md-5 ">
+                              <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                                <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-exp" />
+                                <label class="form-check-label" for="current">Current Job</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <textarea class="form-control border-op-8 border-grey" placeholder="Some of your responsabilities, Job description" name="description"></textarea>
+                        </div>
+                      </div>
+                      <input type="submit" value="Save" class="btn btn-info" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{!-- end Add Exp --}} {{!-- Exp List Start --}}
+          <ul class="list-group" id="exp-list">
+            {{#each experiance}}
+            <li class="list-group-item mt-3">
+              {{!-- Edit - Update Form --}}
+              <form method="POST" action="/candidate-resume/experience/{{this.id}}" class="edit-exp-form">
+                <div class="form-group row">
+                  <div class="col-md-4">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.title}}" name="exper[title]" required />
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.company}}" name="exper[company]" required />
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="exper[location]" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-5">
+                    <h6>From Date</h6>
+                    <input type="date" class="form-control border-op-8 border-grey" name="exper[from]" />
+                  </div>
+                  <div class="col-md-7">
+                    <h6>To Date</h6>
+                    <div class="row">
+                      <div class="col-md-7 to-date-exp">
+                        <input type="date" class="form-control border-op-8 border-grey" name="exper[to]" />
+                      </div>
+                      <div class="col-md-5 ">
+                        <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                          <input class="form-check-input" type="checkbox" name="exper[current]" value="Till Now" id="current-exp-edit" />
+                          <label class="form-check-label" for="current">Current Job</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <textarea class="form-control border-op-8 border-grey">{{this.description}}</textarea>
+                  </div>
+                </div>
+                <input type="submit" value="Update" class="btn btn-info" />
+              </form>
+              {{!-- End of Edit Form --}}
+              <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient">
+                <div class="col-sm-9 col-md-8 col-lg-8">
+                  <div class=" text-left pt-2 pb-2">
+                    <h5>{{title}} @
+                      <span class="text-blue  ">{{company}} - {{location}}</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-4">
+                  <div class="float-right pt-2 pb-2">
+                    {{#if this.to}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                    {{else}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="text-grey-dark">
+                    <p>{{this.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
+                <form style="display: inline" method="POST" action="/candidate-resume/experience/{{this.id}}" class="delete-exp-form">
+                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+          {{!-- Exp List End --}} {{!-- End of Experience --}} {{!-- Start of Education --}}
+          <div class="row no-gutters">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+              <div class="bg-green-bright text-center exp-icon" id="rounded2">
+                <i class="fas fa-briefcase icon-2x p-2"></i>
+              </div>
+            </div>
+            <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+              <div class="bg-blue-dark text-center" id="rounded">
+                <h4 class="display-4 text-white p-2" id="resume-experience">Education
+                  <span class="float-right">
+                    <button type="button" class="btn btn-primary btn-sm" id="add-educ-btn"> Add Education</button>
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          {{!-- add Education --}}
+          <div class="row">
+            <div class="col-md-12">
+              <div id="education">
+                <div class="educ-new-area shadow bg-op-1 bg-blue-dark">
+                  <div class="p-3">
+                    <form method="post" action="/candidate-resume/education" id="add-educ">
+                      <div class="form-group row">
+                        <div class="col-md-3">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="School / collage" name="school" required />
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Degree" name="degree" required />
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Field of study" name="fieldofstudy" />
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-5">
+                          <h6>From Date</h6>
+                          <input type="date" class="form-control border-op-8 border-grey" name="from" />
+                        </div>
+                        <div class="col-md-7">
+                          <h6>To Date</h6>
+                          <div class="row">
+                            <div class="col-md-7 to-date-educ">
+                              <input type="date" class="form-control border-op-8 border-grey" name="to" />
+                            </div>
+                            <div class="col-md-5 ">
+                              <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                                <input class="form-check-input educ-check" type="checkbox" name="current" value="Till Now" id="current-educ" />
+                                <label class="form-check-label" for="current">Current Job</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                          <textarea class="form-control border-op-8 border-grey" placeholder="Description" name="description"></textarea>
+                        </div>
+                      </div>
+                      <input type="submit" value="Save" class="btn btn-info" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{!-- end Add Exp --}} {{!-- Exp List Start --}}
+          <ul class="list-group" id="educ-list">
+            {{#each education}}
+            <li class="list-group-item mt-3">
+              {{!-- Edit - Update Form --}}
+              <form method="POST" action="/candidate-resume/education/{{this.id}}" class="edit-educ-form">
+                <div class="form-group row">
+                  <div class="col-md-3">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.school}}" name="education[school]" required
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.degree}}" name="education[degree]" required
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.fieldofstudy}}" name="education[fieldofstudy]"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="education[location]" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-5">
+                    <h6>From Date</h6>
+                    <input type="date" class="form-control border-op-8 border-grey" name="education[from]" />
+                  </div>
+                  <div class="col-md-7">
+                    <h6>To Date</h6>
+                    <div class="row">
+                      <div class="col-md-7 to-date-educ-edit">
+                        <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
+                      </div>
+                      <div class="col-md-5 ">
+                        <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                          <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ-edit" />
+                          <label class="form-check-label" for="current">Current Job</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <textarea class="form-control border-op-8 border-grey">{{this.description}}</textarea>
+                  </div>
+                </div>
+                <input type="submit" value="Update" class="btn btn-info" />
+              </form>
+              {{!-- End of Edit Form --}}
+              <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient">
+                <div class="col-sm-9 col-md-8 col-lg-8">
+                  <div class=" text-left pt-2 pb-2">
+                    <h5>{{school}}
+                      <span class="text-blue  ">{{degree}} - {{fieldofstudy}}- {{location}}</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-4">
+                  <div class="float-right pt-2 pb-2">
+                    {{#if this.to}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                    {{else}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="text-grey-dark">
+                    <p>{{this.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
+                <form style="display: inline" method="POST" action="/candidate-resume/education/{{this.id}}" class="delete-educ-form">
+                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+
+          {{!-- end of Education --}}
+        </div>
+        <div class="col-md-12">
+          <div class="row no-gutters ">
+            <div class="col-2 col-sm-2 col-md-1 col-lg-1">
+              <div class="bg-green-bright text-center" id="rounded2">
+                <i class="fas fa-cogs icon-2x pt-4 pb-4"></i>
+              </div>
+            </div>
+            <div class="col-10 col-sm-10 col-md-11 col-lg-11">
+              <div class="bg-blue-dark text-center" id="rounded">
+                <h5 class="display-4 text-white p-2" id="resume-profile">Skills</h5>
+              </div>
+            </div>
+            {{#each resume.skills}}
+            <span class="badge badge-success p-2 ml-2 mt-3">
+              <h5></h5>{{this}}</span>
+            {{/each}}
+          </div>
+          {{!-- Skills End --}}
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

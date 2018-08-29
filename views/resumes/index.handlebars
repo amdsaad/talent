@@ -1,0 +1,39 @@
+<div class="container">
+  {{#each resumes}}
+  <div class="row">
+    <div class="col-md-6">
+      <div class="team team-list mt-4">
+        <div class="team-member">
+          <div class="row">
+            <div class="col-sm-3">
+              <a href="/candidate-resume/show/{{id}}" title="View{{fullName}}'s Resume" `>
+                <img src="{{picture}}" class="img-thumbnail" alt="Jimi" />
+              </a>
+            </div>
+            <div class="col-sm-9">
+              <h4 class="name">
+                <a href="/candidate-resume/show/{{id}}" title="View{{fullName}}'s Resume">{{fullName}}</a>
+              </h4>
+              <p class="role">{{jobTitle}}</p>
+              <p>
+                {{#if bio}} {{{stripTags (truncate bio 200)}}} {{/if}}
+              </p>
+              <div class="social-media-branding social-media-branding-sm">
+                {{#each skills}}
+                <span class="badge badge-pill badge-primary">
+                  <span> {{this}}</span>
+                </span>
+                {{/each}}
+              </div>
+              <a class="float-right btn btn-sm btn-blue-dark" href="/candidate-resume/{{handle}}">View more </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      {{this.jobTitle}}
+    </div>
+  </div>
+  {{/each}}
+</div>

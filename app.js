@@ -3,6 +3,7 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -11,18 +12,24 @@ const passport = require('passport');
 
 //load models
 require('./models/User');
-require('./models/Story');
-require('./models/Cv');
+require('./models/posts');
+require('./models/Resume');
+require('./models/Experiances');
+require('./models/Educations');
+require('./models/Company');
+require('./models/Jobs');
+require('./models/JobWanted');
 
 //passport config
 require('./config/passport')(passport);
+require('./config/passport-local')(passport);
 
 //load routes
 const index = require('./routes/index');
 const auth = require('./routes/auth');
-const stories = require('./routes/stories');
-const cvs = require('./routes/cvs');
-
+const posts = require('./routes/posts');
+const jobs = require('./routes/jobs');
+const resumes = require('./routes/resumes');
 //load keys
 const keys = require('./config/keys');
 
@@ -48,7 +55,7 @@ mongoose.connect(keys.mongoURI, {
 const app = express();
 
 //Body Parser Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Method verride Middelware
@@ -72,7 +79,9 @@ app.use(session({
   secret: "secret",
   resave: false,
   saveUninitialized: false
-}))
+}));
+
+app.use(flash());
 //passport midleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -80,17 +89,20 @@ app.use(passport.session());
 //set Global vars
 app.use((req, res, next) => {
   res.locals.user = req.user || null;
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
   next();
 });
 
 //set static folder
-app.use(express.static(path.join(__dirname, 'public')))
-
+app.use(express.static('./public'));
 //Use routes
 app.use('/', index);
 app.use('/auth', auth);
-app.use('/stories', stories);
-app.use('/cvs', cvs);
+app.use('/posts', posts);
+app.use('/jobs', jobs);
+app.use('/candidate-resume', resumes);
 
 const port = process.env.PORT || 5000;
 

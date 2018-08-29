@@ -2,43 +2,145 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <title>Jobs Homepage | AppStrap Bootstrap Theme by Themelize.me</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-    crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/style.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="">
+  <meta name="author" content="Themelize.me">
+  <base href="/">
 
-  <title>Story Books</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+
+
+
+  <link href="assets/css/theme-style.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="#" id="colour-scheme" rel="stylesheet">
+
+  <link href="assets/css/custom-style.css" rel="stylesheet">
+
+  <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+  <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Rambla:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Calligraffitti' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:100,400,700' rel='stylesheet' type='text/css'>
+  <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/retina.js/1.3.0/retina.min.js"></script>
+
+
+
 </head>
 
-<body>
-  <div>
-    {{> _header}} {{#if user}} {{> _add-btn}} {{/if}}
-  </div>
+<body class="page header-translucent header-ontop header-dark page-index-jobs navbar-layout-default">
   <main>
+    <div>
+      {{> _header}} {{#if user}} {{> _add-btn}} {{/if}}
+    </div>
     <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-10">
+          {{> _msg}}{{> _errors}}
+        </div>
+      </div>
+    </div>
+    <div class="body-margin">
       {{{body}}}
     </div>
   </main>
-  {{> _footer}}
-  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js">
-  </script>
-  <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+
+
+  <footer id="footer" class="py-3">
+    <div class="container">
+      <div class="row">
+        <!--@todo: replace with company copyright details-->
+        <div class="col-md-6">
+          <p class="mb-0 text-sm">Copyright 2018 &copy; AppStrap</p>
+          <ul class="list-inline footer-links mb-0 text-sm">
+            <li class="list-inline-item">
+              <a href="#">Terms</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">Privacy</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6 flex-valign">
+          <div class="float-md-right ml-md-auto">
+            <!--@todo: replace with company social media details-->
+            <a href="#" class="btn btn-sm btn-icon btn-dark btn-rounded">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="btn btn-sm btn-icon btn-dark btn-rounded">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="btn btn-sm btn-icon btn-dark btn-rounded">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="btn btn-sm btn-icon btn-dark btn-rounded">
+              <i class="fab fa-google-plus-g"></i>
+            </a>
+            <a href="#top" class="btn btn-sm btn-icon btn-dark btn-rounded" title="Back to top">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+  <script src="/ajax.js"></script>
+  <script src="/style.js"></script>
+  <script src="/countrypicker.min.js"></script>
+  <script src="/jquery-dateformat.min.js"></script>
   <script>
-    $(document).ready(() => {
-      $('.sidenav').sidenav();
-      $('select').formSelect();
-    });
-      CKEDITOR.replace( 'body',{
-        plugins: 'wysiwygarea,toolbar,basicstyles,link'
+    $(document).ready(function () {
+      $("#add-post-btn").click(function () {
+        $(".post-new-area").toggle();
       });
+    });
+    $(document).ready(function () {
+      $("#add-exp-btn").click(function () {
+        $(".exp-new-area").toggle();
+      });
+    });
+    $(document).ready(function () {
+      $("#add-educ-btn").click(function () {
+        $(".educ-new-area").toggle();
+      });
+    });
+    $(document).ready(function () {
+      $("#jobWanted").click(function () {
+        $(".new-job-wanted").toggle();
+      });
+    });
+    $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+      event.preventDefault();
+      $(this).ekkoLightbox();
+    });
+
   </script>
-
-
-
+  <script>    
+    $(".alert").fadeTo(5000, 5000).slideUp(1000, function () {
+      $(".alert").alert('close');
+    });
+  </script>
+  <script src="assets/js/custom-script.js"></script>
+  <script src="assets/js/script.min.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,134 @@
+{{#if resumeDefualt}}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4 col-lg-3" id="resume-side">
+      <div class="d-flex rounded-top">
+        <img class="rounded-top" src="{{resumes.picture}}" alt="">
+      </div>
+      <div class="resume-title ">
+        <div class="top-line"></div>
+        <div class="p-1 bg-blue-dark text-white text-center rounded-bottom">
+          <h4 class="display-4" id="candidate-name">{{resumes.fullName}}</h4>
+          <h6 class="display-4" id="candidate-jobTitle">{{resumes.jobTitle}}</h6>
+        </div>
+      </div>
+      <br> {{!-- Skills Start --}} {{#if resumes.skills}}
+      <div class="row no-gutters d-none d-md-flex d-lg-flex">
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+          <div class="bg-green-bright text-center" id="rounded2">
+            <i class="fas fa-cogs icon-2x pt-4 pb-4"></i>
+          </div>
+        </div>
+        <div class="col-9 col-sm-9 col-md-9 col-lg-9">
+          <div class="bg-blue-dark text-center" id="rounded">
+            <h5 class="display-4 text-white p-2" id="resume-profile">Skills</h5>
+          </div>
+        </div>
+        {{#each resumes.skills}}
+        <span class="badge badge-success p-2 ml-2 mt-3">
+          <h5></h5>{{this}}</span>
+        {{/each}}
+      </div>
+      {{/if}} {{!-- Skills End --}}
+    </div>
+    <div class="col-md-8 col-lg-9">
+      {{!-- Profile Start --}}
+      <div class="row no-gutters">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+          <div class="bg-green-bright text-center" id="rounded2">
+            <i class="far fa-user icon-2x p-2"></i>
+          </div>
+        </div>
+        <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+          <div class="bg-blue-dark text-center" id="rounded">
+            <h5 class="display-4 text-white p-2" id="resume-profile">Profile</h5>
+          </div>
+        </div>
+        <div class="text-grey-dark">
+          <p>{{resumes.bio}}</p>
+        </div>
+      </div>
+      {{!-- Profile End --}} {{!-- Start of Experience --}} {{#if experiance}}
+      <div class="row no-gutters">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+          <div class="bg-green-bright text-center exp-icon" id="rounded2">
+            <i class="fas fa-briefcase icon-2x p-2"></i>
+          </div>
+        </div>
+        <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+          <div class="bg-blue-dark text-center" id="rounded">
+            <h4 class="display-4 text-white p-2" id="resume-experience">Experience</h4>
+          </div>
+        </div>
+        {{#each experiance}}
+        <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient" id="rounded">
+          <div class="col-sm-9 col-md-8 col-lg-8">
+            <div class=" text-left pt-2 pb-2">
+              <h5>{{title}} @
+                <span class="text-blue  ">{{company}}</span>
+              </h5>
+            </div>
+          </div>
+          <div class="col-sm-3 col-md-4 col-lg-4">
+            <div class="float-right pt-2 pb-2">
+              {{#if this.to}}
+              <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+              {{else}}
+              <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+              {{/if}}
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="text-grey-dark">
+              <p>{{this.description}}</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}} {{!-- End of Experience --}} {{!-- Start of Education --}} {{#if education}}
+      <div class="row no-gutters mt-2">
+        <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+          <div class="bg-green-bright text-center exp-icon" id="rounded2">
+            <i class="fas fa-graduation-cap icon-2x p-2"></i>
+          </div>
+        </div>
+        <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+          <div class="bg-blue-dark text-center" id="rounded">
+            <h4 class="display-4 text-white p-2" id="resume-experience">Education</h4>
+          </div>
+        </div>
+        {{#each education}}
+        <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient" id="rounded">
+          <div class="col-sm-9 col-md-8 col-lg-8">
+            <div class=" text-left pt-2 pb-2">
+              <h5>{{school}}
+                <span class="text-blue  ">-{{#if this.degree}} {{degree}} Degree - {{/if}} {{fieldofstudy}} - {{location}}</span>
+              </h5>
+            </div>
+          </div>
+          <div class="col-sm-3 col-md-4 col-lg-4">
+            <div class="float-right pt-2 pb-2">
+              {{#if this.to}}
+              <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+              {{else}}
+              <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+              {{/if}}
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="text-grey-dark">
+              <p>{{this.description}}</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+      {{/if}} {{!-- End of Education --}}
+    </div>
+  </div>
+</div>
+{{else}}
+<h1>One Col</h1>
+{{/if}}
