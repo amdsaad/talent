@@ -12,7 +12,7 @@ const passport = require('passport');
 
 //load models
 require('./models/User');
-require('./models/posts');
+require('./models/Posts');
 require('./models/Resume');
 require('./models/Experiances');
 require('./models/Educations');
