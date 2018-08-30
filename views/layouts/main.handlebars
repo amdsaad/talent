@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Jobs Homepage | AppStrap Bootstrap Theme by Themelize.me</title>
+  <title>Talent Liken | Connecting Talents</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -39,22 +39,8 @@
 
 <body class="page header-translucent header-ontop header-dark page-index-jobs navbar-layout-default">
   <main>
-    <div>
-      {{> _header}} {{#if user}} {{> _add-btn}} {{/if}}
-    </div>
-    <div class="container">
-      <div class="row justify-content-md-center">
-        <div class="col-md-10">
-          {{> _msg}}{{> _errors}}
-        </div>
-      </div>
-    </div>
-    <div class="body-margin">
-      {{{body}}}
-    </div>
+    {{> _header}} {{> _msg}}{{> _errors}} {{{body}}}
   </main>
-
-
   <footer id="footer" class="py-3">
     <div class="container">
       <div class="row">
@@ -111,6 +97,16 @@
     $(document).ready(function () {
       $("#add-post-btn").click(function () {
         $(".post-new-area").toggle();
+      });
+    });
+    $(document).ready(function () {
+      $(".exp-cxl-edit-btn").click(function () {
+        $(".edit-exp-form").hide();
+      });
+    });
+    $(document).ready(function () {
+      $(".exp-cxl-add-btn").click(function () {
+        $(".exp-new-area").hide();
       });
     });
     $(document).ready(function () {

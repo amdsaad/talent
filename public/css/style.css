@@ -7,7 +7,7 @@ body {
 }
 main {
   flex: 1 0 auto;
-  margin-top: 100px;
+  margin-top: 78px;
 }
 
 .nav-wrapper .fa-bars{
@@ -259,12 +259,10 @@ text-decoration: none;
   letter-spacing: 2px;
   text-transform: uppercase
 }
-#resume-experience{
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 1.6;
-  letter-spacing: 2px;
-  text-transform: uppercase
+#resume-heading{
+  font-size: 32px;
+  font-weight: 400;
+
 }
 #candidate-jobTitle{
   font-size: 18px
@@ -277,4 +275,17 @@ text-decoration: none;
 }
 #rounded2{
   border-radius: 5px 0px 0px 5px
+}
+.under-heading {
+  border-bottom: 4px solid;
+  max-width: 7%;
+}
+.under-heading-title {
+  border-bottom: 4px solid;
+  max-width: 33.33%;
+  margin: 0 auto
+}
+#basic-info-resume-area-edit{
+  display: none;
+  list-style: none;
 }

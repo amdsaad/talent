@@ -83,6 +83,81 @@ $('#edit-resume').on('submit', '.published-resume-form', function (e) {
 });
 /* Published Resume Edit End  */
 
+/* Edit Resume Basic Info */
+
+$('#edit-basic-resume').on('click', '.edit-basic-btn', function () {
+  $("#basic-info-resume-area").toggle();
+  $('#basic-info-resume-area-edit').toggle();
+});
+
+$('#edit-basic-resume').on('click', '.cxl-basic-resume-info', function () {
+  $("#basic-info-resume-area").toggle();
+  $('#basic-info-resume-area-edit').toggle();
+});
+
+$('#edit-basic-resume').on('submit', '.basic-info-resume-form', function (e) {
+  e.preventDefault();
+  var basicInfo = $(this).serializeArray();
+  var actionUrl = $(this).attr('action');
+  var $originalItem = $(this).parent('.list-group-item');
+  $.ajax({
+    url: actionUrl,
+    data: basicInfo,
+    type: 'PUT',
+    success: function (data) {
+      $('#edit-basic-resume').html(
+        `
+        <li class="list-group-item bg-light" id="basic-info-resume-area-edit">
+        <form method="post" action="/candidate-resume/${data._id}" class="basic-info-resume-form p-2">
+          <div class="form-group text-center">
+            <input class="border-op-8 border-grey display-4" type="text" name="resume[fullName]" value="${data.fullName}">
+          </div>
+          <div class="form-group text-center">
+            <input class="border-op-8 border-grey display-4 text-muted" type="text" name="resume[jobTitle]" value="${data.jobTitle}">
+          </div>
+          <div class="form-group row text-center">
+            <div class="col-md-4">
+              <i class="fas fa-map-marker-alt text-muted mr-2"></i>
+              <input class="border-op-8 border-grey text-muted" type="text" name="resume[location]" value="${data.location}">
+            </div>
+            <div class="col-md-4">
+              <i class="fas fa-phone-square text-muted mr-2"></i>
+              <input class="border-op-8 border-grey text-muted" type="text" name="resume[contactNumber]" value="${data.contactNumber}">
+            </div>
+            <div class="col-md-4">
+              <i class="fas fa-at text-muted mr-2"></i>
+              <input class="border-op-8 border-grey text-muted" type="text" name="resume[email]" value="${data.email}">
+            </div>
+          </div>
+          <input type="submit" value="Save" class="btn btn-success" />
+          <input type="button" value="Cancel" class="btn btn-warning cxl-basic-resume-info" />
+        </form>
+        </li>
+        <li class="list-group-item" id="basic-info-resume-area">
+        <div class="resume-title mb-3">
+        <div class="pt-5 text-center rounded-bottom">
+          <h3 class="display-3 text-dark mb-2">
+            <strong>${data.fullName}</strong>
+          </h3>
+          <h6 class="display-4 text-muted">${data.jobTitle}</h6>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <i class="fas fa-map-marker-alt text-muted"></i>
+        <p class="ml-1 text-muted">${data.location}</p>
+        <i class="fas fa-phone-square text-muted ml-3"></i>
+        <p class="ml-1 text-muted">${data.contactNumber}</p>
+        <i class="fas fa-at text-muted ml-3"></i>
+        <p class="ml-1 text-muted">${data.email}</p>
+      </div>
+      <button style="margin-top: -5rem;" class="btn btn-outline-primary edit-basic-btn">Edit</button>
+      </li>
+        `
+      )
+    }
+  });
+});
+
 /* Resume Default Style Edit Start */
 $('#edit-resume').on('submit', '.style-resume-form', function (e) {
   e.preventDefault();
@@ -555,3 +630,4 @@ setInterval("jobCount();", 5000 * 5);
 function jobCount() {
   $('#jobSearch').load(location.href + ' #jobCount');
 };
+
