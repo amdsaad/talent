@@ -72,6 +72,7 @@ app.engine('handlebars', exphbs({
   },
   defaultLayout: 'main'
 }));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 
 app.use(cookieParser());
@@ -96,7 +97,7 @@ app.use((req, res, next) => {
 });
 
 //set static folder
-app.use(express.static('./public'));
+app.use(express.static(path.join(__dirname, 'public')));
 //Use routes
 app.use('/', index);
 app.use('/auth', auth);

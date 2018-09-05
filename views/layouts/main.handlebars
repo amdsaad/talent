@@ -10,7 +10,7 @@
   <meta name="author" content="Themelize.me">
   <base href="/">
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
@@ -37,10 +37,13 @@
 
 </head>
 
-<body class="page header-translucent header-ontop header-dark page-index-jobs navbar-layout-default">
-  <main>
-    {{> _header}} {{> _msg}}{{> _errors}} {{{body}}}
-  </main>
+<body class="page page-index navbar-layout-default">
+
+  {{> _header}} 
+  <div class="container">
+    {{> _msg}}{{> _errors}}
+  </div>
+   {{{body}}}
   <footer id="footer" class="py-3">
     <div class="container">
       <div class="row">
@@ -82,10 +85,123 @@
       </div>
     </div>
   </footer>
+  <div class="hidden-elements js-off-canvas-exclude">
+    <!--@modal - signup modal-->
+    <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <form action="signup.html">
+          <div class="modal-content">
+            <div class="modal-header bg-light">
+              <h4 class="modal-title">
+                Sign Up
+              </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <h6 class="op-8">
+                  Price Plan
+                </h6>
+                <select class="form-control">
+                  <option>Basic</option>
+                  <option>Pro</option>
+                  <option>Pro +</option>
+                </select>
+              </div>
+              <hr />
+
+              <h6 class="op-8">
+                Account Information
+              </h6>
+              <div class="form-group">
+                <label class="sr-only" for="signup-first-name">First Name</label>
+                <input type="text" class="form-control" id="signup-first-name" placeholder="First name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="signup-last-name">Last Name</label>
+                <input type="text" class="form-control" id="signup-last-name" placeholder="Last name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="signup-username">Userame</label>
+                <input type="text" class="form-control" id="signup-username" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="signup-email">Email address</label>
+                <input type="email" class="form-control" id="signup-email" placeholder="Email address">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="signup-password">Password</label>
+                <input type="password" class="form-control" id="signup-password" placeholder="Password">
+              </div>
+              <div class="form-check text-xs">
+                <label class="form-check-label op-8">
+                  <input type="checkbox" value="term" class="form-check-input mt-1"> I agree with the Terms and Conditions.
+                </label>
+              </div>
+            </div>
+            <div class="modal-footer bg-light py-3">
+              <div class="d-flex align-items-center">
+                <button type="button" class="btn btn-primary">Sign Up</button>
+                <button type="button" class="btn btn-link ml-1" data-dismiss="modal" aria-hidden="true">Cancel</button>
+              </div>
+              <p class="text-xs text-right text-lh-tight op-8 my-0 ml-auto">Already signed up?
+                <a href="login.html">Login here</a>
+              </p>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </form>
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <!--@modal - login modal-->
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form action="login.html">
+            <div class="modal-header bg-light">
+              <h4 class="modal-title">
+                Login
+              </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label class="sr-only" for="login-email">Email</label>
+                <input type="email" id="login-email" class="form-control email" placeholder="Email">
+              </div>
+              <div class="form-group mb-0">
+                <label class="sr-only" for="login-password">Password</label>
+                <input type="password" id="login-password" class="form-control password mb-1" placeholder="Password">
+              </div>
+            </div>
+            <div class="modal-footer bg-light py-3">
+              <div class="d-flex align-items-center">
+                <button type="button" class="btn btn-primary">Login</button>
+                <button type="button" class="btn btn-link ml-1" data-dismiss="modal" aria-hidden="true">Cancel</button>
+              </div>
+              <p class="text-xs text-right text-lh-tight op-8 my-0 ml-auto">
+                Not a member?
+                <a href="#" class="signup">Sign up now!</a>
+                <br />
+                <a href="#">Forgotten password?</a>
+              </p>
+            </div>
+          </form>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+  </div>
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
@@ -100,23 +216,23 @@
       });
     });
     $(document).ready(function () {
-      $(".exp-cxl-edit-btn").click(function () {
-        $(".edit-exp-form").hide();
-      });
-    });
-    $(document).ready(function () {
-      $(".exp-cxl-add-btn").click(function () {
-        $(".exp-new-area").hide();
-      });
-    });
-    $(document).ready(function () {
       $("#add-exp-btn").click(function () {
         $(".exp-new-area").toggle();
       });
     });
     $(document).ready(function () {
+      $(".exp-cxl-add-btn").click(function () {
+        $('.exp-new-area').toggle();
+      });
+    });
+    $(document).ready(function () {
       $("#add-educ-btn").click(function () {
         $(".educ-new-area").toggle();
+      });
+    });
+    $(document).ready(function () {
+      $(".educ-cxl-add-btn").click(function () {
+        $('.educ-new-area').toggle();
       });
     });
     $(document).ready(function () {
@@ -131,7 +247,7 @@
 
   </script>
   <script>    
-    $(".alert").fadeTo(5000, 5000).slideUp(1000, function () {
+    $(".alert").fadeTo(800, 800).slideUp(800, function () {
       $(".alert").alert('close');
     });
   </script>

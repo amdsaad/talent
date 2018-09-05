@@ -13,7 +13,7 @@ const ResumeSchema = new Schema({
   },
   published: {
     type: String,
-    default:'false'
+    default: 'false'
   },
   fullName: {
     type: String,
@@ -23,10 +23,11 @@ const ResumeSchema = new Schema({
     type: String,
     required: true
   },
-  picture: {
+  pictureUrl:  { 
     type: String,
-    default: '/img/resume.png',
-    required: true
+  },
+  picturePublic_id:{
+    type:String
   },
   jobTitle: {
     type: String,

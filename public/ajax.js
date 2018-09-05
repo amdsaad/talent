@@ -57,7 +57,7 @@ $('#edit-resume').on('submit', '.published-resume-form', function (e) {
     type: 'PUT',
     originalItem: $originalItem,
     success: function (data) {
-      if(data.published == 'false'){
+      if (data.published == 'false') {
         this.originalItem.html(
           `
           <p>Your resume is not yet <span class="text-warning">Published</span> , please published your resume once it is complated</p>
@@ -67,7 +67,7 @@ $('#edit-resume').on('submit', '.published-resume-form', function (e) {
           </form>      
         `
         )
-      }else{
+      } else {
         this.originalItem.html(
           `
           <p>Your resume is <span class="text-warning">Published</span></p>
@@ -82,6 +82,121 @@ $('#edit-resume').on('submit', '.published-resume-form', function (e) {
   });
 });
 /* Published Resume Edit End  */
+/* Edit Resume Pic */
+
+$('#edit-basic-pic-resume').on('click', '.edit-basic-pic-btn', function () {
+  $("#basic-info-resume-pic-edit").toggle();
+  $('#basic-info-resume-pic-area').toggle();
+});
+$('#edit-basic-pic-resume').on('click', '.cxl-pic-resume', function () {
+  $("#basic-info-resume-pic-edit").toggle();
+  $('#basic-info-resume-pic-area').toggle();
+});
+
+
+$('#edit-basic-pic-resume').on('submit', '.basic-info-resume-pic-form', function (e) {
+  e.preventDefault();
+  var pic = new FormData(this);
+  console.log(pic)
+  var actionUrl = $(this).attr('action');
+  var $originalItem = $(this).parent('.list-group-item');
+  $.ajax({
+    url: actionUrl,
+    data: pic,
+    type: 'PUT',
+    processData: false,
+    contentType: false,
+    originalItem: $originalItem,
+    success: function (data) {
+      $('#edit-basic-pic-resume').html(
+        `
+        <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-pic-edit">
+        <form method="post" action="/candidate-resume/${data._id}" class="basic-info-resume-pic-form p-2" enctype="multipart/form-data">
+          <div class="form-group text-center mt-2">
+            <input type="file" name="picture" id="">
+          </div>
+          <input type="submit" value="Upload" class="btn btn-success" />
+          <input type="button" value="Cancel" class="btn btn-secondary cxl-pic-resume" />
+        </form>
+      </li>
+      <li class="list-group-item" id="basic-info-resume-pic-area">
+        <div class="text-grey-dark">
+          <img src="${data.pictureUrl}" alt="">
+        </div>
+        <button class="btn btn-outline-primary edit-basic-pic-btn">Edit</button>
+      </li>
+        `
+      )
+      $('#resume-messages').html(
+        `
+        <div class="alert alert-success"> <i class="fas fa-check"></i>  Your photo has been updated</div>
+        `
+      )
+      $(".alert").fadeTo(800, 800).slideUp(800, function () {
+        $(".alert").alert('close');
+      });
+    }
+  });
+});
+
+/* Resume ic End */
+/* Edit Basic Resume ( About) Start */
+$('#edit-basic-about-resume').on('click', '.edit-basic-about-btn', function () {
+  $("#basic-info-resume-about-area").toggle();
+  $('#basic-info-resume-about-edit').toggle();
+});
+
+$('#edit-basic-about-resume').on('click', '.cxl-about-resume', function () {
+  $("#basic-info-resume-about-area").toggle();
+  $('#basic-info-resume-about-edit').toggle();
+});
+$('#edit-basic-about-resume').on('submit', '.basic-info-resume-about-form', function (e) {
+  e.preventDefault();
+  var basicInfo = $(this).serializeArray();
+  var actionUrl = $(this).attr('action');
+  var $originalItem = $(this).parent('.list-group-item');
+  $.ajax({
+    url: actionUrl,
+    data: basicInfo,
+    type: 'PUT',
+    success: function (data) {
+      $('#edit-basic-about-resume').html(
+        `
+        <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-about-edit">
+        <form method="post" action="/candidate-resume/${data._id}" class="basic-info-resume-about-form p-2">
+          <h4 class="text-blue-dark display-4" id="resume-heading">About</h4>
+          <div class="under-heading text-blue"></div>
+          <div class="form-group text-center mt-2">
+            <textarea class="w-100" name="resume[bio]" rows="5">${data.bio}</textarea>
+          </div>
+          <input type="submit" value="Save" class="btn btn-success" />
+          <input type="button" value="Cancel" class="btn btn-secondary cxl-about-resume" />
+        </form>
+      </li>
+      <li class="list-group-item" id="basic-info-resume-about-area">
+        <div class="text-grey-dark mt-3">
+          <h4 class="text-blue-dark display-4" id="resume-heading">About</h4>
+          <div class="under-heading text-blue"></div>
+          <p>${data.bio}</p>
+        </div>
+        <button class="btn btn-outline-primary edit-basic-about-btn">Edit</button>
+      </li>
+        `
+      )
+      $('#resume-about-messages').html(
+        `
+        <div class="alert alert-success"> <i class="fas fa-check"></i>  Your Info has been updated</div>
+        `
+      )
+      $(".alert").fadeTo(800, 800).slideUp(800, function () {
+        $(".alert").alert('close');
+      });
+    }
+  });
+});
+
+/* Edit Basic Resume ( About) End */
+
 
 /* Edit Resume Basic Info */
 
@@ -170,11 +285,17 @@ $('#edit-resume').on('submit', '.style-resume-form', function (e) {
     type: 'PUT',
     originalItem: $originalItem,
     success: function (data) {
-      window.location.href=window.location.href;
+      window.location.href = window.location.href;
     }
   });
 });
 /* Resume Default Style Edit End */
+
+/* Experiance section  start */
+
+$('#exp-list').on('click', '.exp-cxl-edit-btn', function () {
+  $(".edit-exp-form").hide();
+});
 
 $('#add-exp').submit(function (e) {
   e.preventDefault();
@@ -187,12 +308,10 @@ $('#add-exp').submit(function (e) {
     } else {
       expEnd = data.current
     };
-
-    console.log(data)
     $('#exp-list').prepend(
       `
-      <li class="list-group-item mt-3">
-      <form method="POST" action="/candidate-resume/experience/${data._id}" class="edit-exp-form">
+      <li class="list-group-item">
+      <form method="POST" action="/candidate-resume/experience/${data._id}" class="edit-exp-form p-4 bg-op-5 bg-lime rounded m-2">
         <div class="form-group row">
           <div class="col-md-4">
             <input type="text" class="form-control border-op-8 border-grey" value="${data.title}" name="exper[title]" required />
@@ -207,8 +326,7 @@ $('#add-exp').submit(function (e) {
         <div class="form-group row">
           <div class="col-md-5">
             <h6>From Date</h6>
-            <input type="date" class="form-control border-op-8 border-grey" name="exper[from]" 
-            />
+            <input type="date" class="form-control border-op-8 border-grey" name="exper[from]" />
           </div>
           <div class="col-md-7">
             <h6>To Date</h6>
@@ -227,22 +345,23 @@ $('#add-exp').submit(function (e) {
         </div>
         <div class="form-group row">
           <div class="col-md-12">
-            <textarea class="form-control border-op-8 border-grey" name="exper[description]">${data.description}</textarea>
+            <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
           </div>
         </div>
-        <input type="submit" value="Update" class="btn btn-info" />
+        <input type="submit" value="Update" class="btn btn-success" />
+        <input type="button" value="cancel" class="btn btn-warning exp-cxl-edit-btn" />
       </form>
-      <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient">
+      <div class="row m-2">
         <div class="col-sm-9 col-md-8 col-lg-8">
           <div class=" text-left pt-2 pb-2">
             <h5>${data.title} @
-              <span class="text-blue  ">${data.company} - ${data.location}</span>
+              <span class="text-blue  ">${data.company}} - ${data.location}</span>
             </h5>
           </div>
         </div>
         <div class="col-sm-3 col-md-4 col-lg-4">
           <div class="float-right pt-2 pb-2">
-            <h6 class="text-green">${expFrom} - ${expEnd} </h6>
+            <h6 class="text-green">${expFrom} - ${expEnd}</h6>
           </div>
         </div>
         <div class="col-md-12">
@@ -251,12 +370,12 @@ $('#add-exp').submit(function (e) {
           </div>
         </div>
       </div>
-      <div class="" >
-      <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
-      <form style="display: inline" method="POST" action="/candidate-resume/experience/${data._id}" class="delete-exp-form">
-        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-      </form>
-    </div>
+      <div class="m-4">
+        <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
+        <form style="display: inline" method="POST" action="/candidate-resume/experience/${data._id}" class="delete-exp-form">
+          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+        </form>
+      </div>
     </li>
     `
     )
@@ -266,7 +385,6 @@ $('#add-exp').submit(function (e) {
   });
 });
 
-//Edit Exp
 $('#exp-list').on('click', '.edit-button', function () {
   $(this).parent().siblings('.edit-exp-form').toggle();
 });
@@ -380,9 +498,17 @@ $('#exp-list').on('submit', '.delete-exp-form', function (e) {
     $(this).find('button').blur();
   }
 });
+/* Experiance section  End */
 
 /* Education section  start */
-/* Add New Education Start*/
+$('#educ-list').on('click', '.educ-cxl-edit-btn', function () {
+  $(".edit-educ-form").hide();
+});
+
+$('#educ-list').on('click', '.edit-educ-button', function () {
+  $(this).parent().siblings('.edit-educ-form').toggle();
+});
+
 $('#add-educ').submit(function (e) {
   e.preventDefault();
   var educ = $(this).serializeArray();
@@ -396,8 +522,8 @@ $('#add-educ').submit(function (e) {
     };
     $('#educ-list').prepend(
       `
-      <li class="list-group-item mt-3">
-      <form method="POST" action="/candidate-resume/education/${data._id}" class="edit-educ-form">
+      <li class="list-group-item">
+      <form method="POST" action="/candidate-resume/education/${data._id}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
         <div class="form-group row">
           <div class="col-md-3">
             <input type="text" class="form-control border-op-8 border-grey" value="${data.school}" name="education[school]" required />
@@ -415,19 +541,18 @@ $('#add-educ').submit(function (e) {
         <div class="form-group row">
           <div class="col-md-5">
             <h6>From Date</h6>
-            <input type="date" class="form-control border-op-8 border-grey" name="education[from]" 
-            />
+            <input type="date" class="form-control border-op-8 border-grey" name="education[from]" />
           </div>
           <div class="col-md-7">
             <h6>To Date</h6>
             <div class="row">
-              <div class="col-md-7 to-date-educ">
+              <div class="col-md-7 to-date-exp">
                 <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
               </div>
               <div class="col-md-5 ">
                 <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                  <input class="form-check-input educ-check" type="checkbox" name="education[current]" value="Till Now" id="current-educ-edit" />
-                  <label class="form-check-label" for="current">Current Job</label>
+                  <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ" />
+                  <label class="form-check-label" for="current">Current Study</label>
                 </div>
               </div>
             </div>
@@ -435,22 +560,23 @@ $('#add-educ').submit(function (e) {
         </div>
         <div class="form-group row">
           <div class="col-md-12">
-            <textarea class="form-control border-op-8 border-grey" name="education[description]">${data.description}</textarea>
+            <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
           </div>
         </div>
-        <input type="submit" value="Update" class="btn btn-info" />
+        <input type="submit" value="Update" class="btn btn-success" />
+        <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
       </form>
-      <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient">
+      <div class="row m-2">
         <div class="col-sm-9 col-md-8 col-lg-8">
           <div class=" text-left pt-2 pb-2">
-            <h5>${data.school}
-              <span class="text-blue  "> - ${data.degree} - ${data.fieldofstudy} - ${data.location}</span>
+            <h5>${data.school}-
+              <span class="text-blue"> ${data.degree} Degree - ${data.fieldofstudy} - ${data.location}</span>
             </h5>
           </div>
         </div>
         <div class="col-sm-3 col-md-4 col-lg-4">
           <div class="float-right pt-2 pb-2">
-            <h6 class="text-green">${educFrom} - ${educEnd} </h6>
+            <h6 class="text-green">${educFrom} - ${educEnd}</h6>
           </div>
         </div>
         <div class="col-md-12">
@@ -459,36 +585,29 @@ $('#add-educ').submit(function (e) {
           </div>
         </div>
       </div>
-      <div class="" >
-      <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
-      <form style="display: inline" method="POST" action="/candidate-resume/education/${data._id}" class="delete-educ-form">
-        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-      </form>
-    </div>
+      <div class="m-4">
+        <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
+        <form style="display: inline" method="POST" action="/candidate-resume/education/${data._id}" class="delete-educ-form">
+          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+        </form>
+      </div>
     </li>
     `
     )
     $('#add-educ').find('.form-control').val('');
-    $('.educ-check').prop('checked', false);
+    $('#add-educ').find('.form-check-input').prop("checked", false);
     $(".educ-new-area").toggle();
   });
 });
 
-/* Add New Education End */
-
-/* Edit Education Start */
-$('#educ-list').on('click', '.edit-educ-button', function () {
-  $(this).parent().siblings('.edit-educ-form').toggle();
-});
-
 $('#educ-list').on('submit', '.edit-educ-form', function (e) {
   e.preventDefault();
-  var educ = $(this).serializeArray();
+  var exp = $(this).serializeArray();
   var actionUrl = $(this).attr('action');
   var $originalItem = $(this).parent('.list-group-item');
   $.ajax({
     url: actionUrl,
-    data: educ,
+    data: exp,
     type: 'PUT',
     originalItem: $originalItem,
     success: function (data) {
@@ -501,7 +620,7 @@ $('#educ-list').on('submit', '.edit-educ-form', function (e) {
       };
       this.originalItem.html(
         `
-        <form method="POST" action="/candidate-resume/education/${data._id}" class="edit-educ-form">
+        <form method="POST" action="/candidate-resume/education/${data._id}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
         <div class="form-group row">
           <div class="col-md-3">
             <input type="text" class="form-control border-op-8 border-grey" value="${data.school}" name="education[school]" required />
@@ -519,19 +638,18 @@ $('#educ-list').on('submit', '.edit-educ-form', function (e) {
         <div class="form-group row">
           <div class="col-md-5">
             <h6>From Date</h6>
-            <input type="date" class="form-control border-op-8 border-grey" name="education[from]" 
-            />
+            <input type="date" class="form-control border-op-8 border-grey" name="education[from]" />
           </div>
           <div class="col-md-7">
             <h6>To Date</h6>
             <div class="row">
-              <div class="col-md-7 to-date-educ">
+              <div class="col-md-7 to-date-exp">
                 <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
               </div>
               <div class="col-md-5 ">
                 <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                  <input class="form-check-input educ-check" type="checkbox" name="education[current]" value="Till Now" id="current-educ-edit" />
-                  <label class="form-check-label" for="current">Current Job</label>
+                  <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ" />
+                  <label class="form-check-label" for="current">Current Study</label>
                 </div>
               </div>
             </div>
@@ -539,22 +657,23 @@ $('#educ-list').on('submit', '.edit-educ-form', function (e) {
         </div>
         <div class="form-group row">
           <div class="col-md-12">
-            <textarea class="form-control border-op-8 border-grey" name="education[description]">${data.description}</textarea>
+            <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
           </div>
         </div>
-        <input type="submit" value="Update" class="btn btn-info" />
+        <input type="submit" value="Update" class="btn btn-success" />
+        <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
       </form>
-      <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient">
+      <div class="row m-2">
         <div class="col-sm-9 col-md-8 col-lg-8">
           <div class=" text-left pt-2 pb-2">
-            <h5>${data.school}
-              <span class="text-blue  "> - ${data.degree} - ${data.fieldofstudy} - ${data.location}</span>
+            <h5>${data.school}-
+              <span class="text-blue"> ${data.degree} Degree - ${data.fieldofstudy} - ${data.location}</span>
             </h5>
           </div>
         </div>
         <div class="col-sm-3 col-md-4 col-lg-4">
           <div class="float-right pt-2 pb-2">
-            <h6 class="text-green">${educFrom} - ${educEnd} </h6>
+            <h6 class="text-green">${educFrom} - ${educEnd}</h6>
           </div>
         </div>
         <div class="col-md-12">
@@ -563,41 +682,38 @@ $('#educ-list').on('submit', '.edit-educ-form', function (e) {
           </div>
         </div>
       </div>
-      <div class="" >
-      <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
-      <form style="display: inline" method="POST" action="/candidate-resume/education/${data._id}" class="delete-educ-form">
-        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-      </form>
-    </div>
+      <div class="m-4">
+        <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
+        <form style="display: inline" method="POST" action="/candidate-resume/education/${data._id}" class="delete-educ-form">
+          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+        </form>
+      </div>
           `
       )
     }
   });
 });
 
-/* Edit Education End */
-
-/* Delete Education  Starat */
 $('#educ-list').on('submit', '.delete-educ-form', function (e) {
   e.preventDefault();
 
   var confirmResponse = confirm('Are you sure?');
   if (confirmResponse) {
     var actionUrl = $(this).attr('action');
-    $expToDelete = $(this).closest('.list-group-item');
+    $educToDelete = $(this).closest('.list-group-item');
     $.ajax({
       url: actionUrl,
       type: 'DELETE',
-      expToDelete: $expToDelete,
+      educToDelete: $educToDelete,
       success: function (data) {
-        this.expToDelete.remove();
+        this.educToDelete.remove();
       }
     })
   } else {
     $(this).find('button').blur();
   }
 });
-/* Delete Education End */
+
 
 /* End of Education */
 

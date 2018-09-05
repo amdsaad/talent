@@ -289,3 +289,12 @@ text-decoration: none;
   display: none;
   list-style: none;
 }
+#basic-info-resume-about-edit{
+  display: none;
+  list-style: none;
+}
+
+#basic-info-resume-pic-edit{
+  display: none;
+  list-style: none;
+}
