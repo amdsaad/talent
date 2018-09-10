@@ -119,7 +119,7 @@ router.get('/:handle', async (req, res) => {
   const applicationsCount = applications.length;
 
   let applied = false;
-  
+
   if (req.user) {
     const resume = await Resume.findOne({ user: req.user.id });
     const userApplication = await Application.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id });
@@ -130,7 +130,8 @@ router.get('/:handle', async (req, res) => {
         applicationsCount: applicationsCount,
         jobs:jobs,
         resume:resume,
-        applied: true
+        applied: true,
+        userApplication:userApplication
       });
     } else {
       console.log('no user application found');

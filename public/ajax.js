@@ -754,3 +754,24 @@ $('#add-job-wanted').submit(function (e) {
 
   });
 });
+
+$('#job-cont-sidebar').on('submit', '.application-form', function (e) {
+  e.preventDefault();
+  var application = $(this).serializeArray();
+  var actionUrl = $(this).attr('action');
+  $.ajax({
+    url: actionUrl,
+    data: application,
+    type: 'POST',
+    success: function (data) {
+      $('#job-cont-sidebar').html(
+        `<div class="alert alert-success" id="success-alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Success! </strong>
+         You application sent to the epmloyer.
+    </div>`
+      )
+
+    }
+  });
+});

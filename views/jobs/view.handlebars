@@ -17,7 +17,7 @@
 <div class="container-fluid" style="min-height: 25vh;background: #f4f4f4;" id="job-cont">
   <div class="container">
     <div class="row justify-content-end" id="job-cont-area">
-      <div class="col-md-8" >
+      <div class="col-md-8">
         <div class="bg-white pl-3 pr-3 pt-3 rounded" id="job-cont-main">
           <div class="">
             <ul class="list-group">
@@ -59,12 +59,19 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4" >
-        {{#if user}}
+      <div class="col-md-4">
+        {{#if user}} {{#if userApplication}} 
+        <div class="bg-white p-3 rounded" id="job-cont-sidebar">
+          <div class="bg-info bg-op-7 p-3 rounded text-dark">
+          <h6>you have applied for this job on <br><br>
+          <span class="text-pink">{{formatDate userApplication.date 'DD MMMM YYYY'}}</span></h6>
+          </div>
+        </div>
+        {{else}}
         <div class="bg-white p-3 rounded" id="job-cont-sidebar">
           <h4 class="text-primary text-capitalize">Apply for this job</h4>
           <hr class="w-100 mt-4 mb-4">
-          <form action="/jobs/{{job.handle}}/application" method="post">
+          <form action="/jobs/{{job.handle}}/application" method="post" class="application-form">
             <div class="form-group">
               <label class="text-primary text-capitalize" for="inputFullName">
                 <h6>Full Name</h6>
@@ -86,7 +93,7 @@
             <input type="submit" value="Submit Application" class="btn btn-primary">
           </form>
         </div>
-        {{else}}
+        {{/if}} {{else}}
         <div class="bg-white pl-3 pr-3 pt-3 rounded" id="job-cont-sidebar">
           <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target=".bd-example-modal-lg">Please Login to apply</button>
         </div>
