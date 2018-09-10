@@ -13,7 +13,7 @@ router.get('/facebook',
   passport.authenticate('facebook',{scope: ['email']}));
 
 router.get('/facebook/callback', function(req, res, next){
-  passport.authenticate('facebook', { successRedirect: '/',
+  passport.authenticate('facebook', { successRedirect: req.session.returnTo ||'/',
     failureRedirect: '/login' })(req, res, next);
 });
 
@@ -21,7 +21,8 @@ router.get('/google', passport.authenticate('google', {scope: ['profile', 'email
 
 router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/' }),(req, res) => {
-    res.redirect('/dashboard');
+    res.redirect(req.session.returnTo ||'/dashboard')
+    delete req.session.returnTo;
   });
 
 router.get('/verify', (req, res)=>{

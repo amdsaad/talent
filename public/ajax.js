@@ -722,28 +722,35 @@ $('#add-job-wanted').submit(function (e) {
   e.preventDefault();
 
   var jobWantedtItem = $(this).serializeArray();
-
   $.post('/job-wanted', jobWantedtItem, function (data) {
+    if (data.msg) {
+      $('#msgs').html(
+        `<div class="alert alert-danger" id="danger-alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>${data.msg}</strong>
+    </div>`
 
-    $('#msgs').html(
-      `<div class="alert alert-success" id="success-alert">
-      <button type="button" class="close" data-dismiss="alert">x</button>
-      <strong>Success! </strong>
-       message.
-  </div>`
+      )
+      $('#add-job-wanted').find('.form-control').val('');
+      $(".new-job-wanted").toggle();
+      $("#danger-alert").fadeTo(2000, 5000).slideUp(1000, function () {
+        $("#success-alert").alert('close');
+      });
+    } else {
+      $('#msgs').html(
+        `<div class="alert alert-success" id="success-alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Success! </strong>
+         message.
+    </div>`
 
-    )
-    $('#add-job-wanted').find('.form-control').val('');
-    $(".new-job-wanted").toggle();
-    $("#success-alert").fadeTo(2000, 5000).slideUp(1000, function () {
-      $("#success-alert").alert('close');
-    });
+      )
+      $('#add-job-wanted').find('.form-control').val('');
+      $(".new-job-wanted").toggle();
+      $("#success-alert").fadeTo(2000, 5000).slideUp(1000, function () {
+        $("#success-alert").alert('close');
+      });
+    }
+
   });
 });
-
-/* Job Count Update*/
-setInterval("jobCount();", 5000 * 5);
-function jobCount() {
-  $('#jobSearch').load(location.href + ' #jobCount');
-};
-

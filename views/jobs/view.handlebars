@@ -1,1 +1,134 @@
-<h1>View Single Job</h1>
+<div class="container-fluid bg-blue  overlay overlay-op-7" data-bg-img="https://www.emaar.com/en/Images/1600x707-HOSPITALITY_tcm223-50929.jpg"
+  id="job-header">
+  <div class="container" id="job-top-header">
+    <div class="row">
+      <div class="col-md-9">
+        <h4 class="text-capitalize text-white display-4-job-title">{{job.title}}
+          <span class="text-pink">@</span>
+          <span class="text-white">{{job.company.name}}</span>
+        </h4>
+      </div>
+      <div class="col-md-3">
+        <img style="width: 100px; height: 100px;" src="{{job.company.logo}}" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" style="min-height: 25vh;background: #f4f4f4;" id="job-cont">
+  <div class="container">
+    <div class="row justify-content-end" id="job-cont-area">
+      <div class="col-md-8" >
+        <div class="bg-white pl-3 pr-3 pt-3 rounded" id="job-cont-main">
+          <div class="">
+            <ul class="list-group">
+              <li class="list-group-item justify-content-between"> Category :
+                <span class="text-capitalize text-primary">{{job.specialisms}}</span>
+              </li>
+              <li class="list-group-item justify-content-between"> Monthly Salary Range :
+                <span class="text-capitalize text-primary">{{job.salary}} - {{job.currency}}</span>
+              </li>
+              <li class="list-group-item justify-content-between"> Location :
+                <span class=" text-capitalize text-primary">{{job.address}}</span>
+              </li>
+            </ul>
+            <hr class="w-100 mt-4 mb-4">
+          </div>
+          <div class="text-dark">
+            <h4 class="display-4-job mb-3">Job Description</h4>
+            <p class="mb-1">{{{job.description}}}</p>
+            <hr class="w-100 mt-4 mb-4">
+          </div>
+          <div class="text-dark">
+            <h4 class="display-4-job mb-3">Qualifications and Skills</h4>
+            <p class="mb-1">{{job.qualification}}</p>
+            <hr class="w-100 mt-4 mb-4">
+          </div>
+          {{#if job.benefits}}
+          <div class="text-dark">
+            <h4 class="display-4-job mb-3">Benefits</h4>
+            <p class="mb-1">{{job.benefits}}</p>
+            <hr class="w-100 mt-4 mb-4">
+          </div>
+          {{/if}}
+          <div class="text-dark pb-3">
+            <h4 class="display-4-job">Preferred Candidate</h4>
+            <ul>
+              <li>Experience : {{job.experience}}</li>
+              <li>Career Level : {{job.level}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" >
+        {{#if user}}
+        <div class="bg-white p-3 rounded" id="job-cont-sidebar">
+          <h4 class="text-primary text-capitalize">Apply for this job</h4>
+          <hr class="w-100 mt-4 mb-4">
+          <form action="/jobs/{{job.handle}}/application" method="post">
+            <div class="form-group">
+              <label class="text-primary text-capitalize" for="inputFullName">
+                <h6>Full Name</h6>
+              </label>
+              <input type="text" class="form-control" value="{{resume.fullName}}" id="inputFullName">
+            </div>
+            <div class="form-group">
+              <label class="text-primary text-capitalize" for="inputFullName">
+                <h6>Resume</h6>
+              </label>
+              <input type="text" class="form-control" value="/candidate-resume/{{resume.handle}}" id="inputFullName" disabled>
+            </div>
+            <div class="form-group">
+              <label class="text-primary text-capitalize" for="appTextarea">
+                <h6>Covering Letter</h6>
+              </label>
+              <textarea name="coveringLetter" class="form-control" id="appTextarea" rows="4" data-emoji_font="true" style="font-family: &quot;Open Sans&quot;, Arial, serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, Symbola, EmojiSymbols !important;"></textarea>
+            </div>
+            <input type="submit" value="Submit Application" class="btn btn-primary">
+          </form>
+        </div>
+        {{else}}
+        <div class="bg-white pl-3 pr-3 pt-3">
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target=".bd-example-modal-lg">Please Login to apply to this job</button>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid bg-primary">
+  <div class="row justify-content-center p-5">
+    <div class="col-md-6">
+      <h4 class="display-4-job text-white">About {{job.company.name}}</h4>
+      <p>{{{job.company.description}}}</p>
+    </div>
+    <div class="col-md-4">
+      <h4 class="display-4-job text-white">Jobs @ {{job.company.name}}</h4>
+      {{#if jobs}}
+      <ul class="list-group list-group-striped">
+        {{#each jobs}}
+        <li class="list-group-item justify-content-between">
+          <a class="text-capitalize" href="/jobs/{{this.handle}}">{{this.title}}</a>
+          <span class="small float-right text-capitalize">{{this.level}} - level </span>
+        </li>
+        {{/each}}
+      </ul>
+      {{/if}}
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <a class="btn btn-red" href="/auth/google">Google</a>
+      </div>
+    </div>
+  </div>
+</div>

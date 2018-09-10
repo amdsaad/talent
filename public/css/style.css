@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,100,900);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,500,700,100,900);
 
 body {
   display: flex;
@@ -11,10 +12,6 @@ main {
 
 .nav-wrapper .fa-bars{
   font-size:25px;
-}
-
-footer{
-  margin-top:20px;
 }
 
 .story-text{
@@ -296,4 +293,87 @@ text-decoration: none;
 #basic-info-resume-pic-edit{
   display: none;
   list-style: none;
+}
+
+.owl-carousel .owl-item img {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+}
+.display-4-job {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Lato', sans-serif;
+}
+.display-4-job-title{
+  font-weight: 600;
+  font-family: 'Lato', sans-serif;
+  font-size: 3rem;
+}
+#application-title{
+  text-transform: capitalize;
+}
+#job-header{
+  height: 60vh;
+  -webkit-clip-path: polygon(100% 0, 100% 40vh, 0 100%, 0 100%, 0 0);
+  clip-path: polygon(100% 0, 100% 40vh, 0 100%, 0 100%, 0 0);
+}
+
+#job-cont-area{
+  min-height: 80vh
+}
+#job-cont-main{
+  min-height: 80vh
+}
+#job-cont-sidebar{
+  min-height: 80vh
+}
+#dashboard-heading{
+  font-size:1.5rem;
+  font-weight: 700;
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 1px
+}
+#dashboard-find-job{
+  -webkit-clip-path: polygon(0 0, 100% 20%, 100% 100%, 100% 100%, 0 80%, 0 0);
+  clip-path: polygon(0 0, 100% 20%, 100% 100%, 100% 100%, 0 80%, 0 0);
+  margin-top: -70px;
+}
+#job-cont{
+  margin-top: -20vh;
+}
+@media (max-width: 375px) {
+  #job-top-header{
+    padding-top: 0px;
+  }
+}
+@media (max-width: 425px) {
+  #job-top-header{
+    padding-top: 70px;
+  }
+}
+@media (max-width: 667px) {
+  #job-top-header{
+    padding-top: 10px;
+  }
+}
+@media (max-width: 1024px) {
+  #job-top-header{
+    padding-top: 100px;
+  }
+}
+
+@media (max-width: 1440px) {
+  #job-top-header{
+    padding-top: 120px;
+  }
+}
+@media (max-width: 2560px) {
+  #job-top-header{
+    padding-top: 120px;
+  }
 }

@@ -1,129 +1,140 @@
-<h1>Post A Job</h1>
-<div class="container mt-5">
-  <form action="/jobs" method="post">
-    {{!--
-    <div class="form-group row">
-      <label for="status">Resume Status</label>
-      <select class="custom-select d-block w-100" name="status" required>
-        <option value="public">Public</option>
-        <option value="private">Private</option>
-      </select>
-    </div> --}}
-    <div class="form-group row">
-      <label for="title" class="col-sm-2 col-form-label">Job Title</label>
-      <div class="col-sm-10">
-        <input name="title" type="text" class="form-control" required>
+<div id="highlighted" class="bg-black">
+  <div class="overlay overlay-gradient overlay-op-8 text-left py-5 pt-lg-10" data-animate="fadeIn" data-bg-img="https://source.unsplash.com/collection/385548/1600X900">
+    <div class="container pt-6" data-scroll="scrollax">
+      <h2 class="display-4 text-white mb-3" data-animate="fadeIn" data-animate-delay="0.2">
+        Post a job 
+        <span class="font-weight-bold">and find your future Talent</span>
+      </h2>
+      <div id="jobSearch">
+        <h5 id="jobCount" class="text-grey my-0 font-weight-normal" data-animate="fadeIn" data-animate-delay="0.6">
+          Currently listing
+          <span class="font-weight-bold">{{count}} jobs</span>.
+        </h5>
       </div>
     </div>
-    <div class="form-group row">
-      <label for="specialisms" class="col-sm-2 col-form-label">Specialisms / Sectors </label>
-      <div class="col-sm-10">
-        <select class="custom-select d-block w-100" name="specialisms" required>
-          <option value="">Please select.......</option>
-          <option value="hospitality and restaurants">Hospitality & Restaurants</option>
-          <option value="travel and tourism">Travel & Tourism</option>
-          <option value="sales">Sales</option>
-          <option value="secretarial‬">Secretarial‬</option>
-          <option value="customer service">Customer Service</option>
-          <option value="accounting">Accounting</option>
-          <option value="Airlines and Aviation">Airlines & Aviation</option>
-          <option value="architecture interior design">Architecture & Interior Design</option>
-          <option value="art entertainment">Art & Entertainment</option>
-          <option value="banking finance">Banking & Finance</option>
-          <option value="business development">Business Development</option>
-          <option value="engineering">Engineering</option>
-          <option value="hr recruitment">HR & Recruitment</option>
-          <option value="legal services">Legal Services</option>
-          <option value="logistics distribution">Logistics & Distribution</option>
-          <option value="marketing advertising">Marketing & Advertising</option>
-          <option value="Media">Media</option>
-          <option value="public relations">Public Relations</option>
-          <option value="medical healthcare">Medical & Healthcare</option>
-          <option value="oil gas energy">Oil, Gas & Energy</option>
-          <option value="real estate">Real Estate</option>
-          <option value="safety and security‬">Safety & Security</option>
-          <option value="transportation">Transportation</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row ">
-      <label for="description" class="col-sm-2 col-form-label">Job Description </label>
-      <div class="col-sm-10">
-        <textarea class="form-control" name="description" rows="5" id="editor"></textarea>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="email" class="col-sm-2 col-form-label">Application Email</label>
-      <div class="col-sm-10">
-        <input name="email" type="email" class="form-control" value="{{user.email}}" required>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="deadline" class="col-sm-2 col-form-label">Application Deadline Date</label>
-      <div class="col-sm-10">
-        <input class="form-control" type="date" name="deadline">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="salary" class="col-sm-2 col-form-label">Offerd Salary</label>
-      <div class="col-sm-5">
-        <input name="salary" type="text" class="form-control">
-      </div>
-      <div class="col-sm-5">
-        <select class="custom-select d-block w-100" name="currency" >
-          <option value="">Please select.......</option>
-          <option value="dollar">$</option>
-          <option value="euro">€</option>
-          <option value="dirhams">AED</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="level" class="col-sm-2 col-form-label">Career Level</label>
-      <div class="col-sm-10">
-        <select class="custom-select d-block w-100" name="level" required>
-          <option value="">Please select.......</option>
-          <option value="manager">Manager</option>
-          <option value="exectuive">Exectuive</option>
-          <option value="officer">Officer</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="experience" class="col-sm-2 col-form-label">Experience</label>
-      <div class="col-sm-10">
-        <select class="custom-select d-block w-100" name="experience" required>
-          <option value="">Please select.......</option>
-          <option value="fresh">Fresh</option>
-          <option value="less than 1 year">Less Than 1 Year</option>
-          <option value="2 years">2 Years</option>
-          <option value="3 years">3 Years</option>
-          <option value="4 years">4 Years</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="qualification" class="col-sm-2 col-form-label">Qualification</label>
-      <div class="col-sm-10">
-        <select class="custom-select d-block w-100" name="qualification" required>
-          <option value="">Please select.......</option>
-          <option value="certificate">Certificate</option>
-          <option value="diploma">Diploma</option>
-          <option value="bechelor degree">Bechelor Degree</option>
-          <option value="master degree">Master's Degree</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="address" class="col-sm-2 col-form-label">Location</label>
-      <div class="col-sm-10">
-        <input class="form-control" type="text" name="address" id="search_term">
-      </div>
-    </div>
+  </div>
+</div>
+<div class="container py-4 py-lg-7">
+  <div class="row justify-content-md-center">
+    <div class="col-md-12">
+      <form action="/jobs" method="post">
+        <div class="form-group row">
+          <label for="title" class="col-sm-2 col-form-label">Job Title</label>
+          <div class="col-sm-10">
+            <input name="title" type="text" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="specialisms" class="col-sm-2 col-form-label">Specialisms / Sectors </label>
+          <div class="col-sm-10">
+            <select class="custom-select d-block w-100" name="specialisms" required>
+              <option value="">Please select.......</option>
+              <option value="hospitality and restaurants">Hospitality & Restaurants</option>
+              <option value="travel and tourism">Travel & Tourism</option>
+              <option value="sales">Sales</option>
+              <option value="secretarial‬">Secretarial‬</option>
+              <option value="customer service">Customer Service</option>
+              <option value="accounting">Accounting</option>
+              <option value="Airlines and Aviation">Airlines & Aviation</option>
+              <option value="architecture interior design">Architecture & Interior Design</option>
+              <option value="art entertainment">Art & Entertainment</option>
+              <option value="banking finance">Banking & Finance</option>
+              <option value="business development">Business Development</option>
+              <option value="engineering">Engineering</option>
+              <option value="hr recruitment">HR & Recruitment</option>
+              <option value="legal services">Legal Services</option>
+              <option value="logistics distribution">Logistics & Distribution</option>
+              <option value="marketing advertising">Marketing & Advertising</option>
+              <option value="Media">Media</option>
+              <option value="public relations">Public Relations</option>
+              <option value="medical healthcare">Medical & Healthcare</option>
+              <option value="oil gas energy">Oil, Gas & Energy</option>
+              <option value="real estate">Real Estate</option>
+              <option value="safety and security‬">Safety & Security</option>
+              <option value="transportation">Transportation</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row ">
+          <label for="description" class="col-sm-2 col-form-label">Job Description </label>
+          <div class="col-sm-10">
+            <textarea class="form-control" name="description" rows="5" id="editor" required></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Application Email</label>
+          <div class="col-sm-10">
+            <input name="email" type="email" class="form-control" value="{{user.email}}" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="deadline" class="col-sm-2 col-form-label">Application Deadline Date</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="date" name="deadline" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="salary" class="col-sm-2 col-form-label">Offerd Salary</label>
+          <div class="col-sm-5">
+            <input name="salary" type="text" class="form-control">
+          </div>
+          <div class="col-sm-5">
+            <select class="custom-select d-block w-100" name="currency">
+              <option value="dollar">$</option>
+              <option value="euro">€</option>
+              <option value="dirhams" selected>AED</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="level" class="col-sm-2 col-form-label">Career Level</label>
+          <div class="col-sm-10">
+            <select class="custom-select d-block w-100" name="level" required>
+              <option value="">Please select.......</option>
+              <option value="manager">Manager</option>
+              <option value="exectuive">Exectuive</option>
+              <option value="officer">Officer</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="experience" class="col-sm-2 col-form-label">Experience</label>
+          <div class="col-sm-10">
+            <select class="custom-select d-block w-100" name="experience" required>
+              <option value="">Please select.......</option>
+              <option value="fresh">Fresh</option>
+              <option value="less than 1 year">Less Than 1 Year</option>
+              <option value="2 to 4 years">2 to 4 Years</option>
+              <option value="4 to 6 years">4 to 6 Years</option>
+              <option value="6 to 8 years">6 to 8 Years</option>
+              <option value="more than 8 years">more than 8 years</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="qualification" class="col-sm-2 col-form-label">Qualifications & Skills</label>
+          <div class="col-sm-10">
+            <textarea class="w-100" name="qualification" id="" cols="10" rows="5"></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="qualification" class="col-sm-2 col-form-label">Benefits</label>
+          <div class="col-sm-10">
+            <textarea class="w-100" name="benefits" id="" cols="10" rows="5"></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="address" class="col-sm-2 col-form-label">Location</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" name="address" id="search_term">
+          </div>
+        </div>
 
-    <div class="form-group row ">
-      <input type="submit" value="Save" class="btn btn-primary w-100">
+        <div class="form-group">
+          <input type="submit" value="Save" class="btn btn-primary btn-lg">
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </div>

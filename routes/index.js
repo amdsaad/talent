@@ -7,6 +7,7 @@ const User = mongoose.model('users');
 const Job = mongoose.model('jobs');
 const Company = mongoose.model('companies');
 const JobWanted = mongoose.model('jobWanted');
+const Applications = mongoose.model('applications');
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 
 router.get('/', ensureGuest, async (req, res) => {
@@ -19,24 +20,30 @@ router.get('/', ensureGuest, async (req, res) => {
 router.post('/job-wanted', async (req, res) => {
 
   const resume = await Resume.findOne({ 'user': req.user.id }).populate('user');
-  var str = req.user.name;
-  str = str.replace(/\s+/g, '-').toLowerCase();
-  jTitle = req.body.title.replace(/\s+/g, '-').toLowerCase();
-  const randomStr = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  const handle = jTitle + "-" + str + "-" + randomStr;
+  if (!resume) {
+    res.json({msg: "you do not have a resume, please post your resume"})
 
-  const newJobWanted = {
-    handle: handle,
-    title: req.body.title,
-    body: req.body.body,
-    resume: resume.id,
-    user: req.user.id
+  } else {
+    var str = req.user.name;
+    str = str.replace(/\s+/g, '-').toLowerCase();
+    jTitle = req.body.title.replace(/\s+/g, '-').toLowerCase();
+    const randomStr = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const handle = jTitle + "-" + str + "-" + randomStr;
+
+    const newJobWanted = {
+      handle: handle,
+      title: req.body.title,
+      body: req.body.body,
+      resume: resume.id,
+      user: req.user.id
+    }
+    new JobWanted(newJobWanted)
+      .save()
+      .then(jobwanted => {
+        res.json(jobwanted)
+      });
   }
-  new JobWanted(newJobWanted)
-    .save()
-    .then(jobwanted => {
-      res.json(jobwanted)
-    });
+
 
 });
 
@@ -52,29 +59,25 @@ router.get('/job-wanted/:handle', async (req, res) => {
 });
 
 router.get('/dashboard', ensureAuthenticated, async (req, res) => {
-
-  if (req.user.role == 'employer') {
-    employer = true;
-  } else {
-    employer = false;
-  }
-
   const posts = await Post.find({ 'user': req.user.id });
   const resume = await Resume.findOne({ 'user': req.user.id }).populate('user');
   const latestPosts = await Post.find({}).limit(2).sort({ date: 'desc' });
-  if(resume){
-   var matchJob = resume.specialisms
+  const applications = await Applications.find({ user: req.user.id }).sort({ date: 'desc' });
+  if (resume) {
+    var matchJob = resume.specialisms
   };
-  const jobSpecialisms = await Job.find({ 'specialisms': matchJob }).limit(5).populate('company');
+  const jobSpecialisms = await Job.find({ 'specialisms': matchJob }).limit(10).populate('company');
 
   res.render('index/dashboard', {
     posts: posts,
     resume: resume,
     latestPosts: latestPosts,
-    jobSpecialisms: jobSpecialisms
+    jobSpecialisms: jobSpecialisms,
+    applications: applications
   });
 
 });
+
 router.get('/employer-dashboard', ensureAuthenticated, async (req, res) => {
 
   if (req.user.role == 'candidate') {
@@ -84,10 +87,10 @@ router.get('/employer-dashboard', ensureAuthenticated, async (req, res) => {
     const company = await Company.findOne({ user: req.user.id });
     const jobs = await Job.find({ user: req.user.id });
 
-      res.render('index/employer-dashboard', {
-        company,
-        jobs
-    }); 
+    res.render('index/employer-dashboard', {
+      company,
+      jobs
+    });
   }
 });
 

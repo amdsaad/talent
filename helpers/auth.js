@@ -4,6 +4,7 @@ module.exports = {
       return next();
     }
     req.flash('error_msg', 'You must login to use this');
+    req.session.returnTo = req.originalUrl;
     res.redirect('/auth/login');
   },
   ensureGuest: function (req, res, next) {

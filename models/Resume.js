@@ -36,7 +36,6 @@ const ResumeSchema = new Schema({
   },
   specialisms: {
     type: String,
-    default: 'Job Categoty',
     required: true
   },
   location: {

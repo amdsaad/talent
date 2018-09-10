@@ -43,11 +43,11 @@
                 <img src="{{this.company.logo}}" alt="RRT Productions" class="img-fluid d-none d-md-block" />
               </div>
               <div class="col-md-8">
-                <h4 class="mb-0">
-                  {{this.title}}
+                <h4 class="mb-0 text-capitalize">
+                  <a href="/jobs/{{this.handle}}">{{this.title}}</a>
                 </h4>
                 <p class="text-muted text-uppercase text-xs mb-1">
-                  <span class="text-primary">{{formatDate this.date 'MMMM YYYY'}}</span>
+                  <span class="text-primary">{{formatDate this.date 'DD MMMM YYYY'}}</span>
                 </p>
                 <p class="text-muted mb-2 text-sm">@
                   <a href="#" class="font-weight-bold text-muted">{{this.company.name}}</a> ({{this.level}} level)</p>
@@ -59,9 +59,9 @@
                 </p>
               </div>
               <div class="col-md-2 text-md-center">
-                <a href="#" class="btn btn-danger text-uppercase font-weight-bold d-lg-block">Apply</a>
+                <a href="/jobs/{{this.handle}}" class="btn btn-success text-uppercase font-weight-bold d-lg-block rounded">View</a>
                 <a href="#" class="text-muted text-xs op-7">
-                  <i class="fa fa-heart"></i> Shortlist</a>
+                  <i class="fa fa-heart"></i> Save</a>
               </div>
             </div>
           </div>

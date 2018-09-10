@@ -19,6 +19,7 @@ require('./models/Educations');
 require('./models/Company');
 require('./models/Jobs');
 require('./models/JobWanted');
+require('./models/Applications');
 
 //passport config
 require('./config/passport')(passport);
@@ -104,7 +105,6 @@ app.use('/auth', auth);
 app.use('/posts', posts);
 app.use('/jobs', jobs);
 app.use('/candidate-resume', resumes);
-
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {

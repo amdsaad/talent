@@ -19,18 +19,6 @@ cloudinary.config({
   api_secret: keys.cloudinary.api_secret
 });
 
-// Resumes Index
-router.get('/', (req, res) => {
-  Resume.find({ status: 'public', published: 'true' })
-    .populate('user')
-    .sort({ date: 'desc' })
-    .then(resumes => {
-      res.render('resumes/index', {
-        resumes: resumes
-      });
-    });
-});
-
 // Add Resume Form
 router.get('/add', ensureAuthenticated, (req, res) => {
   Resume.findOne({ user: req.user.id }).then(resume => {
@@ -63,13 +51,15 @@ router.post('/', ensureAuthenticated, async (req, res) => {
       profileFields.fullName = req.user.name;
       profileFields.email = req.user.email;
       profileFields.handle = handle;
+      profileFields.specialisms = req.body.specialisms;
       if (req.body.jobTitle) profileFields.jobTitle = req.body.jobTitle;
-      if (req.body.specialisms) profileFields.specialisms = req.body.specialisms;
       if (req.body.location) profileFields.location = req.body.location;
       if (req.body.contactNumber) profileFields.contactNumber = req.body.contactNumber;
       if (req.body.bio) profileFields.bio = req.body.bio;
       if (req.body.status) profileFields.status = req.body.status;
       if (req.body.style) profileFields.style = req.body.style;
+
+      console.log('req body ', profileFields);
 
       new Resume(profileFields)
         .save()
@@ -80,27 +70,42 @@ router.post('/', ensureAuthenticated, async (req, res) => {
   }
 });
 
+// Resumes Index
+router.get('/', (req, res) => {
+  Resume.find({ status: 'public', published: 'true' })
+    .populate('user')
+    .sort({ date: 'desc' })
+    .then(resumes => {
+      res.render('resumes/index', {
+        resumes: resumes
+      });
+    });
+});
+
+
 
 //show single Resume Handle SEO
 router.get('/:handle', async (req, res) => {
   const resumes = await Resume.findOne({ handle: req.params.handle }).populate('user');
-  const posts = await Posts.find({ user: resumes.user._id });
-  const experiance = await Experiance.find({ user: resumes.user._id });
-  const education = await Education.find({ user: resumes.user._id });
+  if (resumes) {
+    const posts = await Posts.find({ user: resumes.user._id });
+    const experiance = await Experiance.find({ user: resumes.user._id });
+    const education = await Education.find({ user: resumes.user._id });
 
-  if (resumes.style == 'default') {
-    resumeDefualt = true
-  } else {
-    resumeDefualt = false
+    if (resumes.style == 'default') {
+      resumeDefualt = true
+    } else {
+      resumeDefualt = false
+    }
+
+    res.render('resumes/show', {
+      resumes: resumes,
+      posts: posts,
+      experiance: experiance,
+      education: education,
+      resumeDefualt: resumeDefualt
+    });
   }
-
-  res.render('resumes/show', {
-    resumes: resumes,
-    posts: posts,
-    experiance: experiance,
-    education: education,
-    resumeDefualt: resumeDefualt
-  });
 });
 
 
@@ -121,26 +126,26 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 
 // Edit Resume Form Process
 router.put('/:id', ensureAuthenticated, upload.single('picture'), (req, res) => {
-  if(req.file){
-    Resume.findById(req.params.id, async(err, resume) => {
+  if (req.file) {
+    Resume.findById(req.params.id, async (err, resume) => {
       if (err) {
         console.log(err);
       } else {
-          try {
-            await cloudinary.v2.uploader.destroy(resume.picturePublic_id);
-            var result = await cloudinary.v2.uploader.upload(req.file.path);
-            resume.pictureUrl = result.secure_url;
-            resume.picturePublic_id = result.public_id;
-            fs.unlinkSync(req.file.path);
-          }catch(err){
-            console.log(err);
-          }
+        try {
+          await cloudinary.v2.uploader.destroy(resume.picturePublic_id);
+          var result = await cloudinary.v2.uploader.upload(req.file.path);
+          resume.pictureUrl = result.secure_url;
+          resume.picturePublic_id = result.public_id;
+          fs.unlinkSync(req.file.path);
+        } catch (err) {
+          console.log(err);
+        }
         resume.save();
         req.flash('success_msg', 'Successfully updated');
         res.json(resume)
       }
     });
-  }else{
+  } else {
     Resume.findByIdAndUpdate(req.params.id, req.body.resume, { new: true }, (err, resume) => {
       if (err) {
         console.log(err);

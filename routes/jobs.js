@@ -3,10 +3,28 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
 const Resume = mongoose.model('resumes');
+const Application = mongoose.model('applications');
 const Company = mongoose.model('companies');
 const Job = mongoose.model('jobs');
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 
+router.get('/add',ensureAuthenticated, async (req, res) => {
+  const jobs = await Job.find({});
+  const count = jobs.length;
+  if (req.isAuthenticated()) {
+    if (req.user.role == 'employer') {
+      res.render('jobs/add', {
+        count: count
+      })
+    } else {
+      req.flash('error_msg', 'You dont have permission to post jobs');
+      res.redirect('/dashboard')
+    }
+  } else {
+    req.flash('error_msg', 'You must login first');
+    res.redirect('/auth/employers/login');
+  }
+});
 
 router.post('/', ensureAuthenticated, async (req, res) => {
   if (req.user.role == 'employer') {
@@ -33,6 +51,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
       level: req.body.level,
       experience: req.body.experience,
       qualification: req.body.qualification,
+      benefits: req.body.benefits,
       deadline: req.body.deadline,
       address: req.body.address,
       user: req.user.id,
@@ -56,13 +75,13 @@ router.get('/', (req, res) => {
   if (req.query.search) {
     const regex = new RegExp(escapeRegex(req.query.search), 'gi');
     Job.find({ title: regex }, function (err, jobs) {
-      if(err){
+      if (err) {
         console.log(err);
-      }else{
-        if(jobs.length < 1){
+      } else {
+        if (jobs.length < 1) {
           noMatch = "No jobs match that query, please try again.";
         }
-        res.render('jobs/index',{jobs:jobs , noMatch:noMatch})
+        res.render('jobs/index', { jobs: jobs, noMatch: noMatch })
       }
     });
   } else {
@@ -91,26 +110,92 @@ router.get('/my-maching-jobs', ensureAuthenticated, async (req, res) => {
   });
 });
 
-router.get('/view/:handle', (req, res) => {
-  Job.findOne({ handle: req.params.handle })
-    .populate('user')
-    .then(job => {
-      res.render('jobs/view')
-    });
-});
+router.get('/:handle', async (req, res) => {
+  req.session.returnTo = req.originalUrl;
+  const job = await Job.findOne({ handle: req.params.handle }).populate('company').populate('user');
+  const companyJobs = job.company._id;
+  const jobs = await Job.find({ company: companyJobs });
+  const applications = await Application.find({ 'jobHandle': req.params.handle }).populate('user'); 
+  const applicationsCount = applications.length;
 
-router.get('/add', (req, res) => {
-  if (req.isAuthenticated()) {
-    if (req.user.role == 'employer') {
-      res.render('jobs/add')
+  let applied = false;
+  
+  if (req.user) {
+    const resume = await Resume.findOne({ user: req.user.id });
+    const userApplication = await Application.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id });
+    if (userApplication) {
+      console.log(userApplication);
+      res.render('jobs/view', {
+        job: job,
+        applicationsCount: applicationsCount,
+        jobs:jobs,
+        resume:resume,
+        applied: true
+      });
     } else {
-      req.flash('error_msg', 'You dont have permission to post jobs');
-      res.redirect('/dashboard')
+      console.log('no user application found');
+      res.render('jobs/view', {
+        job: job,
+        applicationsCount: applicationsCount,
+        jobs:jobs,
+        resume:resume,
+        applied: false
+      });
     }
   } else {
-    req.flash('error_msg', 'You must login first');
-    res.redirect('/auth/employers/login');
+    console.log('visitor ');
+    res.render('jobs/view', {
+      job: job,
+      jobs:jobs,
+      applicationsCount: applicationsCount,
+      applied: applied
+    });
   }
+});
+
+router.post('/:handle/application', ensureAuthenticated, async (req, res) => {
+  const resume = await Resume.findOne({ user: req.user.id });
+  const job = await Job.findOne({ handle: req.params.handle });
+  if (!resume) {
+    req.flash('error_msg', 'You do not have resume in file to apply for this job');
+    res.redirect(`/jobs/${job.handle}`)
+  } else {
+    const newApplication = {
+      user: req.user.id,
+      resume: resume._id,
+      job: job._id,
+      jobTitle: job.title,
+      jobHandle: job.handle,
+      applied: true,
+      coveringLetter: req.body.coveringLetter,
+    }
+    new Application(newApplication)
+      .save()
+      .then(applicaion => {
+        res.json(applicaion)
+      });
+  }
+});
+router.get('/:handle/application', ensureAuthenticated, async (req, res) => {
+  const application = await Application.findOne({ jobHandle: req.params.handle });
+  if (application.user != req.user.id) {
+    req.flash('error_msg', 'You dont have permission to view this application');
+    res.redirect(`/jobs/${application.jobHandle}`)
+  } else {
+    res.json(application)
+  }
+
+});
+
+router.get('/:handle/applications', ensureAuthenticated, async (req, res) => {
+  const application = await Application.find({ jobHandle: req.params.handle }).populate('resume');
+  if (req.user.role != 'employer') {
+    req.flash('error_msg', 'You dont have permission to view this applications');
+    res.redirect(`/jobs/${req.params.handle}`);
+  } else {
+    res.status(200).json(application);
+  }
+
 });
 
 function escapeRegex(text) {
