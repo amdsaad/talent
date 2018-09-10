@@ -355,6 +355,11 @@ text-decoration: none;
     -webkit-clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
     clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
   }
+  .display-4-job-title{
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.5rem;
+  }
 }
 @media (max-width: 375px) {
   #job-top-header{
@@ -364,6 +369,11 @@ text-decoration: none;
     height: 80vh;
     -webkit-clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
     clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
+  }
+  .display-4-job-title{
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.5rem;
   }
 }
 @media (max-width: 425px) {
