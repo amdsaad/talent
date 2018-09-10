@@ -4,11 +4,12 @@ const mongoose = require('mongoose');
 const User = mongoose.model('users');
 const Resume = mongoose.model('resumes');
 const Application = mongoose.model('applications');
+const SavedJob = mongoose.model('savedJobs');
 const Company = mongoose.model('companies');
 const Job = mongoose.model('jobs');
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 
-router.get('/add',ensureAuthenticated, async (req, res) => {
+router.get('/add', ensureAuthenticated, async (req, res) => {
   const jobs = await Job.find({});
   const count = jobs.length;
   if (req.isAuthenticated()) {
@@ -115,39 +116,40 @@ router.get('/:handle', async (req, res) => {
   const job = await Job.findOne({ handle: req.params.handle }).populate('company').populate('user');
   const companyJobs = job.company._id;
   const jobs = await Job.find({ company: companyJobs });
-  const applications = await Application.find({ 'jobHandle': req.params.handle }).populate('user'); 
+  const applications = await Application.find({ 'jobHandle': req.params.handle }).populate('user');
   const applicationsCount = applications.length;
 
   let applied = false;
 
   if (req.user) {
     const resume = await Resume.findOne({ user: req.user.id });
+    const saved = await SavedJob.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id })
     const userApplication = await Application.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id });
+    console.log(saved);
     if (userApplication) {
-      console.log(userApplication);
       res.render('jobs/view', {
         job: job,
         applicationsCount: applicationsCount,
-        jobs:jobs,
-        resume:resume,
+        jobs: jobs,
+        resume: resume,
         applied: true,
-        userApplication:userApplication
+        saved: saved,
+        userApplication: userApplication
       });
     } else {
-      console.log('no user application found');
       res.render('jobs/view', {
         job: job,
         applicationsCount: applicationsCount,
-        jobs:jobs,
-        resume:resume,
+        jobs: jobs,
+        resume: resume,
+        saved: saved,
         applied: false
       });
     }
   } else {
-    console.log('visitor ');
     res.render('jobs/view', {
       job: job,
-      jobs:jobs,
+      jobs: jobs,
       applicationsCount: applicationsCount,
       applied: applied
     });
@@ -197,6 +199,36 @@ router.get('/:handle/applications', ensureAuthenticated, async (req, res) => {
     res.status(200).json(application);
   }
 
+});
+
+router.post('/:handle/saved-jobs', async (req, res) => {
+  const job = await Job.findOne({ handle: req.params.handle });
+  const jobId = job._id;
+  const jobHandle = job.handle;
+  if (!req.user) {
+    res.json({ msg: 'you must login to save jobs', jobHandle: jobHandle })
+  } else {
+    const newSavedJob = {
+      user: req.user.id,
+      jobId: jobId,
+      jobHandle: jobHandle,
+    }
+    new SavedJob(newSavedJob)
+      .save()
+      .then(savedJob => {
+        res.json(savedJob)
+      });
+  }
+});
+
+router.delete('/:handle/saved-jobs/:id', ensureAuthenticated, (req, res) => {
+  SavedJob.findByIdAndRemove(req.params.id, (err, saved) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(saved);
+    }
+  });
 });
 
 function escapeRegex(text) {

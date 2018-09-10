@@ -770,6 +770,81 @@ $('#job-cont-sidebar').on('submit', '.application-form', function (e) {
         <strong>Success! </strong>
          Your application sent to the epmloyer.
     </div>`
-      )}
+      )
+    }
   });
 });
+
+$('#job-cont-main').on('submit', '.save-job-form', function (e) {
+  e.preventDefault();
+  var savedJob = $(this).serializeArray();
+  var actionUrl = $(this).attr('action');
+
+  $.ajax({
+    url: actionUrl,
+    data: savedJob,
+    type: 'POST',
+    success: function (data) {
+      if (data.msg) {
+        $('.fav-job').html(
+          `<div class="alert alert-danger" id="danger-alert">
+          <button type="button" class="close" data-dismiss="alert">x</button>
+          <strong>${data.msg}</strong>
+           </div>
+            <form action="/jobs/${data.jobHandle}/saved-jobs" method="post" class="save-job-form float-right">
+            <button type="submit" id="save-job" class="fabutton">
+           <i class="fa fa-heart text-muted"></i>
+            </button>
+          </form>      
+      `
+        )
+      } else {
+        $('.fav-job').html(
+          `<div class="alert alert-success" id="success-alert">
+          <button type="button" class="close" data-dismiss="alert">x</button>
+          <strong>Success! : Job Add to favorites</strong>
+           </div>
+            <form action="/jobs/${data.jobHandle}/saved-jobs/${data._id}" method="post" class="edit-save-job-form float-right">
+            <button type="submit" id="edit-save-job" class="fabutton">
+           <i class="fa fa-heart text-danger"></i>
+            </button>
+          </form>      
+      `)
+        $("#success-alert").fadeTo(2000, 5000).slideUp(1000, function () {
+          $("#success-alert").alert('close');
+        });
+      }
+    }
+  })
+});
+
+$('#job-cont-main').on('submit', '.edit-save-job-form', function (e) {
+  e.preventDefault();
+  var savedJob = $(this).serializeArray();
+  var actionUrl = $(this).attr('action');
+
+  $.ajax({
+    url: actionUrl,
+    data: savedJob,
+    type: 'DELETE',
+    success: function (data) {
+        $('.fav-job').html(
+          `<div class="alert alert-success" id="success-alert">
+          <button type="button" class="close" data-dismiss="alert">x</button>
+          <strong>Success! : Job removed from favorites</strong>
+           </div>
+            <form action="/jobs/${data.jobHandle}/saved-jobs" method="post" class="save-job-form float-right">
+            <button type="submit" id="save-job" class="fabutton">
+           <i class="fa fa-heart text-muted"></i>
+            </button>
+          </form>      
+      `)
+        $("#success-alert").fadeTo(2000, 5000).slideUp(1000, function () {
+          $("#success-alert").alert('close');
+        });
+    }
+  })
+});
+
+
+

@@ -16,7 +16,8 @@ const UserSchema = new Schema({
   role:{
     type:String,
     default:'candidate'
-  }
+  },
+
 })
 
 //create collection and add schema

@@ -1,6 +1,14 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,100,900);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,500,700,100,900);
 
+.fabutton{
+  background: white;
+  border: none;
+  font-size: 2rem;
+}
+#save-job{
+  cursor: pointer;
+}
 body {
   display: flex;
   min-height: 100vh;

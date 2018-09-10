@@ -55,13 +55,13 @@
                   <span class="d-block d-md-inline">
                     <i class="fa fa-map-marker-alt"></i> {{this.address}}</span>
                   <span class="d-block d-md-inline">
-                    <i class="far fa-money-bill-alt ml-md-3"></i> {{this.salary}} / {{this.currency}}</span>
+                    <i class="far fa-money-bill-alt ml-md-3"></i> {{this.salary}} /
+                    <span class="text-capitalize">{{this.currency}}</span>
+                  </span>
                 </p>
               </div>
-              <div class="col-md-2 text-md-center">
+              <div class="col-md-2 text-md-center" id="job-extra">
                 <a href="/jobs/{{this.handle}}" class="btn btn-success text-uppercase font-weight-bold d-lg-block rounded">View</a>
-                <a href="#" class="text-muted text-xs op-7">
-                  <i class="fa fa-heart"></i> Save</a>
               </div>
             </div>
           </div>

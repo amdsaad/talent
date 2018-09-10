@@ -20,6 +20,21 @@
       <div class="col-md-8">
         <div class="bg-white pl-3 pr-3 pt-3 rounded" id="job-cont-main">
           <div class="">
+            <div class="fav-job">
+              {{#if saved}}
+              <form action="/jobs/{{job.handle}}/saved-jobs/{{saved.id}}" method="post" class="edit-save-job-form float-right">
+                <button type="submit" id="edit-save-job" class="fabutton">
+                  <i class="fa fa-heart text-danger"></i>
+                </button>
+              </form>
+              {{else}}
+              <form action="/jobs/{{job.handle}}/saved-jobs" method="post" class="save-job-form float-right">
+                <button type="submit" id="save-job" class="fabutton">
+                  <i class="fa fa-heart text-muted"></i>
+                </button>
+              </form>
+              {{/if}}
+            </div>
             <ul class="list-group">
               <li class="list-group-item justify-content-between"> Category :
                 <span class="text-capitalize text-primary">{{job.specialisms}}</span>
@@ -62,12 +77,17 @@
       <div class="col-md-4">
         {{#if user}} {{#if userApplication}}
         <div class="bg-white p-3 rounded" id="job-cont-sidebar">
-          <div class="bg-info bg-op-7 p-3 rounded text-dark">
-            <h6>you have applied for this job on
-              <br>
-              <br>
-              <span class="text-pink">{{formatDate userApplication.date 'DD MMMM YYYY'}}</span>
-            </h6>
+          <div>
+            <div class="bg-info bg-op-7 p-3 rounded text-dark">
+              <h6>you have applied for this job on
+                <br>
+                <br>
+                <span class="text-pink">{{formatDate userApplication.date 'DD MMMM YYYY'}}</span>
+              </h6>
+            </div>
+          </div>
+          <div id="ads">
+            <h1>adssssss</h1>
           </div>
         </div>
         {{else}}
@@ -98,7 +118,7 @@
             </form>
           </div>
           <div id="ads">
-            <h1>ads</h1>
+            <h1>adsss</h1>
           </div>
         </div>
         {{/if}} {{else}}

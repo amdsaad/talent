@@ -20,6 +20,7 @@ require('./models/Company');
 require('./models/Jobs');
 require('./models/JobWanted');
 require('./models/Applications');
+require('./models/savedJob');
 
 //passport config
 require('./config/passport')(passport);

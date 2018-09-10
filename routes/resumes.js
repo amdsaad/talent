@@ -82,8 +82,6 @@ router.get('/', (req, res) => {
     });
 });
 
-
-
 //show single Resume Handle SEO
 router.get('/:handle', async (req, res) => {
   const resumes = await Resume.findOne({ handle: req.params.handle }).populate('user');
@@ -194,7 +192,6 @@ router.get('/manage-my-resume/:id', ensureAuthenticated, async (req, res) => {
     res.redirect('/dashboard');
   }
 });
-
 
 //add experience 
 router.post('/experience', ensureAuthenticated, async (req, res) => {
