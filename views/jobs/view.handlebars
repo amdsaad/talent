@@ -60,38 +60,46 @@
         </div>
       </div>
       <div class="col-md-4">
-        {{#if user}} {{#if userApplication}} 
+        {{#if user}} {{#if userApplication}}
         <div class="bg-white p-3 rounded" id="job-cont-sidebar">
           <div class="bg-info bg-op-7 p-3 rounded text-dark">
-          <h6>you have applied for this job on <br><br>
-          <span class="text-pink">{{formatDate userApplication.date 'DD MMMM YYYY'}}</span></h6>
+            <h6>you have applied for this job on
+              <br>
+              <br>
+              <span class="text-pink">{{formatDate userApplication.date 'DD MMMM YYYY'}}</span>
+            </h6>
           </div>
         </div>
         {{else}}
         <div class="bg-white p-3 rounded" id="job-cont-sidebar">
-          <h4 class="text-primary text-capitalize">Apply for this job</h4>
-          <hr class="w-100 mt-4 mb-4">
-          <form action="/jobs/{{job.handle}}/application" method="post" class="application-form">
-            <div class="form-group">
-              <label class="text-primary text-capitalize" for="inputFullName">
-                <h6>Full Name</h6>
-              </label>
-              <input type="text" class="form-control" value="{{resume.fullName}}" id="inputFullName">
-            </div>
-            <div class="form-group">
-              <label class="text-primary text-capitalize" for="inputFullName">
-                <h6>Resume</h6>
-              </label>
-              <input type="text" class="form-control" value="/candidate-resume/{{resume.handle}}" id="inputFullName" disabled>
-            </div>
-            <div class="form-group">
-              <label class="text-primary text-capitalize" for="appTextarea">
-                <h6>Covering Letter</h6>
-              </label>
-              <textarea name="coveringLetter" class="form-control" id="appTextarea" rows="4" data-emoji_font="true" style="font-family: &quot;Open Sans&quot;, Arial, serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, Symbola, EmojiSymbols !important;"></textarea>
-            </div>
-            <input type="submit" value="Submit Application" class="btn btn-primary">
-          </form>
+          <div id="application-area">
+            <h4 class="text-primary text-capitalize">Apply for this job</h4>
+            <hr class="w-100 mt-4 mb-4">
+            <form action="/jobs/{{job.handle}}/application" method="post" class="application-form">
+              <div class="form-group">
+                <label class="text-primary text-capitalize" for="inputFullName">
+                  <h6>Full Name</h6>
+                </label>
+                <input type="text" class="form-control" value="{{resume.fullName}}" id="inputFullName">
+              </div>
+              <div class="form-group">
+                <label class="text-primary text-capitalize" for="inputFullName">
+                  <h6>Resume</h6>
+                </label>
+                <input type="text" class="form-control" value="/candidate-resume/{{resume.handle}}" id="inputFullName" disabled>
+              </div>
+              <div class="form-group">
+                <label class="text-primary text-capitalize" for="appTextarea">
+                  <h6>Covering Letter</h6>
+                </label>
+                <textarea name="coveringLetter" class="form-control" id="appTextarea" rows="4" data-emoji_font="true" style="font-family: &quot;Open Sans&quot;, Arial, serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, Symbola, EmojiSymbols !important;"></textarea>
+              </div>
+              <input type="submit" value="Submit Application" class="btn btn-primary">
+            </form>
+          </div>
+          <div id="ads">
+            <h1>ads</h1>
+          </div>
         </div>
         {{/if}} {{else}}
         <div class="bg-white pl-3 pr-3 pt-3 rounded" id="job-cont-sidebar">

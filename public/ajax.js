@@ -764,14 +764,12 @@ $('#job-cont-sidebar').on('submit', '.application-form', function (e) {
     data: application,
     type: 'POST',
     success: function (data) {
-      $('#job-cont-sidebar').html(
+      $('#application-area').html(
         `<div class="alert alert-success" id="success-alert">
         <button type="button" class="close" data-dismiss="alert">x</button>
         <strong>Success! </strong>
-         You application sent to the epmloyer.
+         Your application sent to the epmloyer.
     </div>`
-      )
-
-    }
+      )}
   });
 });
