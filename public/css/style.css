@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,100,900);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,500,700,100,900);
 
+
 .fabutton{
   background: white;
   border: none;
@@ -325,6 +326,11 @@ text-decoration: none;
   font-family: 'Lato', sans-serif;
   font-size: 3rem;
 }
+.display-4-homPage{
+  font-weight: 600;
+  font-family: 'Lato', sans-serif;
+  font-size: 2.5rem;
+}
 #application-title{
   text-transform: capitalize;
 }
@@ -354,6 +360,11 @@ text-decoration: none;
   clip-path: polygon(0 0, 100% 20%, 100% 100%, 100% 100%, 0 80%, 0 0);
   margin-top: -70px;
 }
+#homePage-job-search{
+  height: 70vh;
+  -webkit-clip-path: polygon(50% 0%, 100% 0, 100% 87%, 55% 92%, 0 100%, 0 0);
+  clip-path: polygon(50% 0%, 100% 0, 100% 87%, 55% 92%, 0 100%, 0 0);
+}   
 #job-cont{
   margin-top: -20vh;
 }
@@ -371,6 +382,9 @@ text-decoration: none;
     font-family: 'Lato', sans-serif;
     font-size: 1.5rem;
   }
+  #homePage-job-search{
+    height: 100vh;
+  }
 }
 @media (max-width: 375px) {
   #job-top-header{
@@ -386,12 +400,20 @@ text-decoration: none;
     font-family: 'Lato', sans-serif;
     font-size: 1.5rem;
   }
+  #homePage-job-search{
+    height: 100vh;
+  }
 }
+
 @media (max-width: 425px) {
   #job-top-header{
     padding-top: 70px;
   }
+  #homePage-job-search{
+    height: 100vh;
+  }
 }
+
 @media (max-width: 667px) {
   #job-top-header{
     padding-top: 10px;
