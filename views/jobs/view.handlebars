@@ -123,7 +123,9 @@
         </div>
         {{/if}} {{else}}
         <div class="bg-white pl-3 pr-3 pt-3 rounded" id="job-cont-sidebar">
-          <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target=".bd-example-modal-lg">Please Login to apply</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Login to Apply
+          </button>
         </div>
         {{/if}}
       </div>
@@ -152,17 +154,20 @@
   </div>
 </div>
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+        <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <a class="btn btn-red" href="/auth/google">Google</a>
+        <div>
+          <a href="/auth/facebook" type="button" class="mb-1 text-white btn bg-brand-facebook btn-lg">Login with Facebook</a>
+          <a href="/auth/google" type="button" class="mb-1 text-white btn bg-brand-google-plus btn-lg">Login with Google</a>
+        </div>
       </div>
     </div>
   </div>

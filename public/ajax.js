@@ -379,6 +379,14 @@ $('#add-exp').submit(function (e) {
     </li>
     `
     )
+    $('#exp-msg').html(
+      `
+      <div class="alert alert-success float-right w-25"> <i class="fas fa-check"></i>  Success! Experience Added</div>
+      `
+    )
+    $(".alert").fadeTo(800, 800).slideUp(800, function () {
+      $(".alert").alert('close');
+    });
     $('#add-exp').find('.form-control').val('');
     $('#add-exp').find('.form-check-input').prop("checked", false);
     $(".exp-new-area").toggle();
@@ -448,7 +456,7 @@ $('#exp-list').on('submit', '.edit-exp-form', function (e) {
           </div>
           <input type="submit" value="Update" class="btn btn-info" />
         </form>
-        <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5 bg-gradient">
+        <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5">
           <div class="col-sm-9 col-md-8 col-lg-8">
             <div class=" text-left pt-2 pb-2">
               <h5>${data.title} @
@@ -475,6 +483,14 @@ $('#exp-list').on('submit', '.edit-exp-form', function (e) {
       </div>
           `
       )
+      $('#exp-msg').html(
+        `
+        <div class="alert alert-success float-right w-25"> <i class="fas fa-check"></i>  Success! Experience Updated</div>
+        `
+      )
+      $(".alert").fadeTo(800, 800).slideUp(800, function () {
+        $(".alert").alert('close');
+      });
     }
   });
 });
@@ -594,6 +610,14 @@ $('#add-educ').submit(function (e) {
     </li>
     `
     )
+    $('#educ-msg').html(
+      `
+      <div class="alert alert-success float-right w-25"> <i class="fas fa-check"></i>  Success! Education Added</div>
+      `
+    )
+    $(".alert").fadeTo(800, 800).slideUp(800, function () {
+      $(".alert").alert('close');
+    });
     $('#add-educ').find('.form-control').val('');
     $('#add-educ').find('.form-check-input').prop("checked", false);
     $(".educ-new-area").toggle();
@@ -690,6 +714,14 @@ $('#educ-list').on('submit', '.edit-educ-form', function (e) {
       </div>
           `
       )
+      $('#educ-msg').html(
+        `
+        <div class="alert alert-success float-right w-25"> <i class="fas fa-check"></i>  Success! Education Updated</div>
+        `
+      )
+      $(".alert").fadeTo(800, 800).slideUp(800, function () {
+        $(".alert").alert('close');
+      });
     }
   });
 });
@@ -713,8 +745,6 @@ $('#educ-list').on('submit', '.delete-educ-form', function (e) {
     $(this).find('button').blur();
   }
 });
-
-
 /* End of Education */
 
 // Job Wanted Post request
