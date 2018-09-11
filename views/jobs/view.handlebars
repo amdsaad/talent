@@ -1,15 +1,13 @@
 <div class="container-fluid bg-blue  overlay overlay-op-7" data-bg-img="https://www.emaar.com/en/Images/1600x707-HOSPITALITY_tcm223-50929.jpg"
   id="job-header">
-  <div class="container" id="job-top-header">
+  <div class="container">
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-12" id="sgl-job-heading">
         <h4 class="text-capitalize text-white display-4-job-title">{{job.title}}
           <span class="text-pink">@</span>
           <span class="text-white">{{job.company.name}}</span>
         </h4>
-      </div>
-      <div class="col-md-3">
-        <img style="width: 100px; height: 100px;" src="{{job.company.logo}}" alt="">
+        <img class="float-right" style="width: 100px; height: 100px;" src="{{job.company.logo}}" alt="">
       </div>
     </div>
   </div>

@@ -1,62 +1,18 @@
+<div style="margin-top: -70px;" id="manage-resume-header" class="p-4 py-lg-10 bg-grey-dark text-center overlay overlay-default overlay-op-9 mb-3"
+  data-bg-img="https://res.cloudinary.com/dgghoxlug/image/upload/v1536677599/estee-janssens-396887-unsplash.jpg">
+  <div id="mange-resume-heading"></div>
+  <h2 class="display-4-mod text-dark text-white text-capitalize">Manage your resume
+    <i class="em em-point_down"></i>
+  </h2>
+
+</div>
 <div class="container-fluid pt-3" id="resumes">
-  <div class="row ">
-    <div class="col-md-3">
-      <ul class="list-group  p-2" id="edit-resume">
-        <li class="list-group-item mb-3 mt-3 text-white bg-op-7 bg-grey-dark p-2 rounded">
-          {{#if published}}
-          <p>Your resume is
-            <span class="text-warning">Published</span>
-          </p>
-          <form method="post" action="/candidate-resume/{{resume.id}}" class="published-resume-form ">
-            <input type="hidden" name="resume[published]" value="false">
-            <input type="submit" value="Un-Publish" class="btn btn-primary" />
-          </form>
-          {{else}}
-          <p>Your resume is not yet
-            <span class="text-warning">Published</span> , please published your resume once it is complated</p>
-          <form method="post" action="/candidate-resume/{{resume.id}}" class="published-resume-form ">
-            <input type="hidden" name="resume[published]" value="true">
-            <input type="submit" value="Publish" class="btn btn-primary" />
-          </form>
-          {{/if}}
-        </li>
-        <li class="list-group-item mt-1 text-white bg-op-7 bg-grey-dark p-2 rounded text-center">
-          <h5 class="text-left p-3">Change Resume Style</h5>
-          <form method="post" action="/candidate-resume/{{resume.id}}" class="style-resume-form">
-            <div class="form-group">
-              <div>
-                <a href="https://unsplash.it/1200/768.jpg?image=250" data-toggle="lightbox" data-title="A random title" data-footer="A custom footer text">
-                  <img src="https://unsplash.it/600.jpg?image=250" class="img-fluid">
-                </a>
-              </div>
-              {{#if resumeDefualt}}
-              <input id="disabledInput" type="" value="Current Style" class="btn btn-warning" disabled/> {{else}}
-              <input type="hidden" name="resume[style]" value="default">
-              <input type="submit" value="Select" class="btn btn-primary" /> {{/if}}
-            </div>
-            <div class="form-group">
-              <div>
-                <a href="https://unsplash.it/1200/768.jpg?image=20" data-toggle="lightbox" data-title="A random title" data-footer="A custom footer text">
-                  <img src="https://unsplash.it/600.jpg?image=20" class="img-fluid">
-                </a>
-              </div>
-              {{#if resumeOneCol}}
-              <input id="disabledInput" type="" value="Current Style" class="btn btn-warning" disabled/> {{else}}
-              <input type="hidden" name="resume[style]" value="oneCol">
-              <input type="submit" value="Select" class="btn btn-primary" /> {{/if}}
-            </div>
-          </form>
-        </li>
-      </ul>
-    </div>
+  <div class="row justify-content-center">
     <div class="col-md-8" id="resume-lists">
       <div class="row">
         <div class="col-md-12">
           <div id="resume-messages" style="position: relative;float: right;"></div>
         </div>
-      </div>
-      <div class="row justify-content-end">
-        <a class=" btn btn-primary btn-lg rounded btn-shadow" href="/candidate-resume/{{resume.handle}}">View your resume</a>
       </div>
       {{#if resumeDefualt}}
       <div class="row bg-grey ">
@@ -116,12 +72,9 @@
             </div>
             <div class="col-10 col-sm-10 col-md-10 col-lg-11">
               <div class="bg-blue-dark text-center" id="rounded">
-                <h4 class="display-4 text-white p-2" id="resume-experience">Experience
-                  <span class="float-right">
-                    <button type="button" class="btn btn-primary btn-sm" id="add-exp-btn"> Add Experiance</button>
-                  </span>
-                </h4>
+                <h4 class="display-4 text-white p-2" id="resume-experience">Experience</h4>
               </div>
+              <button type="button" class="btn btn-primary btn-sm" id="add-exp-btn"> Add Experiance</button>
             </div>
           </div>
           {{!-- add Exp --}}
@@ -511,18 +464,19 @@
         </div>
         {{!-- Profile End --}} {{!-- Start of Experience --}}
         <div class="col-md-12 bg-op-1 bg-green">
-          <div class="row">
+          <div class="row justify-content-between">
             <div class="col-md-12">
               <div id="exp-msg"></div>
             </div>
-          </div>
-          <div class="text-left rounded p-3">
-            <h4 class="text-blue-dark display-4" id="resume-heading">Experience
-              <span class="float-right">
-                <button type="button" class="btn btn-purple btn-lg btn-shadow" id="add-exp-btn"> Add Experiance</button>
-              </span>
-            </h4>
-            <div class="under-heading text-blue "></div>
+            <div class="col-md-8">
+              <div class="text-left rounded p-3">
+                <h4 class="text-blue-dark display-4" id="resume-heading">Experience</h4>
+                <div class="under-heading text-blue "></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-purple btn-lg btn-shadow mt-3" id="add-exp-btn"> Add Experiance</button>
+            </div>
           </div>
           {{!-- add Exp --}}
           <div class="col-md-12">
@@ -577,6 +531,35 @@
           <ul class="list-group p-3" id="exp-list">
             {{#each experiance}}
             <li class="list-group-item">
+              <div class="row m-2">
+                <div class="col-sm-9 col-md-8 col-lg-8">
+                  <div class=" text-left pt-2 pb-2">
+                    <h5>{{title}} @
+                      <span class="text-blue  ">{{company}} - {{location}}</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-4">
+                  <div class="float-right pt-2 pb-2">
+                    {{#if this.to}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                    {{else}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="text-grey-dark">
+                    <p>{{this.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="m-4">
+                <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
+                <form style="display: inline" method="POST" action="/candidate-resume/experience/{{this.id}}" class="delete-exp-form">
+                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+              </div>
               {{!-- Edit - Update Form --}}
               <form method="POST" action="/candidate-resume/experience/{{this.id}}" class="edit-exp-form p-4 bg-op-5 bg-lime rounded m-2">
                 <div class="form-group row">
@@ -619,35 +602,6 @@
                 <input type="button" value="cancel" class="btn btn-warning exp-cxl-edit-btn" />
               </form>
               {{!-- End of Edit Form --}}
-              <div class="row m-2">
-                <div class="col-sm-9 col-md-8 col-lg-8">
-                  <div class=" text-left pt-2 pb-2">
-                    <h5>{{title}} @
-                      <span class="text-blue  ">{{company}} - {{location}}</span>
-                    </h5>
-                  </div>
-                </div>
-                <div class="col-sm-3 col-md-4 col-lg-4">
-                  <div class="float-right pt-2 pb-2">
-                    {{#if this.to}}
-                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
-                    {{else}}
-                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
-                    {{/if}}
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="text-grey-dark">
-                    <p>{{this.description}}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="m-4">
-                <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
-                <form style="display: inline" method="POST" action="/candidate-resume/experience/{{this.id}}" class="delete-exp-form">
-                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                </form>
-              </div>
             </li>
             {{/each}}
           </ul>
@@ -655,18 +609,19 @@
         </div>
         {{!-- End of Experience --}} {{!-- Start of Education --}}
         <div class="col-md-12 bg-op-1 bg-green">
-          <div class="row">
+          <div class="row justify-content-between">
             <div class="col-md-12">
               <div id="educ-msg"></div>
             </div>
-          </div>
-          <div class="text-left rounded p-3">
-            <h4 class="text-blue-dark display-4" id="resume-heading">Education
-              <span class="float-right">
-                <button type="button" class="btn btn-purple btn-lg btn-shadow" id="add-educ-btn">Add Education</button>
-              </span>
-            </h4>
-            <div class="under-heading text-blue "></div>
+            <div class="col-md-8">
+              <div class="text-left rounded p-3">
+                <h4 class="text-blue-dark display-4" id="resume-heading">Education</h4>
+                <div class="under-heading text-blue "></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-purple btn-lg btn-shadow mt-3" id="add-educ-btn">Add Education</button>
+            </div>
           </div>
           {{!-- add Education --}}
           <div class="col-md-12">
@@ -724,6 +679,35 @@
           <ul class="list-group p-3" id="educ-list">
             {{#each education}}
             <li class="list-group-item">
+              <div class="row m-2">
+                <div class="col-sm-9 col-md-8 col-lg-8">
+                  <div class=" text-left pt-2 pb-2">
+                    <h5>{{school}}-
+                      <span class="text-blue"> {{degree}} Degree - {{fieldofstudy}} - {{location}}</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-4">
+                  <div class="float-right pt-2 pb-2">
+                    {{#if this.to}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                    {{else}}
+                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="text-grey-dark">
+                    <p>{{this.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="m-4">
+                <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
+                <form style="display: inline" method="POST" action="/candidate-resume/education/{{this.id}}" class="delete-educ-form">
+                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+              </div>
               {{!-- Edit - Update Form --}}
               <form method="POST" action="/candidate-resume/education/{{this.id}}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
                 <div class="form-group row">
@@ -772,35 +756,6 @@
                 <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
               </form>
               {{!-- End of Edit Form --}}
-              <div class="row m-2">
-                <div class="col-sm-9 col-md-8 col-lg-8">
-                  <div class=" text-left pt-2 pb-2">
-                    <h5>{{school}}-
-                      <span class="text-blue"> {{degree}} Degree - {{fieldofstudy}} - {{location}}</span>
-                    </h5>
-                  </div>
-                </div>
-                <div class="col-sm-3 col-md-4 col-lg-4">
-                  <div class="float-right pt-2 pb-2">
-                    {{#if this.to}}
-                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
-                    {{else}}
-                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
-                    {{/if}}
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="text-grey-dark">
-                    <p>{{this.description}}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="m-4">
-                <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
-                <form style="display: inline" method="POST" action="/candidate-resume/education/{{this.id}}" class="delete-educ-form">
-                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                </form>
-              </div>
             </li>
             {{/each}}
           </ul>

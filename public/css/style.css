@@ -1,7 +1,20 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,100,900);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,500,700,100,900);
+@import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
 
+.navbar-expand-md .navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md .navbar-main .navbar-nav>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-link{
+  font-size: 16px;
+  color: #f4f4f4;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1.5px;
+  padding: 10px 10px;
 
+}
+.no-page-header{
+  margin-top: 70px
+}
 .fabutton{
   background: white;
   border: none;
@@ -19,7 +32,7 @@ body {
   flex-direction: column; 
 }
 main {
-  flex: 1 0 auto;
+  min-height: 100vh
 }
 
 .nav-wrapper .fa-bars{
@@ -45,65 +58,6 @@ main {
   height: 50px;
 }
 
-.modal-body {
-
-  text-align: center;
-}
-
-/* .card {
-  display: block; 
-    margin-bottom: 20px;
-    line-height: 1.42857143;
-    background-color: #fff;
-    border-radius: 2px;    transition: box-shadow .25s; 
-}
-.card:hover {
-
-background-color: rgba(211, 211, 211, 0.172)
-}
-.img-card {
-  width: 100%;
-  height:200px;
-  border-top-left-radius:2px;
-  border-top-right-radius:2px;
-  display:block;
-    overflow: hidden;
-}
-.img-card img{
-  width: 100%;
-  height: 200px;
-  object-fit:cover; 
-  transition: all .25s ease;
-} 
-.card-content {
-  padding:15px;
-  text-align:left;
-}
-.card-title {
-  margin-top:0px;
-  font-weight: 700;
-  font-size: 1.5em;
-}
-.card-title-cv {
-  margin-top:0px;
-  font-weight: 700;
-  font-size: 1.1em;
-  line-height: 1.5;
-}
-.card-title a {
-  color: #000;
-  text-decoration: none !important;
-  text-transform: capitalize
-}
-.card-read-more {
-  border-top: 1px solid #D4D4D4;
-}
-.card-read-more a {
-  text-decoration: none !important;
-  padding:10px;
-  font-weight:600;
-  text-transform: uppercase
-} */
 .small-image{
   width: 20px;
 }
@@ -326,6 +280,11 @@ text-decoration: none;
   font-family: 'Lato', sans-serif;
   font-size: 3rem;
 }
+.display-4-mod{
+  font-weight: 600;
+  font-family: 'Lato', sans-serif;
+  font-size: 3rem;
+}
 .display-4-homPage{
   font-weight: 600;
   font-family: 'Lato', sans-serif;
@@ -350,9 +309,9 @@ text-decoration: none;
   min-height: 80vh
 }
 #dashboard-heading{
-  font-size:1.5rem;
+  font-size:2rem;
   font-weight: 700;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   letter-spacing: 1px
 }
 #dashboard-find-job{
@@ -364,74 +323,143 @@ text-decoration: none;
   height: 70vh;
   -webkit-clip-path: polygon(50% 0%, 100% 0, 100% 87%, 55% 92%, 0 100%, 0 0);
   clip-path: polygon(50% 0%, 100% 0, 100% 87%, 55% 92%, 0 100%, 0 0);
-}   
+}
+#home-page-search-heading{
+  margin-top: 10rem
+}
 #job-cont{
   margin-top: -20vh;
 }
-@media (max-width: 320px) {
-  #job-top-header{
-    padding-top: 0px;
+#job-header{
+  margin-top: -5rem
+}
+#sgl-job-heading{
+  margin-top: 10rem
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+    #sgl-job-heading{
+      margin-top: 10rem
+    }
+    #job-header{
+      margin-top: 0rem;
+      height: 70vh;
+      -webkit-clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
+      clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
+    }
+    #job-cont {
+      margin-top: -10vh;
+    }
+    .display-4-job-title{
+      font-weight: 600;
+      font-family: 'Lato', sans-serif;
+      font-size: 2rem;
+    }
+    #homePage-job-search{
+      height: 100vh;
+    }
+    #home-page-search-heading{
+      margin-top: 10rem
+    }
+    #homePage-job-search{
+      height: auto;
+      -webkit-clip-path: none;
+      clip-path: none
+    }  
+    .display-4-mod{
+      font-weight: 600;
+      font-family: 'Lato', sans-serif;
+      font-size: 2rem;
+    }
+    #mange-resume-heading{
+      margin: 6rem
+    }
+    
+  }
+
+  /* ##Device = Low Resolution Tablets, Mobiles (Landscape)  ##Screen = B/w 481px to 812px */
+
+@media (min-width: 481px) and (max-width: 768px) {
+  
+  #sgl-job-heading{
+    margin-top: 10rem
   }
   #job-header{
-    height: 80vh;
-    -webkit-clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
-    clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
+    margin-top: 0rem;
+    height: 100vh;
+    -webkit-clip-path: polygon(100% 0, 100% 90vh, 0 100%, 0 100%, 0 0);
+    clip-path: polygon(100% 0, 100% 90vh, 0 100%, 0 100%, 0 0);
+  }
+  #job-cont {
+    margin-top: -10vh;
   }
   .display-4-job-title{
     font-weight: 600;
     font-family: 'Lato', sans-serif;
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
   #homePage-job-search{
     height: 100vh;
   }
+  #home-page-search-heading{
+    margin-top: 7rem
+  }
+  #homePage-job-search{
+    height: auto;
+    -webkit-clip-path: none;
+    clip-path: none
+  }
+  .display-4-mod{
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    font-size: 2rem;
+  }
+  #mange-resume-heading{
+    margin: 6rem
+  }
+  
 }
-@media (max-width: 375px) {
-  #job-top-header{
-    padding-top: 0px;
+
+/* ##Device = Tablets, Ipads (portrait) ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+  #sgl-job-heading{
+    margin-top: 10rem
   }
   #job-header{
-    height: 80vh;
-    -webkit-clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
-    clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
+    margin-top: 0rem;
+    height: 60vh;
+    -webkit-clip-path: polygon(100% 0, 100% 50vh, 0 100%, 0 100%, 0 0);
+    clip-path: polygon(100% 0, 100% 50vh, 0 100%, 0 100%, 0 0);
+  }
+  #job-cont {
+    margin-top: -10vh;
   }
   .display-4-job-title{
     font-weight: 600;
     font-family: 'Lato', sans-serif;
-    font-size: 1.5rem;
+    font-size: 3rem;
   }
   #homePage-job-search{
     height: 100vh;
   }
-}
-
-@media (max-width: 425px) {
-  #job-top-header{
-    padding-top: 70px;
+  #home-page-search-heading{
+    margin-top: 7rem
   }
   #homePage-job-search{
-    height: 100vh;
+    height: auto;
+    -webkit-clip-path: none;
+    clip-path: none
   }
-}
-
-@media (max-width: 667px) {
-  #job-top-header{
-    padding-top: 10px;
+  .display-4-mod{
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    font-size: 2rem;
   }
-}
-@media (max-width: 1024px) {
-  #job-top-header{
-    padding-top: 100px;
-  }
-}
-
-@media (max-width: 1440px) {
-  #job-top-header{
-    padding-top: 120px;
-  }
-}
-@media (max-width: 2560px) {
-  #job-top-header{
-    padding-top: 120px;
-  }
+  #mange-resume-heading{
+    margin: 6rem
+  } 
 }

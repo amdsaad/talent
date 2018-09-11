@@ -112,7 +112,6 @@ router.get('/my-maching-jobs', ensureAuthenticated, async (req, res) => {
 });
 
 router.get('/:handle', async (req, res) => {
-  req.session.returnTo = req.originalUrl;
   const job = await Job.findOne({ handle: req.params.handle }).populate('company').populate('user');
   const companyJobs = job.company._id;
   const jobs = await Job.find({ company: companyJobs });
@@ -125,7 +124,6 @@ router.get('/:handle', async (req, res) => {
     const resume = await Resume.findOne({ user: req.user.id });
     const saved = await SavedJob.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id })
     const userApplication = await Application.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id });
-    console.log(saved);
     if (userApplication) {
       res.render('jobs/view', {
         job: job,

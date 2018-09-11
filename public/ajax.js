@@ -311,6 +311,31 @@ $('#add-exp').submit(function (e) {
     $('#exp-list').prepend(
       `
       <li class="list-group-item">
+      <div class="row m-2">
+        <div class="col-sm-9 col-md-8 col-lg-8">
+          <div class=" text-left pt-2 pb-2">
+            <h5>${data.title} @
+              <span class="text-blue  ">${data.company} - ${data.location}</span>
+            </h5>
+          </div>
+        </div>
+        <div class="col-sm-3 col-md-4 col-lg-4">
+          <div class="float-right pt-2 pb-2">
+            <h6 class="text-green">${expFrom} - ${expEnd}</h6>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="text-grey-dark">
+            <p>${data.description}</p>
+          </div>
+        </div>
+      </div>
+      <div class="m-4">
+        <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
+        <form style="display: inline" method="POST" action="/candidate-resume/experience/${data._id}" class="delete-exp-form">
+          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+        </form>
+      </div>
       <form method="POST" action="/candidate-resume/experience/${data._id}" class="edit-exp-form p-4 bg-op-5 bg-lime rounded m-2">
         <div class="form-group row">
           <div class="col-md-4">
@@ -345,37 +370,12 @@ $('#add-exp').submit(function (e) {
         </div>
         <div class="form-group row">
           <div class="col-md-12">
-            <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
+            <textarea class="form-control border-op-8 border-grey">$${data.description}</textarea>
           </div>
         </div>
         <input type="submit" value="Update" class="btn btn-success" />
         <input type="button" value="cancel" class="btn btn-warning exp-cxl-edit-btn" />
       </form>
-      <div class="row m-2">
-        <div class="col-sm-9 col-md-8 col-lg-8">
-          <div class=" text-left pt-2 pb-2">
-            <h5>${data.title} @
-              <span class="text-blue  ">${data.company}} - ${data.location}</span>
-            </h5>
-          </div>
-        </div>
-        <div class="col-sm-3 col-md-4 col-lg-4">
-          <div class="float-right pt-2 pb-2">
-            <h6 class="text-green">${expFrom} - ${expEnd}</h6>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="text-grey-dark">
-            <p>${data.description}</p>
-          </div>
-        </div>
-      </div>
-      <div class="m-4">
-        <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
-        <form style="display: inline" method="POST" action="/candidate-resume/experience/${data._id}" class="delete-exp-form">
-          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-        </form>
-      </div>
     </li>
     `
     )
@@ -417,71 +417,73 @@ $('#exp-list').on('submit', '.edit-exp-form', function (e) {
       };
       this.originalItem.html(
         `
-          <form method="POST" action="/candidate-resume/experience/${data.id}" class="edit-exp-form">
-          <div class="form-group row">
-            <div class="col-md-4">
-              <input type="text" class="form-control border-op-8 border-grey" value="${data.title}" name="exper[title]" required />
-            </div>
-            <div class="col-md-4">
-              <input type="text" class="form-control border-op-8 border-grey" value="${data.company}" name="exper[company]" required />
-            </div>
-            <div class="col-md-4">
-              <input type="text" class="form-control border-op-8 border-grey" value="${data.location}" name="exper[location]" />
-            </div>
+        <div class="row m-2">
+        <div class="col-sm-9 col-md-8 col-lg-8">
+          <div class=" text-left pt-2 pb-2">
+            <h5>${data.title} @
+              <span class="text-blue  ">${data.company} - ${data.location}</span>
+            </h5>
           </div>
-          <div class="form-group row">
-            <div class="col-md-5">
-              <h6>From Date</h6>
-              <input type="date" class="form-control border-op-8 border-grey" name="exper[from]"/>
-            </div>
-            <div class="col-md-7">
-              <h6>To Date</h6>
-              <div class="row">
-                <div class="col-md-7 to-date">
-                  <input type="date" class="form-control border-op-8 border-grey" name="exper[to]" />
-                </div>
-                <div class="col-md-5 ">
-                  <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                    <input class="form-check-input" type="checkbox" name="exper[current]" value="Till Now" id="current-edit" />
-                    <label class="form-check-label" for="current">Current Job</label>
-                  </div>
+        </div>
+        <div class="col-sm-3 col-md-4 col-lg-4">
+          <div class="float-right pt-2 pb-2">
+            <h6 class="text-green">${expFrom} - ${expEnd}</h6>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="text-grey-dark">
+            <p>${data.description}</p>
+          </div>
+        </div>
+      </div>
+      <div class="m-4">
+        <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
+        <form style="display: inline" method="POST" action="/candidate-resume/experience/${data._id}" class="delete-exp-form">
+          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+        </form>
+      </div>
+      <form method="POST" action="/candidate-resume/experience/${data._id}" class="edit-exp-form p-4 bg-op-5 bg-lime rounded m-2">
+        <div class="form-group row">
+          <div class="col-md-4">
+            <input type="text" class="form-control border-op-8 border-grey" value="${data.title}" name="exper[title]" required />
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control border-op-8 border-grey" value="${data.company}" name="exper[company]" required />
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control border-op-8 border-grey" value="${data.location}" name="exper[location]" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-5">
+            <h6>From Date</h6>
+            <input type="date" class="form-control border-op-8 border-grey" name="exper[from]" />
+          </div>
+          <div class="col-md-7">
+            <h6>To Date</h6>
+            <div class="row">
+              <div class="col-md-7 to-date-exp">
+                <input type="date" class="form-control border-op-8 border-grey" name="exper[to]" />
+              </div>
+              <div class="col-md-5 ">
+                <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                  <input class="form-check-input" type="checkbox" name="exper[current]" value="Till Now" id="current-exp-edit" />
+                  <label class="form-check-label" for="current">Current Job</label>
                 </div>
               </div>
             </div>
           </div>
-          <div class="form-group row">
-            <div class="col-md-12">
-              <textarea class="form-control border-op-8 border-grey" placeholder="Some of your responsabilities, Job description" name="exper[description]">${data.description}</textarea>
-            </div>
-          </div>
-          <input type="submit" value="Update" class="btn btn-info" />
-        </form>
-        <div class="row mr-0 ml-0 mt-2 mb-2 bg-op-1 bg-op-5">
-          <div class="col-sm-9 col-md-8 col-lg-8">
-            <div class=" text-left pt-2 pb-2">
-              <h5>${data.title} @
-                <span class="text-blue  ">${data.company} - ${data.location}</span>
-              </h5>
-            </div>
-          </div>
-          <div class="col-sm-3 col-md-4 col-lg-4">
-            <div class="float-right pt-2 pb-2">
-            <h6 class="text-green">${expFrom} - ${expEnd} </h6>
-            </div>
-          </div>
+        </div>
+        <div class="form-group row">
           <div class="col-md-12">
-            <div class="text-grey-dark">
-              <p>${data.description}</p>
-            </div>
+            <textarea class="form-control border-op-8 border-grey">$${data.description}</textarea>
           </div>
         </div>
-        <div class="" >
-        <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
-        <form style="display: inline" method="POST" action="/candidate-resume/experience/${data.id}" class="delete-exp-form">
-          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-        </form>
-      </div>
-          `
+        <input type="submit" value="Update" class="btn btn-success" />
+        <input type="button" value="cancel" class="btn btn-warning exp-cxl-edit-btn" />
+      </form>
+        `
+        
       )
       $('#exp-msg').html(
         `
@@ -539,49 +541,6 @@ $('#add-educ').submit(function (e) {
     $('#educ-list').prepend(
       `
       <li class="list-group-item">
-      <form method="POST" action="/candidate-resume/education/${data._id}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
-        <div class="form-group row">
-          <div class="col-md-3">
-            <input type="text" class="form-control border-op-8 border-grey" value="${data.school}" name="education[school]" required />
-          </div>
-          <div class="col-md-3">
-            <input type="text" class="form-control border-op-8 border-grey" value="${data.degree}" name="education[degree]" required />
-          </div>
-          <div class="col-md-3">
-            <input type="text" class="form-control border-op-8 border-grey" value="${data.fieldofstudy}" name="education[fieldofstudy]" />
-          </div>
-          <div class="col-md-3">
-            <input type="text" class="form-control border-op-8 border-grey" value="${data.location}" name="education[location]" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-5">
-            <h6>From Date</h6>
-            <input type="date" class="form-control border-op-8 border-grey" name="education[from]" />
-          </div>
-          <div class="col-md-7">
-            <h6>To Date</h6>
-            <div class="row">
-              <div class="col-md-7 to-date-exp">
-                <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
-              </div>
-              <div class="col-md-5 ">
-                <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                  <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ" />
-                  <label class="form-check-label" for="current">Current Study</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-12">
-            <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
-          </div>
-        </div>
-        <input type="submit" value="Update" class="btn btn-success" />
-        <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
-      </form>
       <div class="row m-2">
         <div class="col-sm-9 col-md-8 col-lg-8">
           <div class=" text-left pt-2 pb-2">
@@ -607,6 +566,49 @@ $('#add-educ').submit(function (e) {
           <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
         </form>
       </div>
+      <form method="POST" action="/candidate-resume/education/${data._id}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
+      <div class="form-group row">
+        <div class="col-md-3">
+          <input type="text" class="form-control border-op-8 border-grey" value="${data.school}" name="education[school]" required />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control border-op-8 border-grey" value="${data.degree}" name="education[degree]" required />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control border-op-8 border-grey" value="${data.fieldofstudy}" name="education[fieldofstudy]" />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control border-op-8 border-grey" value="${data.location}" name="education[location]" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-5">
+          <h6>From Date</h6>
+          <input type="date" class="form-control border-op-8 border-grey" name="education[from]" />
+        </div>
+        <div class="col-md-7">
+          <h6>To Date</h6>
+          <div class="row">
+            <div class="col-md-7 to-date-exp">
+              <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
+            </div>
+            <div class="col-md-5 ">
+              <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ" />
+                <label class="form-check-label" for="current">Current Study</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-12">
+          <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
+        </div>
+      </div>
+      <input type="submit" value="Update" class="btn btn-success" />
+      <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
+    </form>
     </li>
     `
     )
@@ -644,49 +646,6 @@ $('#educ-list').on('submit', '.edit-educ-form', function (e) {
       };
       this.originalItem.html(
         `
-        <form method="POST" action="/candidate-resume/education/${data._id}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
-        <div class="form-group row">
-          <div class="col-md-3">
-            <input type="text" class="form-control border-op-8 border-grey" value="${data.school}" name="education[school]" required />
-          </div>
-          <div class="col-md-3">
-            <input type="text" class="form-control border-op-8 border-grey" value="${data.degree}" name="education[degree]" required />
-          </div>
-          <div class="col-md-3">
-            <input type="text" class="form-control border-op-8 border-grey" value="${data.fieldofstudy}" name="education[fieldofstudy]" />
-          </div>
-          <div class="col-md-3">
-            <input type="text" class="form-control border-op-8 border-grey" value="${data.location}" name="education[location]" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-5">
-            <h6>From Date</h6>
-            <input type="date" class="form-control border-op-8 border-grey" name="education[from]" />
-          </div>
-          <div class="col-md-7">
-            <h6>To Date</h6>
-            <div class="row">
-              <div class="col-md-7 to-date-exp">
-                <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
-              </div>
-              <div class="col-md-5 ">
-                <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                  <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ" />
-                  <label class="form-check-label" for="current">Current Study</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-12">
-            <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
-          </div>
-        </div>
-        <input type="submit" value="Update" class="btn btn-success" />
-        <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
-      </form>
       <div class="row m-2">
         <div class="col-sm-9 col-md-8 col-lg-8">
           <div class=" text-left pt-2 pb-2">
@@ -712,6 +671,49 @@ $('#educ-list').on('submit', '.edit-educ-form', function (e) {
           <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
         </form>
       </div>
+      <form method="POST" action="/candidate-resume/education/${data._id}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
+      <div class="form-group row">
+        <div class="col-md-3">
+          <input type="text" class="form-control border-op-8 border-grey" value="${data.school}" name="education[school]" required />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control border-op-8 border-grey" value="${data.degree}" name="education[degree]" required />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control border-op-8 border-grey" value="${data.fieldofstudy}" name="education[fieldofstudy]" />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control border-op-8 border-grey" value="${data.location}" name="education[location]" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-5">
+          <h6>From Date</h6>
+          <input type="date" class="form-control border-op-8 border-grey" name="education[from]" />
+        </div>
+        <div class="col-md-7">
+          <h6>To Date</h6>
+          <div class="row">
+            <div class="col-md-7 to-date-exp">
+              <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
+            </div>
+            <div class="col-md-5 ">
+              <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ" />
+                <label class="form-check-label" for="current">Current Study</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-12">
+          <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
+        </div>
+      </div>
+      <input type="submit" value="Update" class="btn btn-success" />
+      <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
+    </form>
           `
       )
       $('#educ-msg').html(

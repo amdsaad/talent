@@ -13,7 +13,10 @@ const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 router.get('/', ensureGuest, async (req, res) => {
   const latestPosts = await Post.find({ status: 'public' }).limit(5);
   res.render('index/welcome', {
-    latestPosts: latestPosts
+    latestPosts: latestPosts,
+    title:"Talent Liken : Connecting Talents - Find your job",
+    metaDescription: "Talent Liken connecting Talents (job seeker and employer), join us to post free jobs or create Free Professional Resume Templates focus on increasing your visibility.",
+    keywords:"find job, post a resume, build online resume, resume template, cv template, post free jobs, career advise"
   });
 });
 
