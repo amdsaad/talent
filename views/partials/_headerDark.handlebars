@@ -1,0 +1,75 @@
+<div id="header">
+
+  <div data-toggle="sticky">
+    <!--Header & Branding region-->
+    <div class="header header-dark bg-dark bg-op-9 sticky-bg-primary sticky-bg-op-9">
+      <!-- all direct children of the .header-inner element will be vertically aligned with each other you can override all the behaviours using the flexbox utilities (flexbox.html) All elements with .header-brand & .header-block-flex wrappers will automatically be aligned inline & vertically using flexbox, this can be overridden using the flexbox utilities (flexbox.htm) Use .header-block to stack elements within on small screen & "float" on larger screens use .order-first or/and .order-last classes to make an element show first or last within .header-inner or .headr-block elements -->
+      <div class="header-inner container">
+        <!--branding/logo -->
+        <div class="header-brand">
+          <a class="header-brand-text" href="/" title="{{title}}">
+            <h1 class="h2">
+              <span class="header-brand-text-alt text-primary">Talent</span>Liken<span class="header-brand-text-alt">.</span>
+            </h1>
+          </a>
+          <div class="header-divider d-none d-lg-block"></div>
+          <div class="header-slogan d-none d-lg-block">Connecting Talents</div>
+        </div>
+        <!-- other header content -->
+        <div class="header-block order-lg-12">
+          <!-- mobile collapse menu button - data-toggle="collapse" = default BS menu - data-toggle="off-canvas" = Off-cavnas Menu - data-toggle="overlay" = Overlay Menu -->
+          <a href="#top" class="btn btn-link btn-icon header-btn float-right d-lg-none" data-toggle="collapse" data-target=".navbar-main"
+            data-settings='{"cloneTarget":true, "targetClassExtras": "navbar-offcanvas"}'>
+            <i class="fa fa-bars text-light"></i>
+          </a>
+        </div>
+
+        <div class="navbar navbar-expand-md navbar-expand-collapse navbar-static-top">
+          <!--everything within this div is collapsed on mobile-->
+          <div class="navbar-main collapse">
+            <!--main navigation-->
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/jobs">Jobs
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/candidate-resume">Resumes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/employer">Employer</a>
+              </li>
+              <li class="nav-item">
+                {{#if user}}
+                <a href="/auth/logout" type="button" class="btn btn-danger">Logout</a>
+                {{else}}
+               <button type="button" class="btn btn-blue" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Login</button>
+               {{/if}}
+              </li>
+            </ul>
+          </div>
+          <!--/.navbar-collapse -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <a href="/auth/facebook" type="button" class="mb-1 text-white btn bg-brand-facebook btn-lg">Login with Facebook</a>
+          <a href="/auth/google" type="button" class="mb-1 text-white btn bg-brand-google-plus btn-lg">Login with Google</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
