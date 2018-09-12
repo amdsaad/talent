@@ -3,6 +3,25 @@
 @import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
 
+.animated {
+  animation-delay: 2s;
+  animation-duration: 5s;
+  animation-fill-mode: backwards;  
+}
+@keyframes hinge {
+  0% {transform: rotate(0);transform-origin: top left;animation-timing-function: ease-in-out;}
+  20%, 60% {transform: rotate(80deg);transform-origin: top left;animation-timing-function: ease-in-out;}
+  40% {transform: rotate(60deg);transform-origin: top left;animation-timing-function: ease-in-out;}
+  80% {transform: rotate(60deg) translateY(0px);transform-origin: top left;animation-timing-function: ease-in-out;}
+  100% {transform: translateY(700px);}
+}
+.hinge {
+  margin: 20px;
+  color: white;
+  animation-name: hinge;
+}
+
+
 .navbar-expand-md .navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md .navbar-main .navbar-nav>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-link{
   font-size: 16px;
   color: #f4f4f4;

@@ -84,6 +84,7 @@ router.get('/', (req, res) => {
 
 //show single Resume Handle SEO
 router.get('/:handle', async (req, res) => {
+  const back ='/candidate-resume';
   const resumes = await Resume.findOne({ handle: req.params.handle }).populate('user');
   if (resumes) {
     const posts = await Posts.find({ user: resumes.user._id });
@@ -103,6 +104,11 @@ router.get('/:handle', async (req, res) => {
       education: education,
       resumeDefualt: resumeDefualt
     });
+  }else{
+    res.status(404).render('index/404',{
+      back,
+      pageName: "Talent's Resume's"
+    })
   }
 });
 

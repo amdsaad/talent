@@ -106,6 +106,9 @@ app.use('/auth', auth);
 app.use('/posts', posts);
 app.use('/jobs', jobs);
 app.use('/candidate-resume', resumes);
+app.use('*', function(req, res){
+  res.status(404).render('index/404')
+});
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {

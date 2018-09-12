@@ -98,7 +98,6 @@ router.get('/', (req, res) => {
         })
       });
   }
-
 });
 
 router.get('/my-maching-jobs', ensureAuthenticated, async (req, res) => {
@@ -113,44 +112,46 @@ router.get('/my-maching-jobs', ensureAuthenticated, async (req, res) => {
 
 router.get('/:handle', async (req, res) => {
   const job = await Job.findOne({ handle: req.params.handle }).populate('company').populate('user');
-  const companyJobs = job.company._id;
-  const jobs = await Job.find({ company: companyJobs });
-  const applications = await Application.find({ 'jobHandle': req.params.handle }).populate('user');
-  const applicationsCount = applications.length;
-
   let applied = false;
-
-  if (req.user) {
-    const resume = await Resume.findOne({ user: req.user.id });
-    const saved = await SavedJob.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id })
-    const userApplication = await Application.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id });
-    if (userApplication) {
-      res.render('jobs/view', {
-        job: job,
-        applicationsCount: applicationsCount,
-        jobs: jobs,
-        resume: resume,
-        applied: true,
-        saved: saved,
-        userApplication: userApplication
-      });
+  if (job) {
+    companyJobs = job.company._id;
+    jobs = await Job.find({ company: companyJobs });
+    applications = await Application.find({ 'jobHandle': req.params.handle }).populate('user');
+    applicationsCount = applications.length;
+    if (req.user) {
+      const resume = await Resume.findOne({ user: req.user.id });
+      const saved = await SavedJob.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id })
+      const userApplication = await Application.findOne({ 'jobHandle': req.params.handle, 'user': req.user.id });
+      if (userApplication) {
+        res.render('jobs/view', {
+          job: job,
+          applicationsCount: applicationsCount,
+          jobs: jobs,
+          resume: resume,
+          applied: true,
+          saved: saved,
+          userApplication: userApplication
+        });
+      } else {
+        res.render('jobs/view', {
+          job: job,
+          applicationsCount: applicationsCount,
+          jobs: jobs,
+          resume: resume,
+          saved: saved,
+          applied: false
+        });
+      }
     } else {
       res.render('jobs/view', {
         job: job,
-        applicationsCount: applicationsCount,
         jobs: jobs,
-        resume: resume,
-        saved: saved,
-        applied: false
+        applicationsCount: applicationsCount,
+        applied: applied
       });
     }
   } else {
-    res.render('jobs/view', {
-      job: job,
-      jobs: jobs,
-      applicationsCount: applicationsCount,
-      applied: applied
-    });
+    res.status(404).render('index/404');
   }
 });
 
@@ -176,16 +177,6 @@ router.post('/:handle/application', ensureAuthenticated, async (req, res) => {
         res.json(applicaion)
       });
   }
-});
-router.get('/:handle/application', ensureAuthenticated, async (req, res) => {
-  const application = await Application.findOne({ jobHandle: req.params.handle });
-  if (application.user != req.user.id) {
-    req.flash('error_msg', 'You dont have permission to view this application');
-    res.redirect(`/jobs/${application.jobHandle}`)
-  } else {
-    res.json(application)
-  }
-
 });
 
 router.get('/:handle/applications', ensureAuthenticated, async (req, res) => {
