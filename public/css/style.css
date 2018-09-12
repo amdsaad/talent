@@ -3,6 +3,9 @@
 @import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
 
+.header-dark .header, .header.header-dark {
+  border-bottom: none;
+}
 .animated {
   animation-delay: 2s;
   animation-duration: 5s;

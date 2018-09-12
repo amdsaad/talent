@@ -1,11 +1,32 @@
-{{> _header}}
-<div style="margin-top: -70px;" id="manage-resume-header" class="p-4 py-lg-10 bg-grey-dark text-center overlay overlay-default overlay-op-9 mb-3"
-  data-bg-img="https://res.cloudinary.com/dgghoxlug/image/upload/v1536677599/estee-janssens-396887-unsplash.jpg">
-  <div id="mange-resume-heading"></div>
-  <h2 class="display-4-mod text-dark text-white text-capitalize">Manage your resume
-    <i class="em em-point_down"></i>
-  </h2>
-
+{{> _headerDark}}
+<div class="container-fluid bg-dark no-page-header" id="resumes-top-nav">
+  <div class="container">
+    <div class="pt-3 pb-3 d-inline-block">
+      <a class="text-grey d-inline-block m-2" data-toggle="collapse" href="#template" role="button" aria-expanded="false" aria-controls="template">
+        <i class="em em-abcd mr-2"></i>Templates</a>
+      <a class="text-grey m-2 d-inline-block" data-toggle="collapse" href="#coveringLetter" role="button" aria-expanded="false" aria-controls="coveringLetter">
+        <i class="em em-memo mr-2"></i>Covering Letter</a>
+      <a class="text-grey m-2 d-inline-block" data-toggle="collapse" href="#keyWords" role="button" aria-expanded="false" aria-controls="keyWords">
+        <i class="em em-unlock mr-2"></i>Keywords</a>
+    </div>
+  </div>
+</div>
+<div class="container-fluid  bg-green-bright bg-op-5" >
+  <div class="row justify-content-center collapse" id="template">
+    <div class="col-md-8">
+      <h4 class="mt-4 text-center">Change Resume Template</h4>
+    </div>
+  </div>
+  <div class="row justify-content-center collapse" id="coveringLetter">
+    <div class="col-md-8">
+      <h4 class="mt-4 text-center">Add covering letter</h4>
+    </div>
+  </div>
+  <div class="row justify-content-center collapse" id="keyWords">
+    <div class="col-md-8">
+      <h4 class="mt-4 text-center">Keywords</h4>
+    </div>
+  </div>
 </div>
 <div class="container-fluid pt-3" id="resumes">
   <div class="row justify-content-center">
