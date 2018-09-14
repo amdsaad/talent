@@ -7,12 +7,21 @@ const JobWantedSchema = new Schema({
     type: String,
     required: true
   },
-  body: {
+  description: {
+    type: String,
+    required: true
+  },
+  currentJob: {
+    type: String,
+    required: true
+  },
+  desiredJob: {
     type: String,
     required: true
   },
   handle: {
     type: String,
+    unique:true,
     required: true
   },
   user: {
@@ -22,6 +31,14 @@ const JobWantedSchema = new Schema({
   resume: {
     type: Schema.Types.ObjectId,
     ref: 'resumes'
+  },
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: 'companies'
+  },
+  category: {
+    type: String,
+    required: true
   },
   date: {
     type: Date,

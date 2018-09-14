@@ -1,7 +1,7 @@
 'use strict';
 
 var numberOfItems = $('#page .list-group').length; // Get total number of the items that should be paginated
-var limitPerPage = 7; // Limit of items per each page
+var limitPerPage = 4; // Limit of items per each page
 $('#page .list-group:gt(' + (limitPerPage - 1) + ')').hide(); // Hide all items over page limits (e.g., 5th item, 6th item, etc.)
 var totalPages = Math.round(numberOfItems / limitPerPage); // Get number of pages
 $(".pagination").append("<li class='current-page active page-item'><a class='page-link' href='javascript:void(0)'>" + 1 + "</a></li>"); // Add first page marker

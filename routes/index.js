@@ -14,30 +14,36 @@ router.get('/', ensureGuest, async (req, res) => {
   const latestPosts = await Post.find({ status: 'public' }).limit(5);
   res.render('index/welcome', {
     latestPosts: latestPosts,
-    title:"Talent Liken : Connecting Talents - Find your job",
+    title: "Talent Liken : Connecting Talents - Find your job",
     metaDescription: "Talent Liken connecting Talents (job seeker and employer), join us to post free jobs or create Free Professional Resume Templates focus on increasing your visibility.",
-    keywords:"find job, post a resume, build online resume, resume template, cv template, post free jobs, career advise"
+    keywords: "find job, post a resume, build online resume, resume template, cv template, post free jobs, career advise"
   });
 });
 
 router.post('/job-wanted', async (req, res) => {
-
   const resume = await Resume.findOne({ 'user': req.user.id }).populate('user');
   if (!resume) {
-    res.json({msg: "you do not have a resume, please post your resume"})
+    res.json({ msg: "you do not have a resume, please post your resume" })
 
   } else {
+    const allJobWanted = await JobWanted.find();
+    const count = allJobWanted.length + 277;
+    console.log(count);
     var str = req.user.name;
     str = str.replace(/\s+/g, '-').toLowerCase();
     jTitle = req.body.title.replace(/\s+/g, '-').toLowerCase();
-    const randomStr = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    const handle = jTitle + "-" + str + "-" + randomStr;
+    jDesire = req.body.desiredJob.replace(/\s+/g, '-').toLowerCase();
+    const handle = jTitle + "-" + str + "-" + jDesire + "-" + count;
 
     const newJobWanted = {
       handle: handle,
       title: req.body.title,
-      body: req.body.body,
+      currentJob: resume.jobTitle,
+      desiredJob: req.body.desiredJob,
+      description: req.body.description,
       resume: resume.id,
+      category: resume.specialisms,
+      company:req.body.company,
       user: req.user.id
     }
     new JobWanted(newJobWanted)
@@ -46,18 +52,33 @@ router.post('/job-wanted', async (req, res) => {
         res.json(jobwanted)
       });
   }
-
-
 });
 
-router.get('/job-wanted', (req, res) => {
-  res.send('All job wanted list');
+router.get('/job-wanted', async (req, res) => {
+  if (req.user) {
+    if (req.user.role == 'candidate') {
+      const resume = await Resume.findOne({ 'user': req.user.id }).populate('user');
+      console.log(resume);
+      const comp = await Company.find();
+      res.status(200).render('index/jobWanted',{
+        company : comp,
+        resume: resume,
+        title:"Job wanted -Talent Liken : Connecting Talents - Find your job",
+      })
+    }
+  } else {
+    res.status(200).send('visiotr page')
+  }
+
 })
 
 router.get('/job-wanted/:handle', async (req, res) => {
-
-  const jobWanted = await JobWanted.findOne({ handle: req.params.handle }).populate('user');
-  res.send('Show Single Job wanted')
+  const jobWanted = await JobWanted.findOne({ handle: req.params.handle }).populate('user').populate('resume');
+  if (!jobWanted) {
+    res.status(404).render('index/404');
+  } else {
+    res.status(200).json(jobWanted);
+  }
 
 });
 

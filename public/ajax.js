@@ -749,8 +749,11 @@ $('#educ-list').on('submit', '.delete-educ-form', function (e) {
 });
 /* End of Education */
 
+$('#job-wanted-list').on('click', '.job-wanted-btn', function () {
+  $(this).parent().siblings('.add-job-wanted').toggle();
+});
 // Job Wanted Post request
-$('#add-job-wanted').submit(function (e) {
+$('#job-wanted-list').on('submit','.add-job-wanted',function (e) {
   e.preventDefault();
 
   var jobWantedtItem = $(this).serializeArray();
@@ -763,10 +766,10 @@ $('#add-job-wanted').submit(function (e) {
     </div>`
 
       )
-      $('#add-job-wanted').find('.form-control').val('');
-      $(".new-job-wanted").toggle();
+      $('.add-job-wanted').find('.form-control').val('');
+      $(".add-job-wanted").toggle();
       $("#danger-alert").fadeTo(2000, 5000).slideUp(1000, function () {
-        $("#success-alert").alert('close');
+        $("#danger-alert").alert('close');
       });
     } else {
       $('#msgs').html(
@@ -777,13 +780,12 @@ $('#add-job-wanted').submit(function (e) {
     </div>`
 
       )
-      $('#add-job-wanted').find('.form-control').val('');
-      $(".new-job-wanted").toggle();
+      $('.add-job-wanted').find('.form-control').val('');
+      $(".add-job-wanted").hide();
       $("#success-alert").fadeTo(2000, 5000).slideUp(1000, function () {
         $("#success-alert").alert('close');
       });
     }
-
   });
 });
 

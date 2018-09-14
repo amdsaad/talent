@@ -64,14 +64,31 @@
                 <i class="fas fa-bullhorn text-white "></i>
               </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body text-left">
               <div class="p-3">
                 <form method="post" action="/job-wanted" id="add-job-wanted">
                   <div class="form-group row">
-                    <input type="text" class="form-control " placeholder="Title" name="title" required />
+                    <div class="col-md-12">
+                      <label for="description">Title</label>
+                      <input type="text" class="form-control " placeholder="Title" name="title" required />
+                    </div>
                   </div>
                   <div class="form-group row">
-                    <textarea class="form-control" name="body" rows="4" required>{{resume.bio}}</textarea>
+                    <div class="col-md-6">
+                      <label for="description">Current Job Title</label>
+                      <input type="text" class="form-control " placeholder="I.e : Fron Office Manager" name="currentJob" required value="{{resume.jobTitle}}"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="description">Desired Job</label>
+                      <input type="text" class="form-control " placeholder="I.e : Hotel Manager" name="desiredJob" required />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <label for="description">Description</label>
+                      <textarea class="form-control" name="description" rows="4" required></textarea>
+                    </div>
                   </div>
                   <div class="form-group row">
                     <input type="submit" class="btn btn-blue-dark btn-shadow" />
@@ -121,8 +138,7 @@
   </div>
 </div>
 <div class="overlay bg-grey-dark overlay-op-9 text-left py-5 pt-lg-7
- " data-animate="fadeIn" 
-  data-bg-img="https://source.unsplash.com/collection/385548/1600X900" id="dashboard-find-job">
+ " data-animate="fadeIn" data-bg-img="https://source.unsplash.com/collection/385548/1600X900" id="dashboard-find-job">
   <div class="container py-4 py-lg-7">
     <div class="row justify-content-center">
       <h2 class="display-4 text-white mb-3 text-left" data-animate="fadeIn" data-animate-delay="0.2">
@@ -132,8 +148,7 @@
       <div class="col-md-8">
         <form action="/jobs" method="GET" class="row mb-2 mt-3 w-auto pos-relative align-items-center ">
           <div class="col-md-9 mb-3">
-            <input name="search" class="form-control form-control-lg text-center text-lg-left pl-lg-5" type="text"
-              placeholder="Search by Job title ie. Web Developer">
+            <input name="search" class="form-control form-control-lg text-center text-lg-left pl-lg-5" type="text" placeholder="Search by Job title ie. Web Developer">
             <hr class="hr-inverse hr-lg mx-auto mt-1 mb-0">
           </div>
           <div class="col-md-3">

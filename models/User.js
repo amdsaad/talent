@@ -17,6 +17,10 @@ const UserSchema = new Schema({
     type:String,
     default:'candidate'
   },
+  admin:{
+    type:Boolean,
+    default:false
+  }
 
 })
 

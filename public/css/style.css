@@ -83,6 +83,9 @@ main {
 .small-image{
   width: 20px;
 }
+.small-img-comp{
+  width: 200px;
+}
 .user-profile{
 display: block;
 text-align: center;
@@ -185,6 +188,9 @@ text-decoration: none;
   display: none;
 }
 .edit-educ-form{
+  display: none;
+}
+.add-job-wanted{
   display: none;
 }
 .bg-img, .bg-img-cover {
