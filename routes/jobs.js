@@ -7,6 +7,7 @@ const Application = mongoose.model('applications');
 const SavedJob = mongoose.model('savedJobs');
 const Company = mongoose.model('companies');
 const Job = mongoose.model('jobs');
+const moment = require('moment');
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 
 router.get('/add', ensureAuthenticated, async (req, res) => {
@@ -26,7 +27,14 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
     res.redirect('/auth/employers/login');
   }
 });
+router.get('/amd', (req, res) => {
+  var date = moment();
+  var expDate = moment().add(30, 'day');
+  var isExpired = moment(date).isAfter(expDate);
 
+  res.send(isExpired)
+
+});
 router.post('/', ensureAuthenticated, async (req, res) => {
   if (req.user.role == 'employer') {
     const jobs = await Job.find();
@@ -35,12 +43,13 @@ router.post('/', ensureAuthenticated, async (req, res) => {
     var str_title = req.body.title;
     var str_company = company.name;
     var str_address = req.body.address;
+    var date = moment();
+    var expDate = moment().add(30, 'day');
 
     str1 = str_title.replace(/\s+/g, '-').toLowerCase();
     str2 = str_company.replace(/\s+/g, '-').toLowerCase();
     str3 = str_address.replace(/\s+/g, '-').toLowerCase();
     const handle = str1 + "-" + str2 + "-" + str3 + "-" + 'talent-liken-job-vacancy-' + count;
-
     const newJob = {
       handle: handle,
       title: req.body.title,
@@ -56,7 +65,9 @@ router.post('/', ensureAuthenticated, async (req, res) => {
       deadline: req.body.deadline,
       address: req.body.address,
       user: req.user.id,
-      company: company._id
+      company: company._id,
+      date: date,
+      expiryDate: expDate
     }
     new Job(newJob)
       .save()
@@ -71,7 +82,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 
 });
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   var noMatch = null;
   if (req.query.search) {
     const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -86,10 +97,14 @@ router.get('/', (req, res) => {
       }
     });
   } else {
-    Job.find()
+    var today = new Date();
+    console.log(today)
+    Job.find({ expiryDate: { $gte: today } })
       .populate('company')
       .sort({ date: 'desc' })
       .then(jobs => {
+
+
         count = jobs.length;
         res.render('jobs/index', {
           jobs: jobs,
@@ -113,6 +128,12 @@ router.get('/my-maching-jobs', ensureAuthenticated, async (req, res) => {
 router.get('/:handle', async (req, res) => {
   const job = await Job.findOne({ handle: req.params.handle }).populate('company').populate('user');
   let applied = false;
+  let isActive = true;
+  var today = moment();
+  if (moment(today).isAfter(job.expiryDate)) {
+    isActive = false
+  };
+
   if (job) {
     companyJobs = job.company._id;
     jobs = await Job.find({ company: companyJobs });
@@ -129,6 +150,7 @@ router.get('/:handle', async (req, res) => {
           jobs: jobs,
           resume: resume,
           applied: true,
+          isActive: isActive,
           saved: saved,
           userApplication: userApplication
         });
@@ -138,6 +160,7 @@ router.get('/:handle', async (req, res) => {
           applicationsCount: applicationsCount,
           jobs: jobs,
           resume: resume,
+          isActive: isActive,
           saved: saved,
           applied: false
         });
@@ -146,6 +169,7 @@ router.get('/:handle', async (req, res) => {
       res.render('jobs/view', {
         job: job,
         jobs: jobs,
+        isActive: isActive,
         applicationsCount: applicationsCount,
         applied: applied
       });
@@ -219,6 +243,7 @@ router.delete('/:handle/saved-jobs/:id', ensureAuthenticated, (req, res) => {
     }
   });
 });
+
 
 function escapeRegex(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");

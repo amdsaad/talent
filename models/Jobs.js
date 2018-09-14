@@ -19,7 +19,8 @@ const JobSchema = new Schema({
   address: { type: String, required: true },
   user: { type: Schema.Types.ObjectId, ref: 'users' },
   company: { type: Schema.Types.ObjectId, ref: 'companies' },
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  expiryDate: { type: Date },
 })
 
 //create collection and add schema
