@@ -18,16 +18,20 @@
       <div class="tab-content py-3">
         <div class="tab-pane active show menu-tab-1" role="tabpanel">
           <div class="row justify-content-md-center text-center">
-            <div class="col-lg-4 py-2 cursor" id="jobWanted">
-              <i class="fas fa-bullhorn text-success icon-3x op-6"></i>
-              <h5 class=" text-dark op-9 mt-2 mb-2"> New Challange
-                <span class="text-danger op-9">?</span>
+            <div class="col-lg-4 py-2 cursor">
+              <a href="/job-wanted">
+                <i class="fas fa-bullhorn text-success icon-3x op-6"></i>
+              </a>
+              <a href="/job-wanted">
+                <h5 class=" text-dark op-9 mt-2 mb-2"> New Challange</a>
+              <span class="text-danger op-9">?</span>
               </h5>
-              <p class="text-lg mb-0">Looking for
-                <span class="text-info">New Challange ?</span> make an announcement to
-                <strong>Employers</strong> and show your Talent
-                <i class="em em-muscle"></i>
-              </p>
+              <a style="text-decoration: none;" class="text-muted" href="/job-wanted">
+                <p class="text-lg mb-0">Looking for
+                  <span class="text-info">New Challange ?</span> contact
+                  <strong>Employers</strong> direct via job wanted request
+                </p>
+              </a>
             </div>
             <div class="col-lg-4 py-2">
               {{#if resume}}
@@ -50,51 +54,6 @@
                 Tips & Resources
               </h5>
               <p class="text-lg mb-0">Abbas aliquam esse exputo nobis praesent saluto sino valde volutpat.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="new-job-wanted" id="jwanted">
-      <div class="row justify-content-md-center">
-        <div class="col-md-10">
-          <div class="card bg-primary text-white text-center shadow-sm">
-            <div class="card-header">
-              <h5>Add Job Wanted Announcement
-                <i class="fas fa-bullhorn text-white "></i>
-              </h5>
-            </div>
-            <div class="card-body text-left">
-              <div class="p-3">
-                <form method="post" action="/job-wanted" id="add-job-wanted">
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <label for="description">Title</label>
-                      <input type="text" class="form-control " placeholder="Title" name="title" required />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-6">
-                      <label for="description">Current Job Title</label>
-                      <input type="text" class="form-control " placeholder="I.e : Fron Office Manager" name="currentJob" required value="{{resume.jobTitle}}"
-                      />
-                    </div>
-                    <div class="col-md-6">
-                      <label for="description">Desired Job</label>
-                      <input type="text" class="form-control " placeholder="I.e : Hotel Manager" name="desiredJob" required />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <label for="description">Description</label>
-                      <textarea class="form-control" name="description" rows="4" required></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <input type="submit" class="btn btn-blue-dark btn-shadow" />
-                  </div>
-                </form>
-              </div>
             </div>
           </div>
         </div>
