@@ -99,7 +99,6 @@ router.get('/', async (req, res) => {
     });
   } else {
     var today = new Date();
-    console.log(today)
     Job.find({ expiryDate: { $gte: today } })
       .populate('company')
       .sort({ date: 'desc' })
@@ -125,13 +124,9 @@ router.get('/my-maching-jobs', ensureAuthenticated, async (req, res) => {
 });
 
 router.get('/:handle', async (req, res) => {
-  const job = await Job.findOne({ handle: req.params.handle }).populate('company').populate('user');
+  var today = new Date();
+  const job = await Job.findOne({ handle: req.params.handle, expiryDate: { $gte: today }  }).populate('company').populate('user');
   let applied = false;
-  let isActive = true;
-  var today = moment();
-  if (moment(today).isAfter(job.expiryDate)) {
-    isActive = false
-  };
 
   if (job) {
     companyJobs = job.company._id;
@@ -149,7 +144,6 @@ router.get('/:handle', async (req, res) => {
           jobs: jobs,
           resume: resume,
           applied: true,
-          isActive: isActive,
           saved: saved,
           userApplication: userApplication
         });
@@ -159,7 +153,6 @@ router.get('/:handle', async (req, res) => {
           applicationsCount: applicationsCount,
           jobs: jobs,
           resume: resume,
-          isActive: isActive,
           saved: saved,
           applied: false
         });
@@ -168,7 +161,6 @@ router.get('/:handle', async (req, res) => {
       res.render('jobs/view', {
         job: job,
         jobs: jobs,
-        isActive: isActive,
         applicationsCount: applicationsCount,
         applied: applied
       });
