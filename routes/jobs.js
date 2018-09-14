@@ -85,8 +85,9 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 router.get('/', async (req, res) => {
   var noMatch = null;
   if (req.query.search) {
+    var today = new Date();
     const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-    Job.find({ title: regex }, function (err, jobs) {
+    Job.find({ 'expiryDate': { $gte: today },'title': regex }, function (err, jobs) {
       if (err) {
         console.log(err);
       } else {
@@ -103,8 +104,6 @@ router.get('/', async (req, res) => {
       .populate('company')
       .sort({ date: 'desc' })
       .then(jobs => {
-
-
         count = jobs.length;
         res.render('jobs/index', {
           jobs: jobs,
