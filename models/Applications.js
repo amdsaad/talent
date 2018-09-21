@@ -27,6 +27,24 @@ const ApplicationsSchema = new Schema({
   applied: {
     type: Boolean,
   },
+  status: {
+    type: String,
+    default:'sent'
+  },
+  comments: [{
+    commentBody: {
+      type: String,
+      required: true
+    },
+    commentDate: {
+      type: Date,
+      default: Date.now
+    },
+    commentUser: {
+      type: Schema.Types.ObjectId,
+      ref: 'users'
+    }
+  }],
   date: {
     type: Date,
     default: Date.now

@@ -87,7 +87,7 @@ router.get('/', async (req, res) => {
   if (req.query.search) {
     var today = new Date();
     const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-    Job.find({ 'expiryDate': { $gte: today },'title': regex }, function (err, jobs) {
+    Job.find({ 'expiryDate': { $gte: today }, 'title': regex }, function (err, jobs) {
       if (err) {
         console.log(err);
       } else {
@@ -125,7 +125,7 @@ router.get('/my-maching-jobs', ensureAuthenticated, async (req, res) => {
 
 router.get('/:handle', async (req, res) => {
   var today = new Date();
-  const job = await Job.findOne({ handle: req.params.handle, expiryDate: { $gte: today }  }).populate('company').populate('user');
+  const job = await Job.findOne({ handle: req.params.handle, expiryDate: { $gte: today } }).populate('company').populate('user');
   let applied = false;
 
   if (job) {
@@ -184,6 +184,8 @@ router.post('/:handle/application', ensureAuthenticated, async (req, res) => {
       jobTitle: job.title,
       jobHandle: job.handle,
       applied: true,
+      status: req.body.status,
+      employerComment: req.body.employerComment,
       coveringLetter: req.body.coveringLetter,
     }
     new Application(newApplication)
@@ -194,15 +196,57 @@ router.post('/:handle/application', ensureAuthenticated, async (req, res) => {
   }
 });
 
+router.post('/application/comment/:id', ensureAuthenticated, async (req, res) => {
+  const application = await Application.findOne({ _id: req.params.id });
+  const newComment = {
+    commentBody: req.body.commentBody,
+    commentUser: req.user.id
+  }
+
+  application.comments.unshift(newComment);
+  application.save()
+  res.status(200).json(application);
+});
+
+// update application by employer
+router.put('/application/:id', async (req, res) => {
+  const application = await Application.findById(req.params.id);
+  application.status = req.body.status;
+  application.save()
+  res.status(200).json(application);
+});
+
 router.get('/:handle/applications', ensureAuthenticated, async (req, res) => {
-  const application = await Application.find({ jobHandle: req.params.handle }).populate('resume');
+  let shortlisted = false;
+  const job = await Job.findOne({ handle: req.params.handle });
+  const applications = await Application.find({ jobHandle: req.params.handle, status: 'sent' }).populate('resume');
   if (req.user.role != 'employer') {
     req.flash('error_msg', 'You dont have permission to view this applications');
     res.redirect(`/jobs/${req.params.handle}`);
   } else {
-    res.status(200).json(application);
+    res.status(200).render('jobs/applications', {
+      applications,
+      applicationHeading: "applications",
+      job,
+      shortlisted,
+    });
   }
-
+});
+router.get('/:handle/applications/shortlisted', ensureAuthenticated, async (req, res) => {
+  let shortlisted = true;
+  const job = await Job.findOne({ handle: req.params.handle });
+  const applications = await Application.find({ jobHandle: req.params.handle, status: 'shortlisted' }).populate('resume');
+  if (req.user.role != 'employer') {
+    req.flash('error_msg', 'You dont have permission to view this applications');
+    res.redirect(`/jobs/${req.params.handle}`);
+  } else {
+    res.status(200).render('jobs/applications', {
+      applications,
+      applicationHeading: "shortlisted",
+      job,
+      shortlisted,
+    });
+  }
 });
 
 router.post('/:handle/saved-jobs', async (req, res) => {

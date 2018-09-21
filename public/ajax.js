@@ -1,4 +1,3 @@
-
 $('#new-post-form').submit(function (e) {
   e.preventDefault();
 
@@ -274,7 +273,7 @@ $('#edit-basic-resume').on('submit', '.basic-info-resume-form', function (e) {
 });
 
 /* Resume Default Style Edit Start */
-$('#edit-resume').on('submit', '.style-resume-form', function (e) {
+$('#edit-resume-template').on('submit', '.style-resume-form', function (e) {
   e.preventDefault();
   var publ = $(this).serializeArray();
   var actionUrl = $(this).attr('action');
@@ -285,7 +284,7 @@ $('#edit-resume').on('submit', '.style-resume-form', function (e) {
     type: 'PUT',
     originalItem: $originalItem,
     success: function (data) {
-      window.location.href = window.location.href;
+      window.location.reload(true)
     }
   });
 });
@@ -370,7 +369,7 @@ $('#add-exp').submit(function (e) {
         </div>
         <div class="form-group row">
           <div class="col-md-12">
-            <textarea class="form-control border-op-8 border-grey">$${data.description}</textarea>
+            <textarea class="form-control border-op-8 border-grey" name="exper[description]">$${data.description}</textarea>
           </div>
         </div>
         <input type="submit" value="Update" class="btn btn-success" />
@@ -476,14 +475,14 @@ $('#exp-list').on('submit', '.edit-exp-form', function (e) {
         </div>
         <div class="form-group row">
           <div class="col-md-12">
-            <textarea class="form-control border-op-8 border-grey">$${data.description}</textarea>
+            <textarea class="form-control border-op-8 border-grey" name="exper[description]">${data.description}</textarea>
           </div>
         </div>
         <input type="submit" value="Update" class="btn btn-success" />
         <input type="button" value="cancel" class="btn btn-warning exp-cxl-edit-btn" />
       </form>
         `
-        
+
       )
       $('#exp-msg').html(
         `
@@ -603,7 +602,7 @@ $('#add-educ').submit(function (e) {
       </div>
       <div class="form-group row">
         <div class="col-md-12">
-          <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
+          <textarea class="form-control border-op-8 border-grey" name="education[description]">${data.description}</textarea>
         </div>
       </div>
       <input type="submit" value="Update" class="btn btn-success" />
@@ -708,7 +707,7 @@ $('#educ-list').on('submit', '.edit-educ-form', function (e) {
       </div>
       <div class="form-group row">
         <div class="col-md-12">
-          <textarea class="form-control border-op-8 border-grey">${data.description}</textarea>
+          <textarea class="form-control border-op-8 border-grey" name="education[description]">${data.description}</textarea>
         </div>
       </div>
       <input type="submit" value="Update" class="btn btn-success" />
@@ -753,7 +752,7 @@ $('#job-wanted-list').on('click', '.job-wanted-btn', function () {
   $(this).parent().siblings('.add-job-wanted').toggle();
 });
 // Job Wanted Post request
-$('#job-wanted-list').on('submit','.add-job-wanted',function (e) {
+$('#job-wanted-list').on('submit', '.add-job-wanted', function (e) {
   e.preventDefault();
 
   var jobWantedtItem = $(this).serializeArray();
@@ -862,8 +861,8 @@ $('#job-cont-main').on('submit', '.edit-save-job-form', function (e) {
     data: savedJob,
     type: 'DELETE',
     success: function (data) {
-        $('.fav-job').html(
-          `<div class="alert alert-success" id="success-alert">
+      $('.fav-job').html(
+        `<div class="alert alert-success" id="success-alert">
           <button type="button" class="close" data-dismiss="alert">x</button>
           <strong>Success! : Job removed from favorites</strong>
            </div>
@@ -873,12 +872,88 @@ $('#job-cont-main').on('submit', '.edit-save-job-form', function (e) {
             </button>
           </form>      
       `)
-        $("#success-alert").fadeTo(2000, 5000).slideUp(1000, function () {
-          $("#success-alert").alert('close');
-        });
+      $("#success-alert").fadeTo(2000, 5000).slideUp(1000, function () {
+        $("#success-alert").alert('close');
+      });
     }
   })
 });
 
+//appliation comment
+$('#page-applications').on('submit', '.application-comment-form', function (e) {
+  e.preventDefault();
+  var application = $(this).serializeArray();
+  var actionUrl = $(this).attr('action');
+  var $originalItem = $(this).parent('.application-comments');
+  $.ajax({
+    url: actionUrl,
+    data: application,
+    type: 'POST',
+    originalItem: $originalItem,
+    success: function (data) {
+      var commnetDate = $.format.date(data.comments[0].commentDate, "dd MMM yyyy");
+      this.originalItem.prepend(`
+      <li class="media mb-3 pos-relative">
+      <div class="media-body">
+        <ul class="list-inline blog-meta text-muted">
+          <li class="list-inline-item">
+            <i class="fa fa-calendar"></i> ${commnetDate}</li>
+        </ul>
+        <p class="mb-1">${data.comments[0].commentBody}</p>
+      </div>
+    </li>
+      `
+      )
+      $('.application-comment-form').find('.form-control').val('');
 
 
+    }
+  });
+});
+
+//appliation status
+$('#page-applications').on('submit', '.application-shorlist-form', function (e) {
+  e.preventDefault();
+  var application = $(this).serializeArray();
+  var actionUrl = $(this).attr('action');
+  var $originalItem = $(this).parent('.application-stat');
+  $.ajax({
+    url: actionUrl,
+    data: application,
+    type: 'PUT',
+    originalItem: $originalItem,
+    success: function (data) {
+      if (data.status === "shortlisted") {
+        this.originalItem.html(
+          `
+          <div class="alert alert-success"> <i class="fas fa-check"></i>  Success! Application Status Updated</div>
+          <form action="/jobs/application/${data._id}" class="d-inline-block application-shorlist-form" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="status" value="sent">
+          <button type="submit" class="btn btn-outline-primary d-inline-block" id="application-shortlist">
+            <i class="em em-heart mr-2"></i>Shortlisted</button>
+        </form>        
+          `
+        )
+        $(".alert").fadeTo(800, 800).slideUp(800, function () {
+          $(".alert").alert('close');
+        });
+
+      } else if (data.status === "sent") {
+        this.originalItem.html(
+          `
+          <div class="alert alert-success"> <i class="fas fa-check"></i>  Success! Application Status Updated</div>
+          <form action="/jobs/application/${data._id}" class="d-inline-block application-shorlist-form" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="status" value="shortlisted">
+          <button type="submit" class="btn btn-outline-primary d-inline-block" id="application-shortlist">
+            <i class="em em-yellow_heart mr-2"></i>Shortlist</button>
+        </form>        
+          `
+        )
+        $(".alert").fadeTo(800, 800).slideUp(800, function () {
+          $(".alert").alert('close');
+        });
+      }
+
+    }
+  });
+});

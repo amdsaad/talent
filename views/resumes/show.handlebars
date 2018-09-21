@@ -132,5 +132,144 @@
   </div>
 </div>
 {{else}}
-<h1>One Col</h1>
+<div class="container">
+  <div class="row pt-3">
+    <div class="col-md-2 col-lg-2" id="resume-side">
+      <ul class="list-group  pt-2 pb-2" id="edit-basic-pic-resume">
+        <li class="list-group-item" id="basic-info-resume-pic-area">
+          <div class="text-grey-dark">
+            <img class="rounded" src="{{resumes.pictureUrl}}" alt="">
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-10 col-lg-10">
+      <ul class="list-group  pt-2 pb-2" id="edit-basic-resume">
+        <li class="list-group-item" id="basic-info-resume-area">
+          <div class="resume-title mb-3">
+            <div class="pt-5 text-center rounded-bottom">
+              <h3 class="display-3 text-dark mb-2">
+                <strong>{{resumes.fullName}}</strong>
+              </h3>
+              <h6 class="display-4 text-muted">{{resumes.jobTitle}}</h6>
+            </div>
+          </div>
+          <div class=" row justify-content-center">
+            <i class="fas fa-map-marker-alt text-muted"></i>
+            <p class="ml-1 text-muted">{{resumes.location}}</p>
+            <i class="fas fa-phone-square text-muted ml-3"></i>
+            <p class="ml-1 text-muted">{{resumes.contactNumber}}</p>
+            <i class="fas fa-at text-muted ml-3"></i>
+            <p class="ml-1 text-muted">{{resumes.email}}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    {{!-- Profile Start --}}
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="list-group  pt-2 pb-2" id="edit-basic-about-resume">
+            <li class="list-group-item" id="basic-info-resume-about-area">
+              <div class="text-grey-dark mt-3">
+                <h4 class="text-blue-dark display-4" id="resume-heading">About</h4>
+                <div class="under-heading text-blue mb-2"></div>
+                <p>{{{resumes.bio}}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {{!-- Profile End --}} {{!-- Start of Experience --}}
+    <div class="col-md-12 bg-op-1 bg-green">
+      <div class="row justify-content-between">
+        <div class="col-md-12">
+        </div>
+        <div class="col-md-8">
+          <div class="text-left rounded p-3">
+            <h4 class="text-blue-dark display-4" id="resume-heading">Experience</h4>
+            <div class="under-heading text-blue "></div>
+          </div>
+        </div>
+      </div>
+      {{!-- end Add Exp --}} {{!-- Exp List Start --}}
+      <ul class="list-group" id="exp-list">
+        {{#each experiance}}
+        <li class="list-group-item">
+          <div class="row m-2">
+            <div class="col-sm-9 col-md-8 col-lg-8">
+              <div class=" text-left pt-2 pb-2">
+                <h5>{{title}} @
+                  <span class="text-blue  ">{{company}} - {{location}}</span>
+                </h5>
+              </div>
+            </div>
+            <div class="col-sm-3 col-md-4 col-lg-4">
+              <div class="float-right pt-2 pb-2">
+                {{#if this.to}}
+                <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                {{else}}
+                <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                {{/if}}
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="text-grey-dark">
+                <p>{{this.description}}</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+      {{!-- Exp List End --}}
+    </div>
+    {{!-- End of Experience --}} {{!-- Start of Education --}}
+    <div class="col-md-12 bg-op-1 bg-green">
+      <div class="row justify-content-between">
+        <div class="col-md-12">
+          <div id="educ-msg"></div>
+        </div>
+        <div class="col-md-8">
+          <div class="text-left rounded p-3">
+            <h4 class="text-blue-dark display-4" id="resume-heading">Education</h4>
+            <div class="under-heading text-blue "></div>
+          </div>
+        </div>
+      </div>
+      {{!-- Education List Start --}}
+      <ul class="list-group" id="educ-list">
+        {{#each education}}
+        <li class="list-group-item p-2">
+          <div class="row m-2">
+            <div class="col-sm-9 col-md-8 col-lg-8">
+              <div class=" text-left pt-2 pb-2">
+                <h5>{{school}}-
+                  <span class="text-blue"> {{degree}} Degree - {{fieldofstudy}} - {{location}}</span>
+                </h5>
+              </div>
+            </div>
+            <div class="col-sm-3 col-md-4 col-lg-4">
+              <div class="float-right pt-2 pb-2">
+                {{#if this.to}}
+                <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                {{else}}
+                <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                {{/if}}
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="text-grey-dark">
+                <p>{{this.description}}</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+      {{!-- Exp List End --}}
+    </div>{{!-- end of Education --}}
+  </div>
+</div>
 {{/if}}
