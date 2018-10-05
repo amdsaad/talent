@@ -29,7 +29,7 @@ const ApplicationsSchema = new Schema({
   },
   status: {
     type: String,
-    default:'sent'
+    default: 'sent'
   },
   comments: [{
     commentBody: {
@@ -44,6 +44,25 @@ const ApplicationsSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'users'
     }
+  }],
+  activities: [{
+    activityName: {
+      type: String
+    },
+    activityBody: {
+      type: String,
+    },
+    activityUser: {
+      type: Schema.Types.ObjectId,
+      ref: 'users'
+    },
+    activityUserName: {
+      type: String,
+    },
+    activityDate: {
+      type: Date,
+      default: Date.now
+    },
   }],
   date: {
     type: Date,

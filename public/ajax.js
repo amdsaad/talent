@@ -137,6 +137,49 @@ $('#edit-basic-pic-resume').on('submit', '.basic-info-resume-pic-form', function
     }
   });
 });
+$('#edit-basic-pic-resume').on('submit', '.basic-info-resumeDefualt-pic-form', function (e) {
+  e.preventDefault();
+  var pic = new FormData(this);
+  console.log(pic)
+  var actionUrl = $(this).attr('action');
+  var $originalItem = $(this).parent('.list-group-item');
+  $.ajax({
+    url: actionUrl,
+    data: pic,
+    type: 'PUT',
+    processData: false,
+    contentType: false,
+    originalItem: $originalItem,
+    success: function (data) {
+      $('#edit-basic-pic-resume').html(
+        `
+        <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-pic-edit">
+        <form method="post" action="/candidate-resume/${data._id}}" class="basic-info-resumeDefualt-pic-form p-2"
+          enctype="multipart/form-data">
+          <div class="form-group text-center mt-2">
+            <input type="file" name="picture" id="">
+          </div>
+          <input type="submit" value="Upload" class="btn btn-success" />
+          <input type="button" value="Cancel" class="btn btn-secondary cxl-pic-resume" />
+        </form>
+      </li>
+      <li class="list-group-item" id="basic-info-resume-pic-area">
+        <img class="rounded-circle mx-auto d-block" src="${data.pictureUrl}" alt="" style="width:150px; height: 150px;">
+        <button class="btn btn-outline-dark edit-basic-pic-btn btn-sm mx-auto d-block">Edit</button>
+      </li>
+        `
+      )
+      $('#resume-messages').html(
+        `
+        <div class="alert alert-success"> <i class="fas fa-check"></i>  Your photo has been updated</div>
+        `
+      )
+      $(".alert").fadeTo(800, 800).slideUp(800, function () {
+        $(".alert").alert('close');
+      });
+    }
+  });
+});
 
 /* Resume ic End */
 /* Edit Basic Resume ( About) Start */
@@ -885,13 +928,18 @@ $('#page-applications').on('submit', '.application-comment-form', function (e) {
   var application = $(this).serializeArray();
   var actionUrl = $(this).attr('action');
   var $originalItem = $(this).parent('.application-comments');
+  var $activity = $(this).parent().offsetParent().offsetParent().siblings().children('.list-unstyled');
+  console.log($activity)
   $.ajax({
     url: actionUrl,
     data: application,
     type: 'POST',
     originalItem: $originalItem,
+    originalActivity: $activity,
     success: function (data) {
-      var commnetDate = $.format.date(data.comments[0].commentDate, "dd MMM yyyy");
+      console.log(data)
+      var commnetDate = $.format.date(data.comments[0].commentDate, "HH:mm dd MMM yyyy");
+      var activityDate = $.format.date(data.activities[0].activityDate, "HH:mm dd MMM yyyy");
       this.originalItem.prepend(`
       <li class="media mb-3 pos-relative">
       <div class="media-body">
@@ -902,11 +950,19 @@ $('#page-applications').on('submit', '.application-comment-form', function (e) {
         <p class="mb-1">${data.comments[0].commentBody}</p>
       </div>
     </li>
-      `
-      )
+      `)
       $('.application-comment-form').find('.form-control').val('');
-
-
+      this.originalActivity.prepend(
+        `
+        <li>
+        <small>
+          <span class="text-primary">${data.activities[0].activityName} @</span> ${activityDate} by:
+          <span class="text-pink">${data.activities[0].activityUserName}</span>
+        </small>
+        <p class="text-xs">${data.activities[0].activityBody}</p>
+      </li>        
+        `
+      )
     }
   });
 });
@@ -917,16 +973,23 @@ $('#page-applications').on('submit', '.application-shorlist-form', function (e) 
   var application = $(this).serializeArray();
   var actionUrl = $(this).attr('action');
   var $originalItem = $(this).parent('.application-stat');
+  var $activity = $(this).parent().offsetParent().offsetParent().siblings().children('.list-unstyled');
   $.ajax({
     url: actionUrl,
     data: application,
     type: 'PUT',
     originalItem: $originalItem,
+    originalActivity: $activity,
     success: function (data) {
+      var activityDate = $.format.date(data.activities[0].activityDate, "HH:mm dd MMM yyyy");
       if (data.status === "shortlisted") {
         this.originalItem.html(
           `
           <div class="alert alert-success"> <i class="fas fa-check"></i>  Success! Application Status Updated</div>
+          <div class="d-inline-block mt-3">
+          <a href="candidate-resume/${data.resume.handle}" class="btn btn-primary">
+            <i class="em em-eye"></i> View Resume</a>
+        </div>
           <form action="/jobs/application/${data._id}" class="d-inline-block application-shorlist-form" method="post" enctype="multipart/form-data">
           <input type="hidden" name="status" value="sent">
           <button type="submit" class="btn btn-outline-primary d-inline-block" id="application-shortlist">
@@ -938,10 +1001,26 @@ $('#page-applications').on('submit', '.application-shorlist-form', function (e) 
           $(".alert").alert('close');
         });
 
+        this.originalActivity.prepend(
+          `
+          <li>
+          <small>
+            <span class="text-primary">${data.activities[0].activityName} @</span> ${activityDate} by:
+            <span class="text-pink">${data.activities[0].activityUserName}</span>
+          </small>
+          <p class="text-xs">${data.activities[0].activityBody}</p>
+        </li>        
+          `
+        )
+
       } else if (data.status === "sent") {
         this.originalItem.html(
           `
           <div class="alert alert-success"> <i class="fas fa-check"></i>  Success! Application Status Updated</div>
+          <div class="d-inline-block mt-3">
+          <a href="candidate-resume/${data.resume.handle}" class="btn btn-primary">
+            <i class="em em-eye"></i> View Resume</a>
+        </div>
           <form action="/jobs/application/${data._id}" class="d-inline-block application-shorlist-form" method="post" enctype="multipart/form-data">
           <input type="hidden" name="status" value="shortlisted">
           <button type="submit" class="btn btn-outline-primary d-inline-block" id="application-shortlist">
@@ -952,8 +1031,181 @@ $('#page-applications').on('submit', '.application-shorlist-form', function (e) 
         $(".alert").fadeTo(800, 800).slideUp(800, function () {
           $(".alert").alert('close');
         });
+        this.originalActivity.prepend(
+          `
+          <li>
+          <small>
+            <span class="text-primary">${data.activities[0].activityName} @</span> ${activityDate} by:
+            <span class="text-pink">${data.activities[0].activityUserName}</span>
+          </small>
+          <p class="text-xs">${data.activities[0].activityBody}</p>
+        </li>        
+          `
+        )
       }
-
     }
   });
+});
+
+//add skills
+$('#add-skill').submit(function (e) {
+  e.preventDefault();
+  var skill = $(this).serializeArray();
+  $.post('/candidate-resume/skills', skill, function (data) {
+    $('#skills-list').prepend(
+      `
+      <li class="mb-0 list-group-item p-2">
+      <div class="progress bg-white">
+        <span class="font-weight-bold w-30 text-capitalize">${data.name}</span>
+        <span class="w-5">
+          <form action="/candidate-resume/skills/${data._id}" method="post" class="delete-skill-form float-right">
+            <button type="submit" id="" class="fabutton-skills">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+          </form>
+        </span>
+        <span class="w-60">
+          <div class="progress-bar w-${data.level}" role="progressbar" aria-valuenow="${data.level}"
+            aria-valuemin="0" aria-valuemax="100">${data.level}% </div>
+        </span>
+      </div>
+    </li>
+      `
+    )
+    $(".skill-new-area").toggle();
+    $('#add-skill').find('.form-control').val('');
+    $('#skill-msg').html(
+      `
+      <div class="alert alert-success float-right w-100"> <i class="fas fa-check"></i>  Success! Skills added</div>
+      `
+    )
+    $(".alert").fadeTo(800, 800).slideUp(800, function () {
+      $(".alert").alert('close');
+    });
+  });
+});
+
+$('#skills-list').on('submit', '.delete-skill-form', function (e) {
+  e.preventDefault();
+
+  var confirmResponse = confirm('Are you sure?');
+  if (confirmResponse) {
+    var actionUrl = $(this).attr('action');
+    $skillToDelete = $(this).closest('.list-group-item');
+    $.ajax({
+      url: actionUrl,
+      type: 'DELETE',
+      skillToDelete: $skillToDelete,
+      success: function (data) {
+        this.skillToDelete.remove();
+      }
+    })
+  } else {
+    $(this).find('button').blur();
+  }
+});
+
+//add Lang
+$('#add-lang').submit(function (e) {
+  e.preventDefault();
+  var lang = $(this).serializeArray();
+  $.post('/candidate-resume/languages', lang, function (data) {
+    $('#lang-list').prepend(
+      `
+      <li class="mb-0 list-group-item p-2">
+      <h6>${data.name}<span class="badge badge-pill badge-warning text-capitalize ml-2">${data.level}</span> 
+      <span class="w-5">
+          <form action="/candidate-resume/languages/${data.id}" method="post" class="delete-lang-form float-left">
+            <button type="submit" id="" class="fabutton-skills">
+              <i class="far fa-trash-alt text-danger"></i>
+            </button>
+          </form>
+        </span></h6>
+      </li>
+      `
+    )
+    $(".lang-new-area").toggle();
+    $('#add-lang').find('.form-control').val('');
+    $('#lang-msg').html(
+      `
+      <div class="alert alert-success float-right w-100"> <i class="fas fa-check"></i>  Success! Language added</div>
+      `
+    )
+    $(".alert").fadeTo(800, 800).slideUp(800, function () {
+      $(".alert").alert('close');
+    });
+  });
+});
+
+$('#lang-list').on('submit', '.delete-lang-form', function (e) {
+  e.preventDefault();
+
+  var confirmResponse = confirm('Are you sure?');
+  if (confirmResponse) {
+    var actionUrl = $(this).attr('action');
+    $langToDelete = $(this).closest('.list-group-item');
+    $.ajax({
+      url: actionUrl,
+      type: 'DELETE',
+      langToDelete: $langToDelete,
+      success: function (data) {
+        this.langToDelete.remove();
+      }
+    })
+  } else {
+    $(this).find('button').blur();
+  }
+});
+
+//add Award
+$('#add-award').submit(function (e) {
+  e.preventDefault();
+  var award = $(this).serializeArray();
+  $.post('/candidate-resume/awards', award, function (data) {
+    $('#awards-list').prepend(
+      `
+      <li class="mb-0 list-group-item p-2">
+      <h5>${data.name} @
+        <span class="text-blue">${data.awarder} / ${data.awardedOn}</span>
+      </h5>
+      <p class="mb-0">${data.summary}</p>
+      <form action="/candidate-resume/awards/${data._id}" method="post" class="delete-award-form float-left">
+        <button type="submit" id="remove-award" class="fabutton-skills">
+          <i class="far fa-trash-alt text-danger"></i>
+        </button>
+      </form>
+    </li>
+      `
+    )
+    $(".award-new-area").toggle();
+    $('#add-award').find('.form-control').val('');
+    $('#award-msg').html(
+      `
+      <div class="alert alert-success float-right w-100"> <i class="fas fa-check"></i>  Success! Award added</div>
+      `
+    )
+    $(".alert").fadeTo(800, 800).slideUp(800, function () {
+      $(".alert").alert('close');
+    });
+  });
+});
+
+$('#awards-list').on('submit', '.delete-award-form', function (e) {
+  e.preventDefault();
+
+  var confirmResponse = confirm('Are you sure?');
+  if (confirmResponse) {
+    var actionUrl = $(this).attr('action');
+    $awardToDelete = $(this).closest('.list-group-item');
+    $.ajax({
+      url: actionUrl,
+      type: 'DELETE',
+      awardToDelete: $awardToDelete,
+      success: function (data) {
+        this.awardToDelete.remove();
+      }
+    })
+  } else {
+    $(this).find('button').blur();
+  }
 });

@@ -21,6 +21,10 @@ require('./models/Jobs');
 require('./models/JobWanted');
 require('./models/Applications');
 require('./models/savedJob');
+require('./models/Messages');
+require('./models/Skills');
+require('./models/Languages');
+require('./models/Awards');
 
 //passport config
 require('./config/passport')(passport);

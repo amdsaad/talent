@@ -74,7 +74,7 @@
           <div class="text-center" data-toggle="owl-carousel" data-owl-carousel-settings='{"items": 3, "lazyLoad":true, "nav":true, "dots":true}'>
             {{#each jobSpecialisms}}
             <a href="/jobs/{{this.handle}}">
-              <img style="height: 40px; width: 40px;" data-src="{{company.logo}}" alt="Recent Jobs for Candidate" class="owl-lazy" />
+              <img style="height: 80px; width: 80px;" data-src="{{company.logo}}" alt="Recent Jobs for Candidate" class="owl-lazy" />
               <h5 class="mt-4 text-uppercase text-primary op-9 font-weight-bold">{{this.title}} @
                 <span class="text-pink">{{company.name}}</span>
               </h5>
@@ -130,7 +130,7 @@
           <tr class="text-center ">
             <th class="font-weight-bold" style="letter-spacing:1px">Job Title</th>
             <th class="font-weight-bold" style="letter-spacing:1px">Date</th>
-            <th class="font-weight-bold" style="letter-spacing:1px">Application</th>
+            <th class="font-weight-bold" style="letter-spacing:1px">Application Status</th>
           </tr>
         </thead>
         <tbody>
@@ -143,7 +143,7 @@
             </th>
             <td class="text-light">{{formatDate this.date 'DD MMMM YYYY'}}</td>
             <td>
-              <a class="text-light btn btn-blue-dark rounded" href="/jobs/{{jobHandle}}/application">View</a>
+              <p class="text-capitalize">{{this.status}}</p>
             </td>
           </tr>
           {{/each}}

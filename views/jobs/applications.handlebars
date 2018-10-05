@@ -9,7 +9,7 @@
   <h5 class="text-center font-weight-light mt-2 mb-0 text-muted">
     Easly Manage your job application
   </h5>
-  <hr class="w-50 mx-auto" /> {{#if shortlisted}}
+  <hr class="w-50 mx-auto" /> {{#if applications}}
   <small>
     <a href="/jobs/{{job.handle}}/applications">
       <i class="fa fa-arrow-left"></i> Back to Applications</a>
@@ -31,154 +31,84 @@
           </li>
         </ul>
       </nav>
-      <div class="card p-3" id="page-applications">
+      <div id="page-applications">
         {{#each applications}}
         <div class="list-group-applications mb-3">
           <div class="row">
-            <div class="col-md-10">
-              <ul class="list-group mb-3">
-                <li class="list-group-item">Name: {{this.resume.fullName}}</li>
-                <li class="list-group-item">Current Position:
-                  <span class="text-capitalize">{{this.resume.jobTitle}}</span>
-                </li>
-                <li class="list-group-item">Location:
-                  <span class="text-capitalize"> {{this.resume.location}}</span>
-                </li>
-                <li class="list-group-item">Email:
-                  <a href="mailto:">{{this.resume.email}}</a>
-                </li>
-                <li class="list-group-item">Contact Number: {{this.resume.contactNumber}}</li>
-              </ul>
-            </div>
-            <div class="col-md-2">
-              <img src="{{this.resume.pictureUrl}}" alt="" class="img-fluid" style="width: 100px;">
-            </div>
-          </div>
-          <hr class="w-100">
-          <h5>Covering Letter</h5>
-          <p>{{{coveringLetter}}}</p>
-          <div class="d-inline-block">
-            <a href="candidate-resume/{{this.resume.handle}}" class="btn btn-primary">
-              <i class="em em-eye"></i> View Resume</a>
-          </div>
-          <div class="application-stat d-inline-block">
-            <form action="/jobs/application/{{this.id}}" class="d-inline-block application-shorlist-form" method="post" enctype="multipart/form-data">
-              <input type="hidden" name="status" value="sent">
-              <button type="submit" class="btn btn-outline-primary d-inline-block" id="application-shortlist">
-                <i class="em em--1 mr-2"></i> Drop
-              </button>
-            </form>
-          </div>
-          <hr class="w-100">
-          <div class="mt-3">
-            <span class="card-title">Comments</span>
-            <div class="mt-3 application-comments">
-              <ul class="list-unstyled mt-3" id="comment-list">
-                {{#each this.comments}}
-                <li class="media mb-3 pos-relative">
-                  <div class="media-body">
-                    <ul class="list-inline blog-meta text-muted">
-                      <li class="list-inline-item">
-                        <i class="fa fa-calendar"></i> {{formatDate date 'DD MMM YYYY'}}</li>
-                    </ul>
-                    <p class="mb-1">{{commentBody}}</p>
+            <div class="col-md-8 bg-light">
+              <div class="row">
+                <div class="col-md-10">
+                  <ul class="list-group mb-3 bg-light">
+                    <li class="list-group-item bg-light">Name: {{this.resume.fullName}}</li>
+                    <li class="list-group-item bg-light">Current Position:
+                      <span class="text-capitalize">{{this.resume.jobTitle}}</span>
+                    </li>
+                    <li class="list-group-item bg-light">Location:
+                      <span class="text-capitalize"> {{this.resume.location}}</span>
+                    </li>
+                    <li class="list-group-item bg-light">Email:
+                      <a href="mailto:">{{this.resume.email}}</a>
+                    </li>
+                    <li class="list-group-item bg-light">Contact Number: {{this.resume.contactNumber}}</li>
+                  </ul>
+                </div>
+                <div class="col-md-2">
+                  <img src="{{this.resume.pictureUrl}}" alt="" class="img-fluid" style="width: 100px;">
+                </div>
+                <div class="col-md-12">
+                  <h5>Covering Letter</h5>
+                  <p>{{{coveringLetter}}}</p>
+                  <hr class="w-100">
+                  <div class="application-stat d-inline-block">
+                    <div class="d-inline-block">
+                      <a href="candidate-resume/{{this.resume.handle}}" class="btn btn-primary">
+                        <i class="em em-eye"></i> View Resume</a>
+                    </div>
+                    <form action="/jobs/application/{{this.id}}" class="d-inline-block application-shorlist-form" method="post" enctype="multipart/form-data">
+                      <input type="hidden" name="status" value="shortlisted">
+                      <button type="submit" class="btn btn-outline-primary d-inline-block" id="application-shortlist">
+                        <i class="em em-yellow_heart mr-2"></i> Shortlist
+                      </button>
+                    </form>
                   </div>
+                  <div class="mt-3">
+                    <span class="card-title">Comments</span>
+                    <div class="mt-3 application-comments">
+                      <ul class="list-unstyled mt-3" id="comment-list">
+                        {{#each this.comments}}
+                        <li class="media mb-3 pos-relative">
+                          <div class="media-body">
+                            <ul class="list-inline blog-meta text-muted">
+                              <li class="list-inline-item">
+                                <i class="fa fa-calendar"></i> {{formatDate this.commentDate 'HH:mm - DD MMM YYYY'}}</li>
+                            </ul>
+                            <p class="mb-1">{{commentBody}}</p>
+                          </div>
+                        </li>
+                        {{/each}}
+                      </ul>
+                      <form action="/jobs/application/comment/{{this.id}}" class="application-comment-form" method="post">
+                        <textarea name="commentBody" id="" cols="30" rows="2" placeholder="Add comment" class=" form-control w-100 "></textarea>
+                        <input type="submit" value="Save" class="btn btn-primary">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h5>Activities</h5>
+              <lu class="list-unstyled" id="activity-list-item">
+                {{#each this.activities}}
+                <li>
+                  <small>
+                    <span class="text-primary">{{this.activityName}} @</span> {{formatDate this.activityDate 'HH:mm - DD MMM YYYY'}} by:
+                    <span class="text-pink">{{this.activityUser.name}}</span>
+                  </small>
+                  <p class="text-xs">{{this.activityBody}}</p>
                 </li>
                 {{/each}}
-              </ul>
-              <form action="/jobs/application/comment/{{this.id}}" class="application-comment-form" method="post">
-                <textarea name="commentBody" id="" cols="30" rows="2" placeholder="Add comment" class=" form-control w-100 "></textarea>
-                <input type="submit" value="Save" class="btn btn-primary">
-              </form>
-            </div>
-          </div>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-  </div>
-  {{else}}
-  <small>
-    <a href="/jobs/{{job.handle}}/applications/shortlisted">
-      View Shortlisted Applications
-      <i class="fa fa-arrow-right"></i>
-    </a>
-  </small>
-  <div class="text-center mb-3">
-    <a id="application-refresh">
-      <i class="em em-arrows_clockwise"></i>
-      <small class="text-capitalize">Update {{applicationHeading}} List</small>
-    </a>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <nav aria-label="...">
-        <ul class="pagination pagination-applications">
-          <li class="page-item" id="previous-page">
-            <a class="page-link" href="javascript:void(0)" aria-label=Previous>
-              <span aria-hidden=true>&laquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="card p-3" id="page-applications">
-        {{#each applications}}
-        <div class="list-group-applications mb-3">
-          <div class="row">
-            <div class="col-md-10">
-              <ul class="list-group mb-3">
-                <li class="list-group-item">Name: {{this.resume.fullName}}</li>
-                <li class="list-group-item">Current Position:
-                  <span class="text-capitalize">{{this.resume.jobTitle}}</span>
-                </li>
-                <li class="list-group-item">Location:
-                  <span class="text-capitalize"> {{this.resume.location}}</span>
-                </li>
-                <li class="list-group-item">Email:
-                  <a href="mailto:">{{this.resume.email}}</a>
-                </li>
-                <li class="list-group-item">Contact Number: {{this.resume.contactNumber}}</li>
-              </ul>
-            </div>
-            <div class="col-md-2">
-              <img src="{{this.resume.pictureUrl}}" alt="" class="img-fluid" style="width: 100px;">
-            </div>
-          </div>
-          <hr class="w-100">
-          <h5>Covering Letter</h5>
-          <p>{{{coveringLetter}}}</p>
-          <div class="d-inline-block">
-            <a href="candidate-resume/{{this.resume.handle}}" class="btn btn-primary">
-              <i class="em em-eye"></i> View Resume</a>
-          </div>
-          <div class="application-stat d-inline-block">
-            <form action="/jobs/application/{{this.id}}" class="d-inline-block application-shorlist-form" method="post" enctype="multipart/form-data">
-              <input type="hidden" name="status" value="shortlisted">
-              <button type="submit" class="btn btn-outline-primary d-inline-block" id="application-shortlist">
-                <i class="em em-yellow_heart mr-2"></i>Shorlist</button>
-            </form>
-          </div>
-          <hr class="w-100">
-          <div class="mt-3">
-            <span class="card-title">Comments</span>
-            <div class="mt-3 application-comments">
-              <ul class="list-unstyled mt-3" id="comment-list">
-                {{#each this.comments}}
-                <li class="media mb-3 pos-relative">
-                  <div class="media-body">
-                    <ul class="list-inline blog-meta text-muted">
-                      <li class="list-inline-item">
-                        <i class="fa fa-calendar"></i> {{formatDate date 'DD MMM YYYY'}}</li>
-                    </ul>
-                    <p class="mb-1">{{commentBody}}</p>
-                  </div>
-                </li>
-                {{/each}}
-              </ul>
-              <form action="/jobs/application/comment/{{this.id}}" class="application-comment-form" method="post">
-                <textarea name="commentBody" id="" cols="30" rows="2" placeholder="Add comment" class=" form-control w-100 "></textarea>
-                <input type="submit" value="Save" class="btn btn-primary">
-              </form>
+              </lu>
             </div>
           </div>
         </div>

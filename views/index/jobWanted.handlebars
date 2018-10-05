@@ -1,78 +1,21 @@
 {{> _headerDark}}
 
-<div class="container-fluid py-4 py-lg-7 bg-op-9 bg-light" style="min-height: 100vh">
+<div class="container py-4 py-lg-7 bg-op-9 bg-light" style="min-height: 100vh">
   <div class="row justify-content-md-center no-page-header">
-    <div class="col-md-2">
-
-    </div>
     <div class="col-md-8">
-      <div class="" id="job-wanted-list">
-        <div id="page">
-          <div class="row">
-            {{#each company}}
-            <div class="col-md-6">
-              <div class="list-group card shadow p-3 bg-white">
-                <div class="row justify-content-between">
-                  <div class="col-md-6 col-sm-6">
-                    <h3>{{this.name}}</h3>
-                    <h6>{{this.specialisms}}</h6>
-                  </div>
-                  <div class="col-md-2 col-sm-6">
-                    <img class="img-fluid small-img-comp" src="{{this.logo}}" alt="">
-                  </div>
-                </div>
-                <div class="row text-center">
-                  <div class="col-12 text-left">
-                    <p>{{{stripTags (truncate description 150)}}}</p>
-                  </div>
-                </div>
-                <div class="float-right" id="msgs"></div>
-                <div class="mb-3">
-                  <button type="button" class="btn btn-primary job-wanted-btn">Contact {{this.name}}</button>
-                </div>
-                <form method="post" action="/job-wanted" class="add-job-wanted p-2 bg-primary bg-op-3 rounded shadow">
-                  <input type="hidden" name="company" value="{{this.id}}">
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <label for="description">Title</label>
-                      <input type="text" class="form-control " placeholder="Title" name="title" required />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <label for="description">Desired Job Role</label>
-                      <input type="text" class="form-control " placeholder="I.e : Hotel Manager / Sales Manager" name="desiredJob" required />
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <label for="description">Description</label>
-                      <textarea class="form-control" name="description" rows="4" required></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                      <input type="submit" class="btn btn-blue-dark btn-shadow" />
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-            {{/each}}
-          </div>
-        </div>
-      </div>
-      <nav aria-label=...>
-        <ul class="pagination">
-          <li class="page-item" id="previous-page">
-            <a class="page-link" href="javascript:void(0)" aria-label=Previous>
-              <span aria-hidden=true>&laquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <input type="text" id="filterInput" placeholder="Search company names...." class="form-control mb-2" style="border-radius: 0px; border-bottom: 1px solid #00adbba1; border-right: none;border-left: none; border-top: none ">
+      <ul class="list-group" id="companies">
+        {{#each company}}
+        <li class="list-group-item card shadow-sm bg-white mb-1" id="company-lsits">
+          <a href="">{{this.name}}</a>
+          <img class="float-right" src="{{this.logo}}" alt="{{this.fullName}} image"
+            style="width:80px; height: 80px;">
+          <p class="text-muted text-sm">{{{stripTags (truncate description 100)}}}</p>
+        </li>
+        {{/each}}
+      </ul>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-4">
 
     </div>
   </div>

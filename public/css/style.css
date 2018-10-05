@@ -3,166 +3,234 @@
 @import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
 
+#company-lsits:hover{
+box-shadow: 0 .5rem 1rem rgba(52, 188, 238, 0.15)!important
+}
 
-#application-refresh{
+.fa-baseline {
+  vertical-align: baseline !important;
+}
+  
+#remove-award{
+cursor: pointer
+}
+.fabutton-skills{
+  background: white;
+  border: none;
+  font-size: 0.6rem;
+}
+.skill-new-area{
+  display: none;
+}
+.award-new-area{
+  display: none;
+}
+.lang-new-area{
+  display: none;
+}
+#message-area {
+  min-height: 100vh
+}
+
+#application-refresh {
   cursor: pointer;
 }
+
 .header-dark .header, .header.header-dark {
   border-bottom: none;
 }
+
 .animated {
   animation-delay: 2s;
   animation-duration: 5s;
-  animation-fill-mode: backwards;  
+  animation-fill-mode: backwards;
 }
+
 @keyframes hinge {
-  0% {transform: rotate(0);transform-origin: top left;animation-timing-function: ease-in-out;}
-  20%, 60% {transform: rotate(80deg);transform-origin: top left;animation-timing-function: ease-in-out;}
-  40% {transform: rotate(60deg);transform-origin: top left;animation-timing-function: ease-in-out;}
-  80% {transform: rotate(60deg) translateY(0px);transform-origin: top left;animation-timing-function: ease-in-out;}
-  100% {transform: translateY(700px);}
+  0% {
+    transform: rotate(0);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  20%, 60% {
+    transform: rotate(80deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  40% {
+    transform: rotate(60deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  80% {
+    transform: rotate(60deg) translateY(0px);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+    transform: translateY(700px);
+  }
 }
+
 .hinge {
   margin: 20px;
   color: white;
   animation-name: hinge;
 }
 
-
-.navbar-expand-md .navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md .navbar-main .navbar-nav>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-link{
+.navbar-expand-md .navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md .navbar-main .navbar-nav>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-link {
   font-size: 16px;
   color: #f4f4f4;
   font-weight: 500;
   font-family: 'Roboto', sans-serif;
   letter-spacing: 1.5px;
   padding: 10px 10px;
-
 }
-.no-page-header{
+
+.no-page-header {
   margin-top: 70px
 }
-.fabutton{
+
+.fabutton {
   background: white;
   border: none;
   font-size: 2rem;
 }
-#save-job{
+
+#save-job {
   cursor: pointer;
 }
-#edit-save-job{
+
+#edit-save-job {
   cursor: pointer;
 }
+
 body {
   display: flex;
   min-height: 100vh;
-  flex-direction: column; 
+  flex-direction: column;
 }
+
 main {
   min-height: 100vh
 }
 
-.nav-wrapper .fa-bars{
-  font-size:25px;
+.nav-wrapper .fa-bars {
+  font-size: 25px;
 }
 
-.story-text{
-  height:120px;
+.story-text {
+  height: 120px;
 }
 
-.dash-status{
+.dash-status {
   text-transform: capitalize;
 }
 
-#delete-form{
-  display:inline;
+#delete-form {
+  display: inline;
 }
-.cv-image{
+
+.cv-image {
   max-height: 150px;
   padding: 10px
 }
-.logo{
+
+.logo {
   height: 50px;
 }
 
-.small-image{
+.small-image {
   width: 20px;
 }
-.small-img-comp{
+
+.small-img-comp {
   width: 200px;
 }
-.user-profile{
-display: block;
-text-align: center;
-width: 100%;
-}
-.user-profile-dashboard{
-  display: inline-block;
-text-align: center;
-width: 100%;
-margin-top: 50px;
-min-height: 200px;
 
+.user-profile {
+  display: block;
+  text-align: center;
+  width: 100%;
 }
-.edit{
-float: right;
-margin-top: -30px;
-font-size: 20px;
-text-decoration: none;
+
+.user-profile-dashboard {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin-top: 50px;
+  min-height: 200px;
 }
-.bg_dashboard{
+
+.edit {
+  float: right;
+  margin-top: -30px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.bg_dashboard {
   background-size: cover;
   margin-right: -15px;
   margin-left: -15px;
   background-position: right 35% bottom 70%;
   height: 80vh;
-  background-image:linear-gradient(#645f632c, #d136318c),url(../img/irina-219832-unsplash.jpg);
+  background-image: linear-gradient(#645f632c, #d136318c), url(../img/irina-219832-unsplash.jpg);
   clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
 }
-.content_dashboard{
-  margin-top: -50vh;
 
+.content_dashboard {
+  margin-top: -50vh;
 }
-.cv-profile-dashboard{
+
+.cv-profile-dashboard {
   display: inline-block;
   text-align: center;
   width: 100%;
   margin-top: -50px;
-  }
-  .card-dashboard {
-    display: block; 
-      margin-bottom: 20px;
-      line-height: 1.42857143;
-      background-color: #f8f9fab0;
-      border-radius: 2px;
-      box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12); 
-      transition: box-shadow .25s;
-  }
-  input#inputTitle {
-    border-bottom: 1px solid #d2dadb48 !important;
-    border: none;
-    border-radius: 0px;
-    background-color: white
-  }
-  input#inputTitle:focus{
-    box-shadow: none;
-  }
-  .divider-dashboard{
-    border-bottom: 1px solid rgb(230, 228, 228)
-  }
-.fa-dashboard{
+}
+
+.card-dashboard {
+  display: block;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: #f8f9fab0;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  transition: box-shadow .25s;
+}
+
+input#inputTitle {
+  border-bottom: 1px solid #d2dadb48 !important;
+  border: none;
+  border-radius: 0px;
+  background-color: white
+}
+
+input#inputTitle:focus {
+  box-shadow: none;
+}
+
+.divider-dashboard {
+  border-bottom: 1px solid rgb(230, 228, 228)
+}
+
+.fa-dashboard {
   color: #28a745d6
 }
-.fa-alert{
+
+.fa-alert {
   font-size: 20px;
   color: #28a745;
 }
-.img-resume-form{
+
+.img-resume-form {
   width: 150px;
 }
-.em{
+
+.em {
   height: 1.5em !important;
 }
-
 
 .list-group-item {
   position: relative;
@@ -173,122 +241,148 @@ text-decoration: none;
   border: none;
 }
 
-.fas{
+.fas {
   line-height: 0
 }
-.post-new-area{
+
+.post-new-area {
   display: none;
 }
-.exp-new-area{
+
+.exp-new-area {
   display: none;
 }
-.educ-new-area{
+
+.educ-new-area {
   display: none;
 }
-.new-job-wanted{
+
+.new-job-wanted {
   display: none;
 }
-.edit-exp-form{
+
+.edit-exp-form {
   display: none;
 }
-.edit-educ-form{
+
+.edit-educ-form {
   display: none;
 }
-.add-job-wanted{
+
+.add-job-wanted {
   display: none;
 }
+
 .bg-img, .bg-img-cover {
   background-size: cover;
   background-position: center
 }
-.blog-header{
+
+.blog-header {
   min-height: 100vh
 }
-@media (min-width: 992px){
+
+@media (min-width: 992px) {
   .pt-lg-10 {
     padding-top: 20.5rem !important;
+  }
 }
-}
-.image-post{
+
+.image-post {
   height: 200px;
   width: 100%;
   max-width: 100%;
 }
-.post-card{
+
+.post-card {
   min-height: 200px;
 }
-.img-post{
+
+.img-post {
   width: 100%;
   max-height: 250px
 }
-.image-post-carousel{
+
+.image-post-carousel {
   height: 200px;
   widows: 100%;
 }
-.cursor{
+
+.cursor {
   cursor: pointer;
 }
 
-
 /* Single Resume Page */
-#resume-side img{
+
+#resume-side img {
   width: 100%;
   height: 100%;
   margin: 0 auto;
 }
-.top-line{
+
+.top-line {
   padding: 2px;
   width: 100%;
-  background-color: #2ECC71 
+  background-color: #2ECC71
 }
-#candidate-name{
+
+#candidate-name {
   font-size: 20px;
   font-weight: 600;
   line-height: 1.6;
 }
-#resume-profile{
+
+#resume-profile {
   font-size: 20px;
   font-weight: 500;
   line-height: 1.6;
   letter-spacing: 2px;
   text-transform: uppercase
 }
-#resume-heading{
-  font-size: 32px;
-  font-weight: 400;
 
+#resume-heading {
+  font-size: 20px;
+  font-weight: 600;
 }
-#candidate-jobTitle{
+
+#candidate-jobTitle {
   font-size: 18px
 }
-.exp-icon{
+
+.exp-icon {
   line-height: 3;
 }
-#rounded{
+
+#rounded {
   border-radius: 0px 5px 5px 0px
 }
-#rounded2{
+
+#rounded2 {
   border-radius: 5px 0px 0px 5px
 }
+
 .under-heading {
   border-bottom: 4px solid;
-  max-width: 7%;
+  max-width: 80px;
 }
+
 .under-heading-title {
   border-bottom: 4px solid;
   max-width: 33.33%;
   margin: 0 auto
 }
-#basic-info-resume-area-edit{
-  display: none;
-  list-style: none;
-}
-#basic-info-resume-about-edit{
+
+#basic-info-resume-area-edit {
   display: none;
   list-style: none;
 }
 
-#basic-info-resume-pic-edit{
+#basic-info-resume-about-edit {
+  display: none;
+  list-style: none;
+}
+
+#basic-info-resume-pic-edit {
   display: none;
   list-style: none;
 }
@@ -302,122 +396,134 @@ text-decoration: none;
 .display-4 {
   font-size: 2.5rem;
 }
+
 .display-4-job {
   font-size: 1.1rem;
   font-weight: 700;
   font-family: 'Lato', sans-serif;
 }
-.display-4-job-title{
+
+.display-4-job-title {
   font-weight: 600;
   font-family: 'Lato', sans-serif;
   font-size: 3rem;
 }
-.display-4-mod{
+
+.display-4-mod {
   font-weight: 600;
   font-family: 'Lato', sans-serif;
   font-size: 3rem;
 }
-.display-4-homPage{
+
+.display-4-homPage {
   font-weight: 600;
   font-family: 'Lato', sans-serif;
   font-size: 2.5rem;
 }
-#application-title{
+
+#application-title {
   text-transform: capitalize;
 }
-#job-header{
+
+#job-header {
   height: 60vh;
   -webkit-clip-path: polygon(100% 0, 100% 40vh, 0 100%, 0 100%, 0 0);
   clip-path: polygon(100% 0, 100% 40vh, 0 100%, 0 100%, 0 0);
 }
 
-#job-cont-area{
+#job-cont-area {
   min-height: 80vh
 }
-#job-cont-main{
+
+#job-cont-main {
   min-height: 80vh
 }
-#job-cont-sidebar{
+
+#job-cont-sidebar {
   min-height: 80vh
 }
-#dashboard-heading{
-  font-size:2rem;
+
+#dashboard-heading {
+  font-size: 2rem;
   font-weight: 700;
   font-family: 'Quicksand', sans-serif;
   letter-spacing: 1px
 }
-#dashboard-find-job{
+
+#dashboard-find-job {
   -webkit-clip-path: polygon(0 0, 100% 20%, 100% 100%, 100% 100%, 0 80%, 0 0);
   clip-path: polygon(0 0, 100% 20%, 100% 100%, 100% 100%, 0 80%, 0 0);
   margin-top: -70px;
 }
-#homePage-job-search{
+
+#homePage-job-search {
   height: 70vh;
   -webkit-clip-path: polygon(50% 0%, 100% 0, 100% 87%, 55% 92%, 0 100%, 0 0);
   clip-path: polygon(50% 0%, 100% 0, 100% 87%, 55% 92%, 0 100%, 0 0);
 }
-#home-page-search-heading{
+
+#home-page-search-heading {
   margin-top: 10rem
 }
-#job-cont{
+
+#job-cont {
   margin-top: -20vh;
 }
-#job-header{
+
+#job-header {
   margin-top: -5rem
 }
-#sgl-job-heading{
+
+#sgl-job-heading {
   margin-top: 10rem
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  
-    #sgl-job-heading{
-      margin-top: 10rem
-    }
-    #job-header{
-      margin-top: 0rem;
-      height: 70vh;
-      -webkit-clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
-      clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
-    }
-    #job-cont {
-      margin-top: -10vh;
-    }
-    .display-4-job-title{
-      font-weight: 600;
-      font-family: 'Lato', sans-serif;
-      font-size: 2rem;
-    }
-    #homePage-job-search{
-      height: 100vh;
-    }
-    #home-page-search-heading{
-      margin-top: 10rem
-    }
-    #homePage-job-search{
-      height: auto;
-      -webkit-clip-path: none;
-      clip-path: none
-    }  
-    .display-4-mod{
-      font-weight: 600;
-      font-family: 'Lato', sans-serif;
-      font-size: 2rem;
-    }
-    #mange-resume-heading{
-      margin: 6rem
-    }
-    
-  }
-
-  /* ##Device = Low Resolution Tablets, Mobiles (Landscape)  ##Screen = B/w 481px to 812px */
-
-@media (min-width: 481px) and (max-width: 768px) {
-  
-  #sgl-job-heading{
+  #sgl-job-heading {
     margin-top: 10rem
   }
-  #job-header{
+  #job-header {
+    margin-top: 0rem;
+    height: 70vh;
+    -webkit-clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
+    clip-path: polygon(100% 0, 100% 60vh, 0 100%, 0 100%, 0 0);
+  }
+  #job-cont {
+    margin-top: -10vh;
+  }
+  .display-4-job-title {
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    font-size: 2rem;
+  }
+  #homePage-job-search {
+    height: 100vh;
+  }
+  #home-page-search-heading {
+    margin-top: 10rem
+  }
+  #homePage-job-search {
+    height: auto;
+    -webkit-clip-path: none;
+    clip-path: none
+  }
+  .display-4-mod {
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    font-size: 2rem;
+  }
+  #mange-resume-heading {
+    margin: 6rem
+  }
+}
+
+/* ##Device = Low Resolution Tablets, Mobiles (Landscape)  ##Screen = B/w 481px to 812px */
+
+@media (min-width: 481px) and (max-width: 768px) {
+  #sgl-job-heading {
+    margin-top: 10rem
+  }
+  #job-header {
     margin-top: 0rem;
     height: 100vh;
     -webkit-clip-path: polygon(100% 0, 100% 90vh, 0 100%, 0 100%, 0 0);
@@ -426,42 +532,40 @@ text-decoration: none;
   #job-cont {
     margin-top: -10vh;
   }
-  .display-4-job-title{
+  .display-4-job-title {
     font-weight: 600;
     font-family: 'Lato', sans-serif;
     font-size: 2.5rem;
   }
-  #homePage-job-search{
+  #homePage-job-search {
     height: 100vh;
   }
-  #home-page-search-heading{
+  #home-page-search-heading {
     margin-top: 7rem
   }
-  #homePage-job-search{
+  #homePage-job-search {
     height: auto;
     -webkit-clip-path: none;
     clip-path: none
   }
-  .display-4-mod{
+  .display-4-mod {
     font-weight: 600;
     font-family: 'Lato', sans-serif;
     font-size: 2rem;
   }
-  #mange-resume-heading{
+  #mange-resume-heading {
     margin: 6rem
   }
-  
 }
 
 /* ##Device = Tablets, Ipads (portrait) ##Screen = B/w 768px to 1024px
 */
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    
-  #sgl-job-heading{
+  #sgl-job-heading {
     margin-top: 10rem
   }
-  #job-header{
+  #job-header {
     margin-top: 0rem;
     height: 60vh;
     -webkit-clip-path: polygon(100% 0, 100% 50vh, 0 100%, 0 100%, 0 0);
@@ -470,28 +574,28 @@ text-decoration: none;
   #job-cont {
     margin-top: -10vh;
   }
-  .display-4-job-title{
+  .display-4-job-title {
     font-weight: 600;
     font-family: 'Lato', sans-serif;
     font-size: 3rem;
   }
-  #homePage-job-search{
+  #homePage-job-search {
     height: 100vh;
   }
-  #home-page-search-heading{
+  #home-page-search-heading {
     margin-top: 7rem
   }
-  #homePage-job-search{
+  #homePage-job-search {
     height: auto;
     -webkit-clip-path: none;
     clip-path: none
   }
-  .display-4-mod{
+  .display-4-mod {
     font-weight: 600;
     font-family: 'Lato', sans-serif;
     font-size: 2rem;
   }
-  #mange-resume-heading{
+  #mange-resume-heading {
     margin: 6rem
-  } 
+  }
 }

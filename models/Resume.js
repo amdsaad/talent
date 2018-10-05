@@ -11,6 +11,14 @@ const ResumeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
+  skills: [{
+    type: Schema.Types.ObjectId,
+    ref: 'skills'
+  }],
+  languages: [{
+    type: Schema.Types.ObjectId,
+    ref: 'languages'
+  }],
   published: {
     type: String,
     default: 'false'
@@ -23,11 +31,11 @@ const ResumeSchema = new Schema({
     type: String,
     required: true
   },
-  pictureUrl:  { 
+  pictureUrl: {
     type: String,
   },
-  picturePublic_id:{
-    type:String
+  picturePublic_id: {
+    type: String
   },
   jobTitle: {
     type: String,
@@ -52,9 +60,6 @@ const ResumeSchema = new Schema({
     default: 'default',
     required: true
   },
-  languages: {
-    type: [String]
-  },
   bio: {
     type: String,
     default: "Lorem Ipsum is simply nturies, but also the leap into electronic typesetting, remaining essentially unchanged.It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -62,14 +67,6 @@ const ResumeSchema = new Schema({
   contactNumber: {
     type: String,
     default: '+1-202-555-0174',
-  },
-  experience: {
-    type: Schema.Types.ObjectId,
-    ref: 'experiance'
-  },
-  education: {
-    type: Schema.Types.ObjectId,
-    ref: 'education'
   },
   date: {
     type: Date,

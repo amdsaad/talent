@@ -20,8 +20,22 @@ const UserSchema = new Schema({
   admin:{
     type:Boolean,
     default:false
-  }
-
+  },
+  activities:[{
+    activityName:{
+      type:String
+    },
+    activityBody: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
+    activityDate: {
+      type: Date,
+      default: Date.now
+    },
+  }],
 })
 
 //create collection and add schema

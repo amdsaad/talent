@@ -8,6 +8,9 @@ const Job = mongoose.model('jobs');
 const Company = mongoose.model('companies');
 const JobWanted = mongoose.model('jobWanted');
 const Applications = mongoose.model('applications');
+const Message = mongoose.model('messages');
+const moment = require('moment');
+
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 
 router.get('/', ensureGuest, async (req, res) => {
@@ -43,7 +46,7 @@ router.post('/job-wanted', async (req, res) => {
       description: req.body.description,
       resume: resume.id,
       category: resume.specialisms,
-      company:req.body.company,
+      company: req.body.company,
       user: req.user.id
     }
     new JobWanted(newJobWanted)
@@ -60,10 +63,12 @@ router.get('/job-wanted', async (req, res) => {
       const resume = await Resume.findOne({ 'user': req.user.id }).populate('user');
       console.log(resume);
       const comp = await Company.find();
-      res.status(200).render('index/jobWanted',{
-        company : comp,
+      res.status(200).render('index/jobWanted', {
+        company: comp,
         resume: resume,
-        title:"Job wanted -Talent Liken : Connecting Talents - Find your job",
+        title: "Job wanted -Talent Liken : Connecting Talents - Find your job",
+        metaDescription: "Talent Liken connecting Talents (job seeker and employer), join us to post free jobs or create Free Professional Resume Templates focus on increasing your visibility.",
+        keywords: "find job, post a resume, build online resume, resume template, cv template, post free jobs, career advise"
       })
     }
   } else {
@@ -154,8 +159,6 @@ router.post('/company', ensureAuthenticated, async (req, res) => {
   }
 });
 
-
-
 router.get('/users/:email', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   User.findOne({ email: req.params.email })
@@ -188,6 +191,78 @@ router.get('/users/:email', (req, res) => {
 
 router.get('/about', (req, res) => {
   res.render('index/about');
+});
+
+router.post('/messages', ensureAuthenticated, async (req, res) => {
+  const newMessage = {
+    title: req.body.title, body: req.body.body, userFrom: req.user.id, userTo: req.body.userTo
+  }
+  new Message(newMessage).save().then(message => { res.status(200).json(message) })
+});
+
+router.get('/messages', ensureAuthenticated, async (req, res) => {
+  const messages = await Message
+    .find({ $or: [{ userTo: { $eq: req.user.id } }, { userFrom: { $eq: req.user.id } }, { replys: { userTo: req.user.id } }, { replys: { userFrom: req.user.id } }] })
+    .populate('userFrom').populate('userTo')
+    .sort({ newMsgDate: 'desc' });
+  res.status(200).render('index/message', {
+    messages,
+  });
+});
+
+
+router.get('/messages/:id', ensureAuthenticated, async (req, res) => {
+  const message = await Message.findById(req.params.id).populate('userFrom').populate('userTo');
+  if (message) {
+    res.status(200).json(message)
+  } else {
+    res.status(404).render('index/404');
+  }
+});
+
+//read message
+router.put('/messages/:id', ensureAuthenticated, async (req, res) => {
+  const message = await Message.findByIdAndUpdate(req.params.id)
+  .populate('userFrom').populate('userTo')
+  .populate('replys.userFrom').populate('replys.userTo');
+  console.log(message);
+  if (message.newMessage) {
+    if (req.user.id == message.userTo) {
+      message.read = true,
+      message.newMessage = false
+    }
+  };
+  if (message.newReply) {
+    console.log(req.user.id);
+    console.log(message.replys.userTo);
+
+    if (req.user.id == message.replys.userTo) {
+      message.read = true,
+      message.newReply = false
+    }
+  }
+  message.save()
+    .then(message => {
+      res.status(200).json(message);
+    })
+});
+
+//reply message
+router.post('/message-reply/:id', ensureAuthenticated, async (req, res) => {
+  const message = await Message.findByIdAndUpdate(req.params.id);
+  message.newReply = true;
+  message.newMsgDate = moment();
+  const newReply = {
+    replyTitle: 'Re: ' + message.title,
+    replyBody: req.body.replyBody,
+    userFrom: req.user.id,
+    userTo: message.userFrom
+  }
+  message.replys.unshift(newReply);
+  message.save()
+    .then(message => {
+      res.status(200).json(message);
+    })
 });
 
 module.exports = router;

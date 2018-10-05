@@ -197,13 +197,23 @@ router.post('/:handle/application', ensureAuthenticated, async (req, res) => {
 });
 
 router.post('/application/comment/:id', ensureAuthenticated, async (req, res) => {
-  const application = await Application.findOne({ _id: req.params.id });
+  const application = await Application.findOne({ _id: req.params.id })
+    .populate('activities.activityUser');
   const newComment = {
     commentBody: req.body.commentBody,
-    commentUser: req.user.id
+    commentUser: req.user.id,
+    activityName: 'Comment Added',
+    activityBody: req.body.commentBody,
+  }
+  const newActivity = {
+    activityName: 'Comment Added',
+    activityBody: req.body.commentBody,
+    activityUser: req.user.id,
+    activityUserName: req.user.name,
   }
 
   application.comments.unshift(newComment);
+  application.activities.unshift(newActivity);
   application.save()
   res.status(200).json(application);
 });
@@ -212,6 +222,13 @@ router.post('/application/comment/:id', ensureAuthenticated, async (req, res) =>
 router.put('/application/:id', async (req, res) => {
   const application = await Application.findById(req.params.id);
   application.status = req.body.status;
+  const newActivity = {
+    activityName: 'Status update',
+    activityBody: req.body.status,
+    activityUser: req.user.id,
+    activityUserName: req.user.name,
+  }
+  application.activities.unshift(newActivity);
   application.save()
   res.status(200).json(application);
 });
@@ -219,7 +236,8 @@ router.put('/application/:id', async (req, res) => {
 router.get('/:handle/applications', ensureAuthenticated, async (req, res) => {
   let shortlisted = false;
   const job = await Job.findOne({ handle: req.params.handle });
-  const applications = await Application.find({ jobHandle: req.params.handle, status: 'sent' }).populate('resume');
+  const applications = await Application.find({ jobHandle: req.params.handle, status: 'sent' })
+    .populate('resume').populate('activities.activityUser');
   if (req.user.role != 'employer') {
     req.flash('error_msg', 'You dont have permission to view this applications');
     res.redirect(`/jobs/${req.params.handle}`);
@@ -235,7 +253,8 @@ router.get('/:handle/applications', ensureAuthenticated, async (req, res) => {
 router.get('/:handle/applications/shortlisted', ensureAuthenticated, async (req, res) => {
   let shortlisted = true;
   const job = await Job.findOne({ handle: req.params.handle });
-  const applications = await Application.find({ jobHandle: req.params.handle, status: 'shortlisted' }).populate('resume');
+  const applications = await Application.find({ jobHandle: req.params.handle, status: 'shortlisted' })
+    .populate('resume').populate('activities.activityUser');
   if (req.user.role != 'employer') {
     req.flash('error_msg', 'You dont have permission to view this applications');
     res.redirect(`/jobs/${req.params.handle}`);
