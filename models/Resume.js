@@ -19,6 +19,18 @@ const ResumeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'languages'
   }],
+  awards: [{
+    type: Schema.Types.ObjectId,
+    ref: 'awards'
+  }],
+  educations: [{
+    type: Schema.Types.ObjectId,
+    ref: 'education'
+  }],
+  experiances: [{
+    type: Schema.Types.ObjectId,
+    ref: 'experiance'
+  }],
   published: {
     type: String,
     default: 'false'

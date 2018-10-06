@@ -1,5 +1,16 @@
 {{> _headerDark}}
 <div class="no-page-header d-print-none"></div>
+{{#if employer}}
+<div class="container">
+  <div id="save-resume">
+    <form action="candidate-resume/{{resumes.handle}}/save-resume" method="post" class="save-resume-form d-print-none">
+      <button type="submit" id="saveResume" class="fabutton-resume-list">
+        <i class="fa fa-heart icon-1x text-muted"></i>
+      </button>
+    </form>
+  </div>
+</div>
+{{/if}}
 {{#if resumeDefualt}}
 <div class="container">
   <div class="row justify-content-between pt-3">
@@ -56,7 +67,7 @@
     <div class="row">
       <div class="col-md-8">
         {{!-- Start of Experience --}}
-        {{#if experiance}}
+        {{#if resumes.experiances}}
         <div class="col-md-12 bg-op-1 bg-primary rounded pb-3">
           <div class="row justify-content-between">
             <div class="col-md-12">
@@ -72,7 +83,7 @@
           </div>
           {{!-- Exp List Start --}}
           <ul class="list-group" id="exp-list">
-            {{#each experiance}}
+            {{#each resumes.experiances}}
             <li class="list-group-item">
               <div class="row m-2">
                 <div class="col-sm-9 col-md-8 col-lg-8">
@@ -104,7 +115,7 @@
         </div>
         {{/if}}
         {{!-- End of Experience --}} {{!-- Start of Education --}}
-        {{#if education}}
+        {{#if resumes.educations}}
         <div class="col-md-12 bg-op-1 bg-primary rounded pb-3  mt-2">
           <div class="row justify-content-between">
             <div class="col-md-12">
@@ -120,7 +131,7 @@
           </div>
           {{!-- Education List Start --}}
           <ul class="list-group" id="educ-list">
-            {{#each education}}
+            {{#each resumes.educations}}
             <li class="list-group-item p-2">
               <div class="row m-2">
                 <div class="col-sm-9 col-md-8 col-lg-8">
@@ -154,7 +165,7 @@
       </div>
       <div class="col-md-4">
         {{!-- Start of Lang --}}
-        {{#if language}}
+        {{#if resumes.languages}}
         <div class="col-md-12 bg-op-1 bg-primary rounded pb-3">
           <div class="row justify-content-between">
             <div class="col-md-8">
@@ -169,7 +180,7 @@
             {{!-- add Lang --}}
             <div class="col-md-12">
               <ul class="list-group" id="lang-list">
-                {{#each language}}
+                {{#each resumes.languages}}
                 <li class="mb-0 list-group-item p-2">
                   <h6 class="text-blue">{{this.name}}<span class="badge badge-pill badge-info text-capitalize ml-2 p-1">{{this.level}}</span></h6>
                 </li>
@@ -181,7 +192,7 @@
         {{/if}}
         {{!-- End of Lang --}}
         {{!-- Start of Skills --}}
-        {{#if skill}}
+        {{#if resumes.skills}}
         <div class="col-md-12 bg-op-1 bg-primary rounded pb-3 mt-2">
           <div class="row justify-content-between">
             <div class="col-md-8">
@@ -196,7 +207,7 @@
             {{!-- add Skills --}}
             <div class="col-md-12">
               <ul class="list-group" id="skills-list">
-                {{#each skill}}
+                {{#each resumes.skills}}
                 <li class="mb-0 list-group-item p-2">
                   <div class="progress progress-info bg-white">
                     <span class="font-weight-bold w-30 text-capitalize text-blue">{{this.name}}</span>
@@ -214,7 +225,7 @@
         {{/if}}
         {{!-- End of Skills --}}
         {{!-- Start of Awards --}}
-        {{#if award}}
+        {{#if resumes.awards}}
         <div class="col-md-12 bg-op-1 bg-primary rounded pb-3 mt-2">
           <div class="row justify-content-between">
             <div class="col-md-12">
@@ -231,7 +242,7 @@
           <div class="row">
             <div class="col-md-12">
               <ul class="list-group" id="awards-list">
-                {{#each award}}
+                {{#each resumes.awards}}
                 <li class="mb-1 rounded list-group-item p-2">
                   <h5>{{name}} @
                     <span class="text-blue">{{awarder}} / {{this.awardedOn}}</span>
@@ -303,7 +314,7 @@
       </div>
     </div>
     {{!-- Profile End --}} {{!-- Start of Experience --}}
-    {{#if experiance}}
+    {{#if resumes.experiances}}
     <div class="col-md-12 bg-op-1 bg-green rounded pb-3 mt-2">
       <div class="row justify-content-between">
         <div class="col-md-12">
@@ -318,7 +329,7 @@
       </div>
       {{!-- end Add Exp --}} {{!-- Exp List Start --}}
       <ul class="list-group" id="exp-list">
-        {{#each experiance}}
+        {{#each resumes.experiances}}
         <li class="list-group-item">
           <div class="row p-1">
             <div class="col-sm-9 col-md-8 col-lg-8">
@@ -350,7 +361,7 @@
     </div>
     {{/if}}
     {{!-- End of Experience --}} {{!-- Start of Education --}}
-    {{#if education}}
+    {{#if resumes.educations}}
     <div class="col-md-12 bg-op-1 bg-green rounded pb-3 mt-2">
       <div class="row justify-content-between">
         <div class="col-md-8">
@@ -363,7 +374,7 @@
       </div>
       {{!-- Education List Start --}}
       <ul class="list-group" id="educ-list">
-        {{#each education}}
+        {{#each resumes.educations}}
         <li class="list-group-item p-2">
           <div class="row p-1">
             <div class="col-sm-9 col-md-8 col-lg-8">
@@ -395,7 +406,7 @@
     </div>
     {{/if}}
     {{!-- end of Education --}}
-    {{#if language}}
+    {{#if resumes.languages}}
     <div class="col-md-12 bg-op-1 bg-primary rounded pb-3 mt-2">
       <div class="row justify-content-between">
         <div class="col-md-8">
@@ -410,7 +421,7 @@
         {{!-- add Lang --}}
         <div class="col-md-12">
           <ul class="list-group" id="lang-list">
-            {{#each language}}
+            {{#each resumes.languages}}
             <li class="mb-0 list-group-item p-3">
               <h6 class="text-blue">{{this.name}}<span class="badge badge-pill badge-info text-capitalize ml-2 p-1">{{this.level}}</span></h6>
             </li>
@@ -422,7 +433,7 @@
     {{/if}}
     {{!-- End of Lang --}}
     {{!-- Start of Skills --}}
-    {{#if skill}}
+    {{#if resumes.skills}}
     <div class="col-md-12 bg-op-1 bg-primary rounded pb-3 mt-2">
       <div class="row justify-content-between">
         <div class="col-md-8">
@@ -437,7 +448,7 @@
         {{!-- add Skills --}}
         <div class="col-md-12">
           <ul class="list-group" id="skills-list">
-            {{#each skill}}
+            {{#each resumes.skills}}
             <li class="mb-0 list-group-item p-3">
               <div class="progress progress-info bg-white">
                 <span class="font-weight-bold w-10 text-capitalize text-blue">{{this.name}}</span>
@@ -455,7 +466,7 @@
     {{/if}}
     {{!-- End of Skills --}}
     {{!-- Start of Awards --}}
-    {{#if award}}
+    {{#if resumes.awards}}
     <div class="col-md-12 bg-op-1 bg-primary rounded pb-3 mt-2">
       <div class="row justify-content-between">
         <div class="col-md-12">
@@ -472,7 +483,7 @@
       <div class="row">
         <div class="col-md-12">
           <ul class="list-group" id="awards-list">
-            {{#each award}}
+            {{#each resumes.awards}}
             <li class="mb-1 rounded list-group-item p-3">
               <h6>{{name}} @
                 <span class="text-blue">{{awarder}} / {{this.awardedOn}}</span>

@@ -11,10 +11,15 @@ const Applications = mongoose.model('applications');
 const Message = mongoose.model('messages');
 const moment = require('moment');
 
-const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
+const {
+  ensureAuthenticated,
+  ensureGuest
+} = require('../helpers/auth');
 
 router.get('/', ensureGuest, async (req, res) => {
-  const latestPosts = await Post.find({ status: 'public' }).limit(5);
+  const latestPosts = await Post.find({
+    status: 'public'
+  }).limit(5);
   res.render('index/welcome', {
     latestPosts: latestPosts,
     title: "Talent Liken : Connecting Talents - Find your job",
@@ -23,10 +28,14 @@ router.get('/', ensureGuest, async (req, res) => {
   });
 });
 
-router.post('/job-wanted', async (req, res) => {
-  const resume = await Resume.findOne({ 'user': req.user.id }).populate('user');
+/* router.post('/job-wanted', async (req, res) => {
+  const resume = await Resume.findOne({
+    'user': req.user.id
+  }).populate('user');
   if (!resume) {
-    res.json({ msg: "you do not have a resume, please post your resume" })
+    res.json({
+      msg: "you do not have a resume, please post your resume"
+    })
 
   } else {
     const allJobWanted = await JobWanted.find();
@@ -56,29 +65,12 @@ router.post('/job-wanted', async (req, res) => {
       });
   }
 });
-
-router.get('/job-wanted', async (req, res) => {
-  if (req.user) {
-    if (req.user.role == 'candidate') {
-      const resume = await Resume.findOne({ 'user': req.user.id }).populate('user');
-      console.log(resume);
-      const comp = await Company.find();
-      res.status(200).render('index/jobWanted', {
-        company: comp,
-        resume: resume,
-        title: "Job wanted -Talent Liken : Connecting Talents - Find your job",
-        metaDescription: "Talent Liken connecting Talents (job seeker and employer), join us to post free jobs or create Free Professional Resume Templates focus on increasing your visibility.",
-        keywords: "find job, post a resume, build online resume, resume template, cv template, post free jobs, career advise"
-      })
-    }
-  } else {
-    res.status(200).send('visiotr page')
-  }
-
-})
+ */
 
 router.get('/job-wanted/:handle', async (req, res) => {
-  const jobWanted = await JobWanted.findOne({ handle: req.params.handle }).populate('user').populate('resume');
+  const jobWanted = await JobWanted.findOne({
+    handle: req.params.handle
+  }).populate('user').populate('resume');
   if (!jobWanted) {
     res.status(404).render('index/404');
   } else {
@@ -88,14 +80,26 @@ router.get('/job-wanted/:handle', async (req, res) => {
 });
 
 router.get('/dashboard', ensureAuthenticated, async (req, res) => {
-  const posts = await Post.find({ 'user': req.user.id });
-  const resume = await Resume.findOne({ 'user': req.user.id }).populate('user');
-  const latestPosts = await Post.find({}).limit(2).sort({ date: 'desc' });
-  const applications = await Applications.find({ user: req.user.id }).sort({ date: 'desc' });
+  const posts = await Post.find({
+    'user': req.user.id
+  });
+  const resume = await Resume.findOne({
+    'user': req.user.id
+  }).populate('user');
+  const latestPosts = await Post.find({}).limit(2).sort({
+    date: 'desc'
+  });
+  const applications = await Applications.find({
+    user: req.user.id
+  }).sort({
+    date: 'desc'
+  });
   if (resume) {
     var matchJob = resume.specialisms
   };
-  const jobSpecialisms = await Job.find({ 'specialisms': matchJob }).limit(10).populate('company');
+  const jobSpecialisms = await Job.find({
+    'specialisms': matchJob
+  }).limit(10).populate('company');
 
   res.render('index/dashboard', {
     posts: posts,
@@ -107,15 +111,16 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) => {
 
 });
 
-router.get('/employer-dashboard', ensureAuthenticated, async (req, res) => {
-
-  if (req.user.role == 'candidate') {
-    req.flash('error_msg', 'You Don not have permission)');
+router.get('/employer-dashboard', async (req, res) => {
+  if(!req.user){
+    req.flash('error_msg', 'Please login as employer to access this page');
+    res.redirect('/auth/employers/login');
+  }else  if (req.user.role == 'candidate') {
+    req.flash('error_msg', 'You Don not have permission to access this page');
     res.redirect('/dashboard');
   } else {
-    const company = await Company.findOne({ user: req.user.id });
-    const jobs = await Job.find({ user: req.user.id });
-
+    const company = await Company.findOne({  user: req.user.id });
+    const jobs = await Job.find({  user: req.user.id  });
     res.render('index/employer-dashboard', {
       company,
       jobs
@@ -130,7 +135,9 @@ router.post('/company', ensureAuthenticated, async (req, res) => {
     employer = true;
   }
   const company = await Company
-    .findOne({ user: req.user.id });
+    .findOne({
+      user: req.user.id
+    });
 
   if (employer) {
 
@@ -159,15 +166,27 @@ router.post('/company', ensureAuthenticated, async (req, res) => {
   }
 });
 
+router.get('/companies', async (req, res) => {
+
+  const comp = await Company.find();
+  res.status(200).render('index/companies', {
+    company: comp,
+    title: "Job wanted -Talent Liken : Connecting Talents - Find your job",
+    metaDescription: "Talent Liken connecting Talents (job seeker and employer), join us to post free jobs or create Free Professional Resume Templates focus on increasing your visibility.",
+    keywords: "find job, post a resume, build online resume, resume template, cv template, post free jobs, career advise"
+  })
+});
+
 router.get('/users/:email', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  User.findOne({ email: req.params.email })
+  User.findOne({
+      email: req.params.email
+    })
     .then(user => {
       res.status(200).json({
         "version": "v2",
         "content": {
-          "actions": [
-            {
+          "actions": [{
               "action": "set_field_value",
               "field_name": "_userID",
               "value": user.id
@@ -195,16 +214,41 @@ router.get('/about', (req, res) => {
 
 router.post('/messages', ensureAuthenticated, async (req, res) => {
   const newMessage = {
-    title: req.body.title, body: req.body.body, userFrom: req.user.id, userTo: req.body.userTo
+    title: req.body.title,
+    body: req.body.body,
+    userFrom: req.user.id,
+    userTo: req.body.userTo
   }
-  new Message(newMessage).save().then(message => { res.status(200).json(message) })
+  new Message(newMessage).save().then(message => {
+    res.status(200).json(message)
+  })
 });
 
 router.get('/messages', ensureAuthenticated, async (req, res) => {
   const messages = await Message
-    .find({ $or: [{ userTo: { $eq: req.user.id } }, { userFrom: { $eq: req.user.id } }, { replys: { userTo: req.user.id } }, { replys: { userFrom: req.user.id } }] })
+    .find({
+      $or: [{
+        userTo: {
+          $eq: req.user.id
+        }
+      }, {
+        userFrom: {
+          $eq: req.user.id
+        }
+      }, {
+        replys: {
+          userTo: req.user.id
+        }
+      }, {
+        replys: {
+          userFrom: req.user.id
+        }
+      }]
+    })
     .populate('userFrom').populate('userTo')
-    .sort({ newMsgDate: 'desc' });
+    .sort({
+      newMsgDate: 'desc'
+    });
   res.status(200).render('index/message', {
     messages,
   });
@@ -223,13 +267,13 @@ router.get('/messages/:id', ensureAuthenticated, async (req, res) => {
 //read message
 router.put('/messages/:id', ensureAuthenticated, async (req, res) => {
   const message = await Message.findByIdAndUpdate(req.params.id)
-  .populate('userFrom').populate('userTo')
-  .populate('replys.userFrom').populate('replys.userTo');
+    .populate('userFrom').populate('userTo')
+    .populate('replys.userFrom').populate('replys.userTo');
   console.log(message);
   if (message.newMessage) {
     if (req.user.id == message.userTo) {
       message.read = true,
-      message.newMessage = false
+        message.newMessage = false
     }
   };
   if (message.newReply) {
@@ -238,7 +282,7 @@ router.put('/messages/:id', ensureAuthenticated, async (req, res) => {
 
     if (req.user.id == message.replys.userTo) {
       message.read = true,
-      message.newReply = false
+        message.newReply = false
     }
   }
   message.save()

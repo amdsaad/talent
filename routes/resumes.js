@@ -15,6 +15,7 @@ const Message = mongoose.model('messages');
 const Skill = mongoose.model('skills');
 const Language = mongoose.model('languages');
 const Award = mongoose.model('awards');
+const SaveResume = mongoose.model('saveResume');
 const {
   ensureAuthenticated,
   ensureGuest
@@ -86,67 +87,50 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 // Resumes Index
 router.get('/', async (req, res) => {
   const resumes = await Resume.find({
-      status: 'public',
-      published: 'true'
-    })
+    status: 'public',
+    published: 'true'
+  })
     .populate('user')
     .populate('skills')
     .populate('languages')
+    .populate('awards')
+    .populate('educations')
+    .populate('experiances')
     .sort({
       date: 'desc'
     });
   res.render('resumes/index', {
     resumes,
   })
-
 });
 
 //show single Resume Handle SEO
 router.get('/:handle', async (req, res) => {
   const back = '/candidate-resume';
-  const resumes = await Resume.findOne({
-    handle: req.params.handle
-  }).populate('user');
+  const resumes = await Resume.findOne({handle: req.params.handle})
+  .populate('user')
+  .populate('skills')
+  .populate('languages')
+  .populate('awards')
+  .populate('educations')
+  .populate('experiances');
   if (resumes) {
-    const posts = await Posts.find({
-      user: resumes.user._id
-    });
-    const experiance = await Experiance.find({
-      user: resumes.user._id
-    });
-    const education = await Education.find({
-      user: resumes.user._id
-    });
-    const skill = await Skill.find({
-      user: resumes.user._id
-    });
-    const language = await Language.find({
-      user: resumes.user._id
-    });
-    const award = await Award.find({
-      user: resumes.user._id
-    });
-
-    if (resumes.style == 'default') {
-      resumeDefualt = true
-    } else {
-      resumeDefualt = false
+    const posts = await Posts.find({ user: resumes.user._id });
+    if (resumes.style == 'default') { resumeDefualt = true } else { resumeDefualt = false };
+    if (resumes.style == 'simple') { resumeSimple = true } else { resumeSimple = false };
+    if (req.user) {
+      if (req.user.role == 'employer') {
+        employer = true
+      } else {
+        employer = false
+      }
+    }else{
+      employer = false
     }
-    if (resumes.style == 'simple') {
-      resumeSimple = true
-    } else {
-      resumeSimple = false
-    }
-
-
     res.render('resumes/show', {
       resumes: resumes,
       posts: posts,
-      experiance: experiance,
-      education: education,
-      skill,
-      language,
-      award,
+      employer,
       resumeDefualt: resumeDefualt,
       resumeSimple
     });
@@ -154,7 +138,7 @@ router.get('/:handle', async (req, res) => {
     res.status(404).render('index/404', {
       back,
       pageName: "Talent's Resume's"
-    })
+    });
   }
 });
 
@@ -212,12 +196,12 @@ router.put('/:id', ensureAuthenticated, upload.single('picture'), (req, res) => 
 
 //Manage resume - inlcludes experience and education
 router.get('/manage-my-resume/:id', ensureAuthenticated, async (req, res) => {
-  const resume = await Resume.findOne({    _id: req.params.id  }).populate('user');
-  const experiance = await Experiance.find({    'user': req.user.id  }).sort({    date: 'desc'  });
-  const education = await Education.find({    'user': req.user.id  }).sort({    date: 'desc'  });
-  const skill = await Skill.find({    'user': req.user.id  }).sort({    date: 'desc'  });
-  const language = await Language.find({    'user': req.user.id  }).sort({    date: 'desc'  });
-  const award = await Award.find({    'user': req.user.id  }).sort({    date: 'desc'  });
+  const resume = await Resume.findOne({ _id: req.params.id }).populate('user');
+  const experiance = await Experiance.find({'user': req.user.id}).sort({ date: 'desc'});
+  const education = await Education.find({'user': req.user.id}).sort({ date: 'desc' });
+  const skill = await Skill.find({'user': req.user.id }).sort({date: 'desc'});
+  const language = await Language.find({'user': req.user.id}).sort({date: 'desc'});
+  const award = await Award.find({'user': req.user.id}).sort({date: 'desc'});
   if (resume) {
     if (resume.style == 'default') {
       resumeDefualt = true
@@ -229,7 +213,7 @@ router.get('/manage-my-resume/:id', ensureAuthenticated, async (req, res) => {
     } else {
       resumeSimple = false
     };
- 
+
     if (resume.published == 'true') {
       published = true
     } else {
@@ -273,6 +257,8 @@ router.post('/experience', ensureAuthenticated, async (req, res) => {
   new Experiance(newExp)
     .save()
     .then(experiance => {
+      resume.experiances.unshift(experiance);
+      resume.save();
       res.json(experiance)
     });
 });
@@ -280,8 +266,8 @@ router.post('/experience', ensureAuthenticated, async (req, res) => {
 // edit experience form
 router.get('/experience/edit/:id', ensureAuthenticated, (req, res) => {
   Experiance.findOne({
-      _id: req.params.id
-    })
+    _id: req.params.id
+  })
     .populate('resume')
     .sort({
       date: 'desc'
@@ -311,6 +297,11 @@ router.delete('/experience/:id', ensureAuthenticated, (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      Resume.findOneAndUpdate({'user': req.user.id}, {$pull: {"experiances": { $in: [exper._id]}}}, {new: true}, (err, resume) => {
+        if (err) {
+          console.log(err)
+        }
+      })
       res.json(exper);
     }
   });
@@ -335,6 +326,8 @@ router.post('/education', ensureAuthenticated, async (req, res) => {
   new Education(newEdu)
     .save()
     .then(education => {
+      resume.educations.unshift(education);
+      resume.save();
       res.json(education);
     });
 });
@@ -348,8 +341,8 @@ router.get('/education', ensureAuthenticated, async (req, res) => {
 
 router.get('/education/edit/:id', ensureAuthenticated, (req, res) => {
   Education.findOne({
-      _id: req.params.id
-    })
+    _id: req.params.id
+  })
     .populate('resume')
     .sort({
       date: 'desc'
@@ -378,6 +371,11 @@ router.delete('/education/:id', ensureAuthenticated, (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      Resume.findOneAndUpdate({'user': req.user.id}, {$pull: {"educations": { $in: [educ._id]}}}, {new: true}, (err, resume) => {
+        if (err) {
+          console.log(err)
+        }
+      })
       res.json(educ);
     }
   });
@@ -410,18 +408,18 @@ router.delete('/skills/:id', ensureAuthenticated, async (req, res) => {
       Resume.findOneAndUpdate({
         'user': req.user.id
       }, {
-        $pull: {
-          "skills": {
-            $in: [skill._id]
+          $pull: {
+            "skills": {
+              $in: [skill._id]
+            }
           }
-        }
-      }, {
-        new: true
-      }, (err, resume) => {
-        if (err) {
-          console.log(err)
-        }
-      })
+        }, {
+          new: true
+        }, (err, resume) => {
+          if (err) {
+            console.log(err)
+          }
+        })
       res.json(skill);
     }
   });
@@ -451,21 +449,11 @@ router.delete('/languages/:id', ensureAuthenticated, (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      Resume.findOneAndUpdate({
-        'user': req.user.id
-      }, {
-        $pull: {
-          "languages": {
-            $in: [language._id]
+      Resume.findOneAndUpdate({'user': req.user.id}, {$pull: {"languages": { $in: [language._id]}}}, {new: true}, (err, resume) => {
+          if (err) {
+            console.log(err)
           }
-        }
-      }, {
-        new: true
-      }, (err, resume) => {
-        if (err) {
-          console.log(err)
-        }
-      })
+        })
       res.json(language);
     }
   });
@@ -486,6 +474,8 @@ router.post('/awards', ensureAuthenticated, async (req, res) => {
   new Award(newAwad)
     .save()
     .then(awards => {
+      resume.awards.unshift(awards);
+      resume.save();
       res.json(awards);
     });
 });
@@ -495,17 +485,52 @@ router.delete('/awards/:id', ensureAuthenticated, (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      Resume.findOneAndUpdate({'user': req.user.id}, {$pull: {"awards": { $in: [award._id]}}}, {new: true}, (err, resume) => {
+        if (err) {
+          console.log(err)
+        }
+      })
       res.json(award);
     }
   });
 });
 
-function remove(array, element) {
-  const index = array.indexOf(element);
+router.post('/:handle/save-resume', async (req, res) => {
+  const resume = await Resume.findOne({ handle: req.params.handle });
+  const resumeHandle = resume.handle;
+  if (!req.user) {
+    res.json({
+      msg: 'Please login as emploer to save resume(s)',
+      resumeHandle
+    });
+  } else {
+    if (req.user.role == 'employer') {
+      const savedResume = await SaveResume.findOne({ $and: [{ 'resumeId': resume._id }, { 'user': req.user.id }] });
+      if (!savedResume) {
+        const newSaveResume = {
+          user: req.user.id,
+          resumeId: resume._id,
+          resumeHandle: resume.handle,
+        }
 
-  if (index !== -1) {
-    array.splice(index, 1);
+        new SaveResume(newSaveResume)
+          .save()
+          .then(savedResume => {
+            res.json(savedResume)
+          });
+      } else {
+        res.json({
+          msg: 'You have saved this resume before',
+          resumeHandle
+        });
+      };
+    } else {
+      res.json({
+        msg: 'you do not have permision to save resume',
+        resumeHandle
+      });
+    }
   }
-}
+});
 
 module.exports = router;

@@ -791,46 +791,6 @@ $('#educ-list').on('submit', '.delete-educ-form', function (e) {
 });
 /* End of Education */
 
-$('#job-wanted-list').on('click', '.job-wanted-btn', function () {
-  $(this).parent().siblings('.add-job-wanted').toggle();
-});
-// Job Wanted Post request
-$('#job-wanted-list').on('submit', '.add-job-wanted', function (e) {
-  e.preventDefault();
-
-  var jobWantedtItem = $(this).serializeArray();
-  $.post('/job-wanted', jobWantedtItem, function (data) {
-    if (data.msg) {
-      $('#msgs').html(
-        `<div class="alert alert-danger" id="danger-alert">
-        <button type="button" class="close" data-dismiss="alert">x</button>
-        <strong>${data.msg}</strong>
-    </div>`
-
-      )
-      $('.add-job-wanted').find('.form-control').val('');
-      $(".add-job-wanted").toggle();
-      $("#danger-alert").fadeTo(2000, 5000).slideUp(1000, function () {
-        $("#danger-alert").alert('close');
-      });
-    } else {
-      $('#msgs').html(
-        `<div class="alert alert-success" id="success-alert">
-        <button type="button" class="close" data-dismiss="alert">x</button>
-        <strong>Success! </strong>
-         message.
-    </div>`
-
-      )
-      $('.add-job-wanted').find('.form-control').val('');
-      $(".add-job-wanted").hide();
-      $("#success-alert").fadeTo(2000, 5000).slideUp(1000, function () {
-        $("#success-alert").alert('close');
-      });
-    }
-  });
-});
-
 $('#job-cont-sidebar').on('submit', '.application-form', function (e) {
   e.preventDefault();
   var application = $(this).serializeArray();
@@ -1208,4 +1168,76 @@ $('#awards-list').on('submit', '.delete-award-form', function (e) {
   } else {
     $(this).find('button').blur();
   }
+});
+
+$('#save-resume').on('submit', '.save-resume-form', function (e) {
+  e.preventDefault();
+  var application = $(this).serializeArray();
+  var actionUrl = $(this).attr('action');
+  var $originalItem = $(this).parent('#save-resume');
+  $.ajax({
+    url: actionUrl,
+    data: application,
+    type: 'POST',
+    originalItem: $originalItem,
+    success: function (data) {
+      if (data.msg == 'You have saved this resume before') {
+        this.originalItem.html(
+          `
+          <div class="alert alert-danger"><small>Opps! ${data.msg}</small></div>
+          <form action="candidate-resume/${data.resumeHandle}/save-resume" method="post" class="save-resume-form d-print-none">
+          <button type="submit" id="saveResume" class="fabutton-resume-list">
+            <i class="fa fa-heart icon-1x text-muted"></i>
+          </button>
+        </form>
+          `
+        )
+        $(".alert").fadeTo(2000, 2000).slideUp(800, function () {
+          $(".alert").alert('close');
+        });
+      } else if (data.msg == 'Please login as emploer to save resume(s)') {
+        this.originalItem.html(
+          `
+          <div class="alert alert-danger"><small>Opps! ${data.msg}</small></div>
+          <form action="candidate-resume/${data.resumeHandle}/save-resume" method="post" class="save-resume-form d-print-none">
+          <button type="submit" id="saveResume" class="fabutton-resume-list">
+            <i class="fa fa-heart icon-1x text-muted"></i>
+          </button>
+        </form>
+          `
+        )
+        $(".alert").fadeTo(2000, 2000).slideUp(800, function () {
+          $(".alert").alert('close');
+        });
+      } else if (data.msg == 'you do not have permision to save resume') {
+        this.originalItem.html(
+          `
+          <div class="alert alert-danger"><small>Opps! ${data.msg}</small></div>
+          <form action="candidate-resume/${data.resumeHandle}/save-resume" method="post" class="save-resume-form d-print-none">
+          <button type="submit" id="saveResume" class="fabutton-resume-list">
+            <i class="fa fa-heart icon-1x text-muted"></i>
+          </button>
+        </form>
+          `
+        )
+        $(".alert").fadeTo(2000, 2000).slideUp(800, function () {
+          $(".alert").alert('close');
+        });
+      } else {
+        this.originalItem.html(
+          `
+          <div class="alert alert-success"> <i class="fas fa-check"></i> Success! Resume Saved</div>
+          <form action="candidate-resume/${data.resumeHandle}/save-resume" method="post" class="save-resume-form d-print-none">
+          <button type="submit" id="saveResume" class="fabutton-resume-list">
+            <i class="fa fa-heart icon-1x text-muted"></i>
+          </button>
+        </form>
+          `
+        )
+        $(".alert").fadeTo(2000, 2000).slideUp(800, function () {
+          $(".alert").alert('close');
+        });
+      }
+    }
+  });
 });
