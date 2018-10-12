@@ -13,12 +13,7 @@ module.exports = function(passport){
     }).then(user => {
       if(!user){
         return done(null, false, {message: 'No User Found'});
-      } else{
-        if(user.role == 'candidate'){
-          return done(null, false, {message: 'You dont have permission for Employer'});
-        }
       }
-
       // Match password
       bcrypt.compare(password, user.password, (err, isMatch) => {
         if(err) throw err;

@@ -31,10 +31,6 @@ const ResumeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'experiance'
   }],
-  published: {
-    type: String,
-    default: 'false'
-  },
   fullName: {
     type: String,
     required: true
@@ -66,6 +62,10 @@ const ResumeSchema = new Schema({
   status: {
     type: String,
     default: 'public'
+  },
+  published: {
+    type: String,
+    default: 'false'
   },
   style: {
     type: String,

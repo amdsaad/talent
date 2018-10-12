@@ -18,8 +18,8 @@
         <!-- other header content -->
         <div class="header-block order-lg-12">
           <!-- mobile collapse menu button - data-toggle="collapse" = default BS menu - data-toggle="off-canvas" = Off-cavnas Menu - data-toggle="overlay" = Overlay Menu -->
-          <a href="#top" class="btn btn-link btn-icon header-btn float-right d-lg-none" data-toggle="collapse" data-target=".navbar-main"
-            data-settings='{"cloneTarget":true, "targetClassExtras": "navbar-offcanvas"}'>
+          <a href="#top" class="btn btn-link btn-icon header-btn float-right d-lg-none" data-toggle="collapse"
+            data-target=".navbar-main" data-settings='{"cloneTarget":true, "targetClassExtras": "navbar-offcanvas"}'>
             <i class="fa fa-bars text-light"></i>
           </a>
         </div>
@@ -39,12 +39,34 @@
               <li class="nav-item">
                 <a class="nav-link" href="/employer">Employer</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item dropdown">
+                {{#if candidate}}
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle icon-2x text-primary" style="line-height: 0 !important;"></i></a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                  <a class="dropdown-item" href="#">Action22</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+                {{/if}}
+                {{#if employer}}
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle icon-2x text-primary" style="line-height: 0 !important;"></i></a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                  <a class="dropdown-item" href="/jobs/add">Company Profile</a>
+                  <a class="dropdown-item" href="/jobs/add">add jobs</a>
+                  <a class="dropdown-item" href="/candidate-resume">Search Resume</a>
+                  <a class="dropdown-item" href="/auth/forgot">Rest Password</a>
+                  <a class="dropdown-item" href="/auth/logout">logout <i class="fas fa-sign-out-alt text-primary icon-2x ml-2"></i></a>
+                </div>
+                {{/if}}
+              </li>
+              <li class="nav-item ml-2">
                 {{#if user}}
-                <a href="/auth/logout" type="button" class="btn btn-danger">Logout</a>
                 {{else}}
-               <button type="button" class="btn btn-blue" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Login</button>
-               {{/if}}
+                <button type="button" class="btn btn-blue" data-toggle="modal" data-target="#exampleModal"
+                  data-whatever="@mdo">Login</button>
+                {{/if}}
               </li>
             </ul>
           </div>
@@ -59,15 +81,42 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
+        <h5 class="modal-title text-muted" id="exampleModalCenterTitle">Login to Your TalentLiken Account</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div>
-          <a href="/auth/facebook" type="button" class="mb-1 text-white btn bg-brand-facebook btn-lg">Login with Facebook</a>
-          <a href="/auth/google" type="button" class="mb-1 text-white btn bg-brand-google-plus btn-lg">Login with Google</a>
+        <a style="font-size:16px;" href="/auth/facebook" type="button" class="text-left mb-1 text-white btn bg-brand-facebook btn-lg text-capitalize w-100"><span
+            class="text-white"><i class="fab fa-facebook-f fa-baseline"></i></span>
+          Continue with Facebook</a>
+        <a style="font-size:16px;" href="/auth/google" type="button" class=" mt-1 text-left mb-1 text-white btn bg-brand-google-plus btn-lg text-capitalize w-100"><span
+            class="text-white"><i class="fab fa-google fa-baseline"></i></span>
+          Continue with Google</a>
+        <hr class="w-100">
+        <form method="post" action="/auth/candidate/login">
+          <div class="input-group input-group-lg text-left mb-3">
+            <div class="input-group-prepend"> <span class="input-group-text" id="inputGroup-sizing-default"><i class="fas fa-at"></i></span>
+            </div>
+            <input type="email" name="email" class="form-control" placeholder="email" required>
+          </div>
+          <div class="input-group input-group-lg text-left mb-3">
+            <div class="input-group-prepend"> <span class="input-group-text" id="inputGroup-sizing-default"><i class="fas fa-key"></i></span>
+            </div>
+            <input type="password" name="password" class="form-control" placeholder="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg w-100">Login</button>
+        </form>
+        <div class="mt-3 text-center">
+          <p class=""><a class="text-blue" href="/auth/forgot">Forgot your password ?</a> </p>
+        </div>
+        <hr class="w-100">
+        <div class="mt-3 text-center">
+          <small class="text-xs">By signing up, you agree to our Terms of Use and Privacy Policy.</small>
+        </div>
+        <hr class="w-100">
+        <div class="p-3 mb-3 bg-light w-100 text-center">
+          Don't have an account?<a href="/auth/candidate/register"><strong> Sign up</strong></a>
         </div>
       </div>
     </div>

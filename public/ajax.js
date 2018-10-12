@@ -262,10 +262,11 @@ $('#edit-basic-resume').on('submit', '.basic-info-resume-form', function (e) {
     data: basicInfo,
     type: 'PUT',
     success: function (data) {
+      console.log(data);
       $('#edit-basic-resume').html(
         `
         <li class="list-group-item bg-light" id="basic-info-resume-area-edit">
-        <form method="post" action="/candidate-resume/${data._id}" class="basic-info-resume-form p-2">
+        <form method="post" action="/candidate-resume/${data._id}}" class="basic-info-resume-form p-2">
           <div class="form-group text-center">
             <input class="border-op-8 border-grey display-4" type="text" name="resume[fullName]" value="${data.fullName}">
           </div>
@@ -289,25 +290,25 @@ $('#edit-basic-resume').on('submit', '.basic-info-resume-form', function (e) {
           <input type="submit" value="Save" class="btn btn-success" />
           <input type="button" value="Cancel" class="btn btn-warning cxl-basic-resume-info" />
         </form>
-        </li>
-        <li class="list-group-item" id="basic-info-resume-area">
-        <div class="resume-title mb-3">
-        <div class="pt-5 text-center rounded-bottom">
-          <h3 class="display-3 text-dark mb-2">
-            <strong>${data.fullName}</strong>
-          </h3>
-          <h6 class="display-4 text-muted">${data.jobTitle}</h6>
+      </li>
+      <li class="list-group-item" id="basic-info-resume-area">
+        <div class="resume-title">
+          <div class="text-center rounded-bottom">
+            <h3 class="display-3 text-dark mb-2">
+              <strong>${data.fullName}</strong>
+            </h3>
+            <h6 class="display-4 text-muted text-capitalize">${data.jobTitle}</h6>
+          </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-center">
-        <i class="fas fa-map-marker-alt text-muted"></i>
-        <p class="ml-1 text-muted">${data.location}</p>
-        <i class="fas fa-phone-square text-muted ml-3"></i>
-        <p class="ml-1 text-muted">${data.contactNumber}</p>
-        <i class="fas fa-at text-muted ml-3"></i>
-        <p class="ml-1 text-muted">${data.email}</p>
-      </div>
-      <button style="margin-top: -5rem;" class="btn btn-outline-primary edit-basic-btn">Edit</button>
+        <div class=" row justify-content-center">
+          <i class="fas fa-map-marker-alt text-muted"></i>
+          <p class="ml-1 text-muted">${data.location}</p>
+          <i class="fas fa-phone-square text-muted ml-3"></i>
+          <p class="ml-1 text-muted">${data.contactNumber}</p>
+          <i class="fas fa-at text-muted ml-3"></i>
+          <p class="ml-1 text-muted">${data.email}</p>
+        </div>
+        <button class="btn btn-outline-primary edit-basic-btn btn-sm mx-auto d-block">Edit</button>
       </li>
         `
       )
@@ -353,7 +354,7 @@ $('#add-exp').submit(function (e) {
     $('#exp-list').prepend(
       `
       <li class="list-group-item">
-      <div class="row m-2">
+      <div class="row">
         <div class="col-sm-9 col-md-8 col-lg-8">
           <div class=" text-left pt-2 pb-2">
             <h5>${data.title} @
@@ -372,7 +373,7 @@ $('#add-exp').submit(function (e) {
           </div>
         </div>
       </div>
-      <div class="m-4">
+      <div class="">
         <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
         <form style="display: inline" method="POST" action="/candidate-resume/experience/${data._id}" class="delete-exp-form">
           <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
@@ -423,7 +424,7 @@ $('#add-exp').submit(function (e) {
     )
     $('#exp-msg').html(
       `
-      <div class="alert alert-success float-right w-25"> <i class="fas fa-check"></i>  Success! Experience Added</div>
+      <div class="alert alert-success w-50"> <i class="fas fa-check"></i>  Success! Experience Added</div>
       `
     )
     $(".alert").fadeTo(800, 800).slideUp(800, function () {
@@ -459,7 +460,7 @@ $('#exp-list').on('submit', '.edit-exp-form', function (e) {
       };
       this.originalItem.html(
         `
-        <div class="row m-2">
+        <div class="row">
         <div class="col-sm-9 col-md-8 col-lg-8">
           <div class=" text-left pt-2 pb-2">
             <h5>${data.title} @
@@ -478,7 +479,7 @@ $('#exp-list').on('submit', '.edit-exp-form', function (e) {
           </div>
         </div>
       </div>
-      <div class="m-4">
+      <div class="">
         <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
         <form style="display: inline" method="POST" action="/candidate-resume/experience/${data._id}" class="delete-exp-form">
           <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
@@ -529,7 +530,7 @@ $('#exp-list').on('submit', '.edit-exp-form', function (e) {
       )
       $('#exp-msg').html(
         `
-        <div class="alert alert-success float-right w-25"> <i class="fas fa-check"></i>  Success! Experience Updated</div>
+        <div class="alert alert-success w-50"> <i class="fas fa-check"></i>  Success! Experience Updated</div>
         `
       )
       $(".alert").fadeTo(800, 800).slideUp(800, function () {

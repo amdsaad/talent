@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const upload = multer({
-  'dest': 'uploads/'
-});
+const upload = multer({ 'dest': 'uploads/'});
 const fs = require('fs');
 const mongoose = require('mongoose');
 const Resume = mongoose.model('resumes');
@@ -16,10 +14,7 @@ const Skill = mongoose.model('skills');
 const Language = mongoose.model('languages');
 const Award = mongoose.model('awards');
 const SaveResume = mongoose.model('saveResume');
-const {
-  ensureAuthenticated,
-  ensureGuest
-} = require('../helpers/auth');
+const {  ensureAuthenticated,  ensureGuest} = require('../helpers/auth');
 const keys = require('../config/keys');
 
 const cloudinary = require('cloudinary');
@@ -28,6 +23,11 @@ cloudinary.config({
   api_key: keys.cloudinary.api_key,
   api_secret: keys.cloudinary.api_secret
 });
+
+var mailgun = require("mailgun-js");
+var api_key = keys.mailgun.api_key;
+var DOMAIN = 'sandbox0c8fd842922b4dacb9fd7f621d9dc745.mailgun.org';
+var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
 
 // Add Resume Form
 router.get('/add', ensureAuthenticated, (req, res) => {
@@ -53,7 +53,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
     res.redirect('/dashboard')
   } else {
     cloudinary.v2.uploader.upload("https://res.cloudinary.com/dgghoxlug/image/upload/v1535918171/lem0ardcpdmvzpd6or8v.png", (error, result) => {
-      console.log(result, error);
+      
       // Get fields
       var str = req.user.name;
       str = str.replace(/\s+/g, '-').toLowerCase();
@@ -72,12 +72,19 @@ router.post('/', ensureAuthenticated, async (req, res) => {
       if (req.body.bio) profileFields.bio = req.body.bio;
       if (req.body.status) profileFields.status = req.body.status;
       if (req.body.style) profileFields.style = req.body.style;
-
-      console.log('req body ', profileFields);
-
       new Resume(profileFields)
         .save()
         .then(resume => {
+         /* var data = {
+            from: 'talentliken<hello@talentliken.com>',
+            to: 'saadamd@gmail.com',
+            subject: 'your Resume at talentliken',
+            text: 'Testing some Mailgun awesomness!',
+            html: "<html>HTML version of the body</html>",
+          };
+          mailgun.messages().send(data, function (error, body) {
+            console.log(body);
+          }); */       
           res.redirect(`/candidate-resume/manage-my-resume/${resume.id}`);
         });
     });
@@ -86,19 +93,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 
 // Resumes Index
 router.get('/', async (req, res) => {
-  const resumes = await Resume.find({
-    status: 'public',
-    published: 'true'
-  })
-    .populate('user')
-    .populate('skills')
-    .populate('languages')
-    .populate('awards')
-    .populate('educations')
-    .populate('experiances')
-    .sort({
-      date: 'desc'
-    });
+  const resumes = await Resume.find({status: 'public',published: 'true'}).populate('user').populate('skills').populate('languages').populate('awards').populate('educations').populate('experiances').sort({date: 'desc'});
   res.render('resumes/index', {
     resumes,
   })
@@ -107,13 +102,7 @@ router.get('/', async (req, res) => {
 //show single Resume Handle SEO
 router.get('/:handle', async (req, res) => {
   const back = '/candidate-resume';
-  const resumes = await Resume.findOne({handle: req.params.handle})
-  .populate('user')
-  .populate('skills')
-  .populate('languages')
-  .populate('awards')
-  .populate('educations')
-  .populate('experiances');
+  const resumes = await Resume.findOne({handle: req.params.handle}).populate('user').populate('skills').populate('languages').populate('awards').populate('educations').populate('experiances');
   if (resumes) {
     const posts = await Posts.find({ user: resumes.user._id });
     if (resumes.style == 'default') { resumeDefualt = true } else { resumeDefualt = false };

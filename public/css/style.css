@@ -2,7 +2,19 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,500,700,100,900);
 @import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,700,300);
 
+
+.navbar-expand-md .navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md .navbar-main .navbar-nav>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-item>.nav-link, .navbar-expand-md.navbar-main .navbar-nav>.nav-link{
+  font-weight: 700 !important;
+  font-family: 'Raleway', Tahoma, Geneva, Verdana, sans-serif !important
+}
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused){
+  min-height: 300px;
+}
+.ck.ck-editor__main>.ck-editor__editable.ck-focused{
+  min-height: 300px;
+}
 #saveResume{
   cursor: pointer;
 }

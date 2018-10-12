@@ -3,7 +3,7 @@
   <div class="overlay overlay-gradient overlay-op-8 text-left py-5 pt-lg-10" data-animate="fadeIn" data-bg-img="https://source.unsplash.com/collection/385548/1600X900">
     <div class="container pt-6" data-scroll="scrollax">
       <h2 class="display-4 text-white mb-3" data-animate="fadeIn" data-animate-delay="0.2">
-        Post a job 
+        Post a job
         <span class="font-weight-bold">and find your future Talent</span>
       </h2>
       <div id="jobSearch">
@@ -20,13 +20,13 @@
     <div class="col-md-12">
       <form action="/jobs" method="post">
         <div class="form-group row">
-          <label for="title" class="col-sm-2 col-form-label">Job Title</label>
+          <label for="title" class="col-sm-2 col-form-label">Job Title<span class="text-danger">*</span></label>
           <div class="col-sm-10">
             <input name="title" type="text" class="form-control" required>
           </div>
         </div>
         <div class="form-group row">
-          <label for="specialisms" class="col-sm-2 col-form-label">Specialisms / Sectors </label>
+          <label for="specialisms" class="col-sm-2 col-form-label">Specialisms / Sectors <span class="text-danger">*</span></label>
           <div class="col-sm-10">
             <select class="custom-select d-block w-100" name="specialisms" required>
               <option value="">Please select.......</option>
@@ -57,19 +57,20 @@
           </div>
         </div>
         <div class="form-group row ">
-          <label for="description" class="col-sm-2 col-form-label">Job Description </label>
+          <label for="description" class="col-sm-2 col-form-label">Job Description <span class="text-danger">*</span></label>
           <div class="col-sm-10">
-            <textarea class="form-control" name="description" rows="5" id="editor" required></textarea>
+            <textarea class="form-control jobDescription" name="description" rows="5" id="editor"></textarea>
+            <div class="error"></div>
           </div>
         </div>
         <div class="form-group row">
-          <label for="email" class="col-sm-2 col-form-label">Application Email</label>
+          <label for="email" class="col-sm-2 col-form-label">Application Email <span class="text-danger">*</span></label>
           <div class="col-sm-10">
             <input name="email" type="email" class="form-control" value="{{user.email}}" required>
           </div>
         </div>
         <div class="form-group row">
-          <label for="deadline" class="col-sm-2 col-form-label">Application Deadline Date</label>
+          <label for="deadline" class="col-sm-2 col-form-label">Application Deadline Date <span class="text-danger">*</span></label>
           <div class="col-sm-10">
             <input class="form-control" type="date" name="deadline" required>
           </div>
@@ -116,7 +117,7 @@
         <div class="form-group row">
           <label for="qualification" class="col-sm-2 col-form-label">Qualifications & Skills</label>
           <div class="col-sm-10">
-            <textarea class="w-100" name="qualification" id="" cols="10" rows="5"></textarea>
+            <textarea class="w-100" name="qualification" id="editor" cols="10" rows="5"></textarea>
           </div>
         </div>
         <div class="form-group row">
@@ -126,16 +127,40 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="address" class="col-sm-2 col-form-label">Location</label>
-          <div class="col-sm-10">
-            <input class="form-control" type="text" name="address" id="search_term">
+          <label for="address" class="col-sm-2 col-form-label">Location <span class="text-danger">*</span></label>
+          <div class="col-sm-5">
+            <select class="custom-select" id="country" name="country" required></select>
+          </div>
+          <div class="col-sm-5">
+            <select class="custom-select" id="state" name="city" required></select>
           </div>
         </div>
-
         <div class="form-group">
           <input type="submit" value="Save" class="btn btn-primary btn-lg">
+          <div class="formError"></div>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<script type="text/javascript" src="/countries.js"></script>
+<script language="javascript">
+  populateCountries("country", "state");
+</script>
+<script>
+  var form = document.getElementsByTagName('form')[0];
+  var description = document.querySelector('.jobDescription');
+  var error = document.querySelector('.error');
+  var formError = document.querySelector('.formError');
+
+  form.addEventListener("submit", function (event) {
+    if (!description.validity.valueMissing) {
+      error.innerHTML = "I expect a job description , darling!";
+      error.className = "error alert alert-danger mt-2 w-100";
+      formError.innerHTML = "Opps! some fileds still missing";
+      formError.className = "error alert alert-danger mt-2 w-100";
+      event.preventDefault();
+    }
+  }, false);
+</script>

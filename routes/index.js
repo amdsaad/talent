@@ -10,6 +10,14 @@ const JobWanted = mongoose.model('jobWanted');
 const Applications = mongoose.model('applications');
 const Message = mongoose.model('messages');
 const moment = require('moment');
+const keys = require('../config/keys');
+
+const cloudinary = require('cloudinary');
+cloudinary.config({
+  cloud_name: 'dgghoxlug',
+  api_key: keys.cloudinary.api_key,
+  api_secret: keys.cloudinary.api_secret
+});
 
 const {
   ensureAuthenticated,
@@ -67,7 +75,7 @@ router.get('/', ensureGuest, async (req, res) => {
 });
  */
 
-router.get('/job-wanted/:handle', async (req, res) => {
+/* router.get('/job-wanted/:handle', async (req, res) => {
   const jobWanted = await JobWanted.findOne({
     handle: req.params.handle
   }).populate('user').populate('resume');
@@ -78,28 +86,14 @@ router.get('/job-wanted/:handle', async (req, res) => {
   }
 
 });
-
+ */
 router.get('/dashboard', ensureAuthenticated, async (req, res) => {
-  const posts = await Post.find({
-    'user': req.user.id
-  });
-  const resume = await Resume.findOne({
-    'user': req.user.id
-  }).populate('user');
-  const latestPosts = await Post.find({}).limit(2).sort({
-    date: 'desc'
-  });
-  const applications = await Applications.find({
-    user: req.user.id
-  }).sort({
-    date: 'desc'
-  });
-  if (resume) {
-    var matchJob = resume.specialisms
-  };
-  const jobSpecialisms = await Job.find({
-    'specialisms': matchJob
-  }).limit(10).populate('company');
+  const posts = await Post.find({ 'user': req.user.id });
+  const resume = await Resume.findOne({ 'user': req.user.id }).populate('user');
+  const latestPosts = await Post.find({}).limit(2).sort({ date: 'desc' });
+  const applications = await Applications.find({ user: req.user.id }).sort({ date: 'desc' });
+  if (resume) { var matchJob = resume.specialisms };
+  const jobSpecialisms = await Job.find({ 'specialisms': matchJob }).limit(10).populate('company');
 
   res.render('index/dashboard', {
     posts: posts,
@@ -112,15 +106,15 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) => {
 });
 
 router.get('/employer-dashboard', async (req, res) => {
-  if(!req.user){
+  if (!req.user) {
     req.flash('error_msg', 'Please login as employer to access this page');
     res.redirect('/auth/employers/login');
-  }else  if (req.user.role == 'candidate') {
+  } else if (req.user.role == 'candidate') {
     req.flash('error_msg', 'You Don not have permission to access this page');
     res.redirect('/dashboard');
   } else {
-    const company = await Company.findOne({  user: req.user.id });
-    const jobs = await Job.find({  user: req.user.id  });
+    const company = await Company.findOne({ user: req.user.id });
+    const jobs = await Job.find({ user: req.user.id });
     res.render('index/employer-dashboard', {
       company,
       jobs
@@ -130,22 +124,13 @@ router.get('/employer-dashboard', async (req, res) => {
 
 
 router.post('/company', ensureAuthenticated, async (req, res) => {
-
-  if (req.user.role == 'employer') {
-    employer = true;
-  }
-  const company = await Company
-    .findOne({
-      user: req.user.id
-    });
-
+  if (req.user.role == 'employer') { employer = true; }
+  const company = await Company.findOne({ user: req.user.id });
   if (employer) {
-
     if (company) {
       req.flash('error_msg', 'You arelaedy have a company profile :)');
       res.redirect('/dashboard');
     } else {
-
       const newComp = {
         name: req.body.name,
         specialisms: req.body.specialisms,
@@ -158,7 +143,6 @@ router.post('/company', ensureAuthenticated, async (req, res) => {
         .then(company => {
           res.redirect('/dashboard')
         });
-
     }
   } else {
     req.flash('error_msg', 'Opps! you dont have permission to add company profile');
@@ -166,41 +150,46 @@ router.post('/company', ensureAuthenticated, async (req, res) => {
   }
 });
 
+router.get('/company/:id', async (req, res) => {
+  const company = await Company.findOne({ _id: req.params.id });
+  res.status(200).send('SGL company');
+});
+
 router.get('/companies', async (req, res) => {
 
   const comp = await Company.find();
   res.status(200).render('index/companies', {
     company: comp,
-    title: "Job wanted -Talent Liken : Connecting Talents - Find your job",
-    metaDescription: "Talent Liken connecting Talents (job seeker and employer), join us to post free jobs or create Free Professional Resume Templates focus on increasing your visibility.",
-    keywords: "find job, post a resume, build online resume, resume template, cv template, post free jobs, career advise"
+    title: "",
+    metaDescription: "",
+    keywords: ""
   })
 });
 
 router.get('/users/:email', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   User.findOne({
-      email: req.params.email
-    })
+    email: req.params.email
+  })
     .then(user => {
       res.status(200).json({
         "version": "v2",
         "content": {
           "actions": [{
-              "action": "set_field_value",
-              "field_name": "_userID",
-              "value": user.id
-            },
-            {
-              "action": "set_field_value",
-              "field_name": "facebook",
-              "value": user.facebook
-            },
-            {
-              "action": "set_field_value",
-              "field_name": "picture",
-              "value": user.picture
-            }
+            "action": "set_field_value",
+            "field_name": "_userID",
+            "value": user.id
+          },
+          {
+            "action": "set_field_value",
+            "field_name": "facebook",
+            "value": user.facebook
+          },
+          {
+            "action": "set_field_value",
+            "field_name": "picture",
+            "value": user.picture
+          }
           ]
         }
       });

@@ -10,7 +10,7 @@ const Job = mongoose.model('jobs');
 const moment = require('moment');
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 
-router.get('/add', ensureAuthenticated, async (req, res) => {
+router.get('/add', async (req, res) => {
   const jobs = await Job.find({});
   const count = jobs.length;
   if (req.isAuthenticated()) {
@@ -23,7 +23,7 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
       res.redirect('/dashboard')
     }
   } else {
-    req.flash('error_msg', 'You must login first');
+    req.flash('error_msg', 'You must login as employer first to add jobs');
     res.redirect('/auth/employers/login');
   }
 });
@@ -42,14 +42,16 @@ router.post('/', ensureAuthenticated, async (req, res) => {
     const company = await Company.findOne({ user: req.user.id });
     var str_title = req.body.title;
     var str_company = company.name;
-    var str_address = req.body.address;
+    var str_country = req.body.country;
+    var str_city = req.body.city;
     var date = moment();
     var expDate = moment().add(30, 'day');
 
     str1 = str_title.replace(/\s+/g, '-').toLowerCase();
     str2 = str_company.replace(/\s+/g, '-').toLowerCase();
-    str3 = str_address.replace(/\s+/g, '-').toLowerCase();
-    const handle = str1 + "-" + str2 + "-" + str3 + "-" + 'talent-liken-job-vacancy-' + count;
+    str3 = str_country.replace(/\s+/g, '-').toLowerCase();
+    str4 = str_city.replace(/\s+/g, '-').toLowerCase();
+    const handle = str1 + "-" + str2 + "-" + str3 + "-" + str4 + "-" +'talent-liken-job-vacancy-' + count;
     const newJob = {
       handle: handle,
       title: req.body.title,
@@ -63,7 +65,8 @@ router.post('/', ensureAuthenticated, async (req, res) => {
       qualification: req.body.qualification,
       benefits: req.body.benefits,
       deadline: req.body.deadline,
-      address: req.body.address,
+      country: req.body.country,
+      city: req.body.city,
       user: req.user.id,
       company: company._id,
       date: date,
@@ -72,7 +75,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
     new Job(newJob)
       .save()
       .then(job => {
-        res.redirect(`/jobs/view/${job.handle}`)
+        res.redirect(`/jobs/${job.handle}`)
       });
   } else {
     req.flash('error_msg', 'You dont have permission to post jobs');
@@ -94,9 +97,24 @@ router.get('/', async (req, res) => {
         if (jobs.length < 1) {
           noMatch = "No jobs match that query, please try again.";
         }
-        res.render('jobs/index', { jobs: jobs, noMatch: noMatch })
+        var count = jobs.length;
+        res.render('jobs/index', { jobs: jobs, noMatch: noMatch,count })
       }
-    });
+    }).populate('company');
+  } else if (req.query.location) {
+    var today = new Date();
+    const regex = new RegExp(escapeRegex(req.query.location), 'gi');
+    Job.find({ 'expiryDate': { $gte: today },  $or:[{'country': regex},{'city': regex}]}, function (err, jobs) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (jobs.length < 1) {
+          noMatch = "No jobs match that query, please try again.";
+        }
+        var count = jobs.length;
+        res.render('jobs/index', { jobs: jobs, noMatch: noMatch ,count})
+      }
+    }).populate('company');
   } else {
     var today = new Date();
     Job.find({ expiryDate: { $gte: today } })

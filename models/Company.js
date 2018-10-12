@@ -9,39 +9,45 @@ const CompanySchema = new Schema({
   },
   name: {
     type: String,
-    required: true
+    required: true,
+    default: 'Company Name'
   },
   specialisms: {
     type: String,
-    required: true
+    required: true,
+    default: 'Company Specialisms or Category'
   },
   description: {
     type: String,
-    required: true
+    required: true,
+    default: 'Company Description'
+  },
+  video: {
+    type: String,
   },
   logo: {
     type: String,
     required: true,
-    default:'http://2.bp.blogspot.com/-Y2XrnrXJmXs/Uf5Y_bfr4jI/AAAAAAAAALk/ydouC9lEmDE/s1600/Logogap+Logobb.jpg'
-   },
+    default: 'http://2.bp.blogspot.com/-Y2XrnrXJmXs/Uf5Y_bfr4jI/AAAAAAAAALk/ydouC9lEmDE/s1600/Logogap+Logobb.jpg'
+  },
   social: {
     youtube: {
-      type: String
+      type: String,
     },
     twitter: {
-      type: String
+      type: String,
     },
     facebook: {
-      type: String
+      type: String,
     },
     linkedin: {
-      type: String
+      type: String,
     },
     instagram: {
-      type: String
+      type: String,
     }
   },
-  date:{
+  date: {
     type: Date,
     default: Date.now
   }

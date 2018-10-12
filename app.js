@@ -102,7 +102,18 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
-
+app.use((req, res, next) => {
+  if (req.user) {
+    if (req.user.role == 'candidate') {
+      candidate = true,
+        res.locals.candidate = candidate
+    } else if (req.user.role == 'employer') {
+      employer = true,
+        res.locals.employer = employer
+    }
+  }
+  next();
+});
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 //Use routes
@@ -111,7 +122,7 @@ app.use('/auth', auth);
 app.use('/posts', posts);
 app.use('/jobs', jobs);
 app.use('/candidate-resume', resumes);
-app.use('*', function(req, res){
+app.use('*', function (req, res) {
   res.status(404).render('index/404')
 });
 const port = process.env.PORT || 5000;

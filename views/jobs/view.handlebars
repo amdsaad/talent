@@ -52,11 +52,13 @@
             <p class="mb-1">{{{job.description}}}</p>
             <hr class="w-100 mt-4 mb-4">
           </div>
+          {{#if job.qualification}}
           <div class="text-dark">
             <h4 class="display-4-job mb-3">Qualifications and Skills</h4>
             <p class="mb-1">{{job.qualification}}</p>
             <hr class="w-100 mt-4 mb-4">
           </div>
+          {{/if}}
           {{#if job.benefits}}
           <div class="text-dark">
             <h4 class="display-4-job mb-3">Benefits</h4>
@@ -74,7 +76,9 @@
         </div>
       </div>
       <div class="col-md-4">
-        {{#if user}} {{#if userApplication}}
+        {{#if user}}
+        {{#if resume}}
+        {{#if userApplication}}
         <div class="bg-white p-3 rounded" id="job-cont-sidebar">
           <div>
             <div class="bg-info bg-op-7 p-3 rounded text-dark">
@@ -105,13 +109,15 @@
                 <label class="text-primary text-capitalize" for="inputFullName">
                   <h6>Resume</h6>
                 </label>
-                <input type="text" class="form-control" value="/candidate-resume/{{resume.handle}}" id="inputFullName" disabled>
+                <input type="text" class="form-control" value="/candidate-resume/{{resume.handle}}" id="inputFullName"
+                  disabled>
               </div>
               <div class="form-group">
                 <label class="text-primary text-capitalize" for="appTextarea">
                   <h6>Covering Letter</h6>
                 </label>
-                <textarea name="coveringLetter" class="form-control" id="appTextarea" rows="4" data-emoji_font="true" style="font-family: &quot;Open Sans&quot;, Arial, serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, Symbola, EmojiSymbols !important;"></textarea>
+                <textarea name="coveringLetter" class="form-control" id="appTextarea" rows="4" data-emoji_font="true"
+                  style="font-family: &quot;Open Sans&quot;, Arial, serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, Symbola, EmojiSymbols !important;"></textarea>
               </div>
               <input type="submit" value="Submit Application" class="btn btn-primary">
             </form>
@@ -120,7 +126,22 @@
             <h1>adsss</h1>
           </div>
         </div>
-        {{/if}} {{else}}
+        {{/if}}
+        {{else}}
+        <div class="bg-white p-3 rounded" id="job-cont-sidebar">
+          <div>
+            <div class="bg-danger bg-op-3 p-3 rounded text-dark">
+              <p class="text-sm">Seems you do not have resume, please add resume to apply for this job
+              </p>
+              <a class="btn btn-primary btn-sm" href="candidate-resume/add">Add Resme</a>
+            </div>
+          </div>
+          <div id="ads">
+            <h1>adssssss</h1>
+          </div>
+        </div>
+        {{/if}}
+        {{else}}
         <div class="bg-white pl-3 pr-3 pt-3 rounded" id="job-cont-sidebar">
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Login to Apply
@@ -164,8 +185,10 @@
       </div>
       <div class="modal-body">
         <div>
-          <a href="/auth/facebook" type="button" class="mb-1 text-white btn bg-brand-facebook btn-lg">Login with Facebook</a>
-          <a href="/auth/google" type="button" class="mb-1 text-white btn bg-brand-google-plus btn-lg">Login with Google</a>
+          <a href="/auth/facebook" type="button" class="mb-1 text-white btn bg-brand-facebook btn-lg">Login with
+            Facebook</a>
+          <a href="/auth/google" type="button" class="mb-1 text-white btn bg-brand-google-plus btn-lg">Login with
+            Google</a>
         </div>
       </div>
     </div>

@@ -36,8 +36,9 @@
                     </div>
                     {{#if resumeDefualt}}
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="resume[style]" id="inlineRadio1" value="default" checked>
-                      <label class="form-check-label" for="inlineRadio1" >Default</label>
+                      <input class="form-check-input" type="radio" name="resume[style]" id="inlineRadio1" value="default"
+                        checked>
+                      <label class="form-check-label" for="inlineRadio1">Default</label>
                     </div>
                     {{else}}
                     <div class="form-check form-check-inline">
@@ -57,7 +58,8 @@
                     </div>
                     {{#if resumeSimple}}
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="resume[style]" id="inlineRadio1" value="simple" checked>
+                      <input class="form-check-input" type="radio" name="resume[style]" id="inlineRadio1" value="simple"
+                        checked>
                       <label class="form-check-label" for="inlineRadio1">Simple & Clean</label>
                     </div>
                     {{else}}
@@ -87,855 +89,145 @@
     </div>
   </div>
 </div>
-<div class="container-fluid pt-3" id="resumes">
-  <div class="row justify-content-center">
-    <div class="col-md-8" id="resume-lists">
-      <div class="row">
-        <div class="col-md-12">
-          <div id="resume-messages" style="position: relative;float: right;"></div>
-        </div>
-      </div>
-      {{#if resumeDefualt}}
-      <div class="row justify-content-between pt-3">
-        <div class="col-md-12" id="resume-side">
-          <ul class="list-group" id="edit-basic-pic-resume">
-            <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-pic-edit">
-              <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resumeDefualt-pic-form p-2"
-                enctype="multipart/form-data">
-                <div class="form-group text-center mt-2">
-                  <input type="file" name="picture" id="">
-                </div>
-                <input type="submit" value="Upload" class="btn btn-success" />
-                <input type="button" value="Cancel" class="btn btn-secondary cxl-pic-resume" />
-              </form>
-            </li>
-            <li class="list-group-item" id="basic-info-resume-pic-area">
-              <img class="rounded-circle mx-auto d-block" src="{{resume.pictureUrl}}" alt="" style="width:150px; height: 150px;">
-              <button class="btn btn-outline-dark edit-basic-pic-btn btn-sm mx-auto d-block">Edit</button>
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-12">
-          <ul class="list-group " id="edit-basic-resume">
-            <li class="list-group-item bg-light" id="basic-info-resume-area-edit">
-              <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-form p-2">
-                <div class="form-group text-center">
-                  <input class="border-op-8 border-grey display-4" type="text" name="resume[fullName]" value="{{resume.fullName}}">
-                </div>
-                <div class="form-group text-center">
-                  <input class="border-op-8 border-grey display-4 text-muted" type="text" name="resume[jobTitle]" value="{{resume.jobTitle}}">
-                </div>
-                <div class="form-group row text-center">
-                  <div class="col-md-4">
-                    <i class="fas fa-map-marker-alt text-muted mr-2"></i>
-                    <input class="border-op-8 border-grey text-muted" type="text" name="resume[location]" value="{{resume.location}}">
-                  </div>
-                  <div class="col-md-4">
-                    <i class="fas fa-phone-square text-muted mr-2"></i>
-                    <input class="border-op-8 border-grey text-muted" type="text" name="resume[contactNumber]" value="{{resume.contactNumber}}">
-                  </div>
-                  <div class="col-md-4">
-                    <i class="fas fa-at text-muted mr-2"></i>
-                    <input class="border-op-8 border-grey text-muted" type="text" name="resume[email]" value="{{resume.email}}">
-                  </div>
-                </div>
-                <input type="submit" value="Save" class="btn btn-success" />
-                <input type="button" value="Cancel" class="btn btn-warning cxl-basic-resume-info" />
-              </form>
-            </li>
-            <li class="list-group-item" id="basic-info-resume-area">
-              <div class="resume-title">
-                <div class="text-center rounded-bottom">
-                  <h3 class="display-3 text-dark mb-2">
-                    <strong>{{resume.fullName}}</strong>
-                  </h3>
-                  <h6 class="display-4 text-muted text-capitalize">{{resume.jobTitle}}</h6>
-                </div>
+<div class="container pt-3" id="resumes">
+  <div class="row">
+    <div class="col-md-12" id="resume-lists">
+      <div id="resume-messages" style="position: relative;float: right;"></div>
+    </div>
+    {{#if resumeDefualt}}
+    <div class="col-md-12">
+      <ul class="list-group" id="edit-basic-pic-resume">
+        <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-pic-edit">
+          <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resumeDefualt-pic-form p-2"
+            enctype="multipart/form-data">
+            <div class="form-group text-center mt-2">
+              <input type="file" name="picture" id="">
+            </div>
+            <input type="submit" value="Upload" class="btn btn-success" />
+            <input type="button" value="Cancel" class="btn btn-secondary cxl-pic-resume" />
+          </form>
+        </li>
+        <li class="list-group-item" id="basic-info-resume-pic-area">
+          <img class="rounded-circle mx-auto d-block" src="{{resume.pictureUrl}}" alt="" style="width:150px; height: 150px;">
+          <button class="btn btn-outline-dark edit-basic-pic-btn btn-sm mx-auto d-block">Edit</button>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-12">
+      <ul class="list-group " id="edit-basic-resume">
+        <li class="list-group-item bg-light" id="basic-info-resume-area-edit">
+          <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-form p-2">
+            <div class="form-group text-center">
+              <input class="border-op-8 border-grey display-4" type="text" name="resume[fullName]" value="{{resume.fullName}}">
+            </div>
+            <div class="form-group text-center">
+              <input class="border-op-8 border-grey display-4 text-muted" type="text" name="resume[jobTitle]" value="{{resume.jobTitle}}">
+            </div>
+            <div class="form-group row text-center">
+              <div class="col-md-4">
+                <i class="fas fa-map-marker-alt text-muted mr-2"></i>
+                <input class="border-op-8 border-grey text-muted" type="text" name="resume[location]" value="{{resume.location}}">
               </div>
-              <div class=" row justify-content-center">
-                <i class="fas fa-map-marker-alt text-muted"></i>
-                <p class="ml-1 text-muted">{{resume.location}}</p>
-                <i class="fas fa-phone-square text-muted ml-3"></i>
-                <p class="ml-1 text-muted">{{resume.contactNumber}}</p>
-                <i class="fas fa-at text-muted ml-3"></i>
-                <p class="ml-1 text-muted">{{resume.email}}</p>
+              <div class="col-md-4">
+                <i class="fas fa-phone-square text-muted mr-2"></i>
+                <input class="border-op-8 border-grey text-muted" type="text" name="resume[contactNumber]" value="{{resume.contactNumber}}">
               </div>
-              <button class="btn btn-outline-primary edit-basic-btn btn-sm mx-auto d-block">Edit</button>
-            </li>
-          </ul>
-        </div>
-        {{!-- Profile Start --}}
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-12">
-              <div id="resume-about-messages" style="position: relative;float: right;"></div>
+              <div class="col-md-4">
+                <i class="fas fa-at text-muted mr-2"></i>
+                <input class="border-op-8 border-grey text-muted" type="text" name="resume[email]" value="{{resume.email}}">
+              </div>
+            </div>
+            <input type="submit" value="Save" class="btn btn-success" />
+            <input type="button" value="Cancel" class="btn btn-warning cxl-basic-resume-info" />
+          </form>
+        </li>
+        <li class="list-group-item" id="basic-info-resume-area">
+          <div class="resume-title">
+            <div class="text-center rounded-bottom">
+              <h3 class="display-3 text-dark mb-2">
+                <strong>{{resume.fullName}}</strong>
+              </h3>
+              <h6 class="display-4 text-muted text-capitalize">{{resume.jobTitle}}</h6>
             </div>
           </div>
-          <ul class="list-group  pt-2 pb-2" id="edit-basic-about-resume">
-            <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-about-edit">
-              <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-about-form p-2">
-                <h4 class="text-blue-dark display-4" id="resume-heading">About Me</h4>
-                <div class="under-heading text-blue"></div>
-                <div class="form-group text-center mt-2">
-                  <textarea class="w-100" name="resume[bio]" rows="5">{{resume.bio}}</textarea>
-                </div>
-                <input type="submit" value="Save" class="btn btn-success" />
-                <input type="button" value="Cancel" class="btn btn-secondary cxl-about-resume" />
-              </form>
-            </li>
-            <li class="list-group-item" id="basic-info-resume-about-area">
-              <div class="text-grey-dark mt-3">
-                <h4 class="text-blue-dark display-4" id="resume-heading">About Me</h4>
-                <div class="under-heading text-blue"></div>
-                <p>{{{resume.bio}}}</p>
-              </div>
-              <button class="btn btn-outline-primary edit-basic-about-btn btn-sm">Edit</button>
-            </li>
-          </ul>
-        </div>
-        {{!-- Profile End --}}
-        <div class="row">
-          <div class="col-md-8">
-            {{!-- Start of Experience --}}
-            <div class="col-md-12 bg-op-3 bg-primary rounded pb-3">
-              <div class="row justify-content-between">
-                <div class="col-md-12">
-                  <div id="exp-msg"></div>
-                </div>
-                <div class="col-md-8">
-                  <div class="text-left rounded mb-2 mt-3">
-                    <h4 class="text-blue-dark display-4" id="resume-heading">Experience</h4>
-                    <div class="under-heading text-blue "></div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-exp-btn"> Add Experiance</button>
-                </div>
-              </div>
-              {{!-- add Exp --}}
-              <div class="col-md-12">
-                <div id="experience">
-                  <div class="exp-new-area shadow bg-op-5 bg-purple mb-3">
-                    <div class="p-3">
-                      <form method="post" action="/candidate-resume/experience" id="add-exp">
-                        <div class="form-group row">
-                          <div class="col-md-4">
-                            <input type="text" class="form-control border-op-8 border-grey" placeholder="Job Title"
-                              name="title" required />
-                          </div>
-                          <div class="col-md-4">
-                            <input type="text" class="form-control border-op-8 border-grey" placeholder="Company" name="company"
-                              required />
-                          </div>
-                          <div class="col-md-4">
-                            <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-md-5">
-                            <h6>From Date</h6>
-                            <input type="date" class="form-control border-op-8 border-grey" name="from" />
-                          </div>
-                          <div class="col-md-7">
-                            <h6>To Date</h6>
-                            <div class="row">
-                              <div class="col-md-7 to-date-exp">
-                                <input type="date" class="form-control border-op-8 border-grey" name="to" />
-                              </div>
-                              <div class="col-md-5 ">
-                                <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                                  <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-exp" />
-                                  <label class="form-check-label" for="current">Current Job</label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-md-12">
-                            <textarea class="form-control border-op-8 border-grey" placeholder="Some of your responsabilities, Job description"
-                              name="description"></textarea>
-                          </div>
-                        </div>
-                        <input type="submit" value="Save" class="btn btn-success" />
-                        <input type="button" value="Cancel" class="btn btn-warning exp-cxl-add-btn" />
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {{!-- end Add Exp --}} {{!-- Exp List Start --}}
-              <ul class="list-group" id="exp-list">
-                {{#each experiance}}
-                <li class="list-group-item">
-                  <div class="row m-2">
-                    <div class="col-sm-9 col-md-8 col-lg-8">
-                      <div class=" text-left pt-2 pb-2">
-                        <h5>{{title}} @
-                          <span class="text-blue  ">{{company}} - {{location}}</span>
-                        </h5>
-                      </div>
-                    </div>
-                    <div class="col-sm-3 col-md-4 col-lg-4">
-                      <div class="float-right pt-2 pb-2">
-                        {{#if this.to}}
-                        <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
-                        {{else}}
-                        <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
-                        {{/if}}
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="text-grey-dark">
-                        <p>{{this.description}}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="m-4">
-                    <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
-                    <form style="display: inline" method="POST" action="/candidate-resume/experience/{{this.id}}" class="delete-exp-form">
-                      <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                    </form>
-                  </div>
-                  {{!-- Edit - Update Form --}}
-                  <form method="POST" action="/candidate-resume/experience/{{this.id}}" class="edit-exp-form p-4 bg-op-5 bg-lime rounded m-2">
-                    <div class="form-group row">
-                      <div class="col-md-4">
-                        <input type="text" class="form-control border-op-8 border-grey" value="{{this.title}}" name="exper[title]"
-                          required />
-                      </div>
-                      <div class="col-md-4">
-                        <input type="text" class="form-control border-op-8 border-grey" value="{{this.company}}" name="exper[company]"
-                          required />
-                      </div>
-                      <div class="col-md-4">
-                        <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="exper[location]" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-5">
-                        <h6>From Date</h6>
-                        <input type="date" class="form-control border-op-8 border-grey" name="exper[from]" />
-                      </div>
-                      <div class="col-md-7">
-                        <h6>To Date</h6>
-                        <div class="row">
-                          <div class="col-md-7 to-date-exp">
-                            <input type="date" class="form-control border-op-8 border-grey" name="exper[to]" />
-                          </div>
-                          <div class="col-md-5 ">
-                            <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                              <input class="form-check-input" type="checkbox" name="exper[current]" value="Till Now" id="current-exp-edit" />
-                              <label class="form-check-label" for="current">Current Job</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <textarea class="form-control border-op-8 border-grey" name="exper[description]">{{this.description}}</textarea>
-                      </div>
-                    </div>
-                    <input type="submit" value="Update" class="btn btn-success" />
-                    <input type="button" value="cancel" class="btn btn-warning exp-cxl-edit-btn" />
-                  </form>
-                  {{!-- End of Edit Form --}}
-                </li>
-                {{/each}}
-              </ul>
-              {{!-- Exp List End --}}
-            </div>
-            {{!-- End of Experience --}} {{!-- Start of Education --}}
-            <div class="col-md-12 bg-op-3 bg-primary rounded pb-3">
-              <div class="row justify-content-between">
-                <div class="col-md-12">
-                  <div id="educ-msg"></div>
-                </div>
-                <div class="col-md-8">
-                  <div class="text-left rounded mb-2 mt-3">
-                    <h4 class="text-blue-dark display-4" id="resume-heading">Education</h4>
-                    <div class="under-heading text-blue "></div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-educ-btn">Add Education</button>
-                </div>
-              </div>
-              {{!-- add Education --}}
-              <div class="col-md-12">
-                <div id="education">
-                  <div class="educ-new-area shadow bg-op-5 bg-purple mb-3 rounded">
-                    <div class="p-3">
-                      <form method="post" action="/candidate-resume/education" id="add-educ">
-                        <div class="form-group row">
-                          <div class="col-md-3">
-                            <input type="text" class="form-control border-op-8 border-grey" placeholder="School / Collage"
-                              name="school" required />
-                          </div>
-                          <div class="col-md-3">
-                            <input type="text" class="form-control border-op-8 border-grey" placeholder="Degree" name="degree"
-                              required />
-                          </div>
-                          <div class="col-md-3">
-                            <input type="text" class="form-control border-op-8 border-grey" placeholder="field of study"
-                              name="fieldofstudy" />
-                          </div>
-                          <div class="col-md-3">
-                            <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-md-5">
-                            <h6>From Date</h6>
-                            <input type="date" class="form-control border-op-8 border-grey" name="from" />
-                          </div>
-                          <div class="col-md-7">
-                            <h6>To Date</h6>
-                            <div class="row">
-                              <div class="col-md-7 to-date-exp">
-                                <input type="date" class="form-control border-op-8 border-grey" name="to" />
-                              </div>
-                              <div class="col-md-5 ">
-                                <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                                  <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-educ" />
-                                  <label class="form-check-label" for="current">Current Job</label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-md-12">
-                            <textarea class="form-control border-op-8 border-grey" placeholder="Description" name="description"></textarea>
-                          </div>
-                        </div>
-                        <input type="submit" value="Save" class="btn btn-success" />
-                        <input type="button" value="Cancel" class="btn btn-warning educ-cxl-add-btn" />
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {{!-- end Add Education --}} {{!-- Education List Start --}}
-              <ul class="list-group" id="educ-list">
-                {{#each education}}
-                <li class="list-group-item p-2">
-                  <div class="row m-2">
-                    <div class="col-sm-9 col-md-8 col-lg-8">
-                      <div class=" text-left pt-2 pb-2">
-                        <h5>{{school}}-
-                          <span class="text-blue"> {{degree}} Degree - {{fieldofstudy}} - {{location}}</span>
-                        </h5>
-                      </div>
-                    </div>
-                    <div class="col-sm-3 col-md-4 col-lg-4">
-                      <div class="float-right pt-2 pb-2">
-                        {{#if this.to}}
-                        <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
-                        {{else}}
-                        <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
-                        {{/if}}
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="text-grey-dark">
-                        <p>{{this.description}}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="m-4">
-                    <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
-                    <form style="display: inline" method="POST" action="/candidate-resume/education/{{this.id}}" class="delete-educ-form">
-                      <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                    </form>
-                  </div>
-                  {{!-- Edit - Update Form --}}
-                  <form method="POST" action="/candidate-resume/education/{{this.id}}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
-                    <div class="form-group row">
-                      <div class="col-md-3">
-                        <input type="text" class="form-control border-op-8 border-grey" value="{{this.school}}" name="education[school]"
-                          required />
-                      </div>
-                      <div class="col-md-3">
-                        <input type="text" class="form-control border-op-8 border-grey" value="{{this.degree}}" name="education[degree]"
-                          required />
-                      </div>
-                      <div class="col-md-3">
-                        <input type="text" class="form-control border-op-8 border-grey" value="{{this.fieldofstudy}}"
-                          name="education[fieldofstudy]" />
-                      </div>
-                      <div class="col-md-3">
-                        <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="education[location]" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-5">
-                        <h6>From Date</h6>
-                        <input type="date" class="form-control border-op-8 border-grey" name="education[from]" value="{{formatDate this.from 'DD MM YYYY'}}" />
-                      </div>
-                      <div class="col-md-7">
-                        <h6>To Date</h6>
-                        <div class="row">
-                          <div class="col-md-7 to-date-exp">
-                            <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
-                          </div>
-                          <div class="col-md-5 ">
-                            <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                              <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now"
-                                id="current-educ" />
-                              <label class="form-check-label" for="current">Current Study</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <textarea class="form-control border-op-8 border-grey" name="education[description]">{{this.description}}</textarea>
-                      </div>
-                    </div>
-                    <input type="submit" value="Update" class="btn btn-success" />
-                    <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
-                  </form>
-                  {{!-- End of Edit Form --}}
-                </li>
-                {{/each}}
-              </ul>
-              {{!-- Exp List End --}}
-            </div>{{!-- end of Education --}}
+          <div class=" row justify-content-center">
+            <i class="fas fa-map-marker-alt text-muted"></i>
+            <p class="ml-1 text-muted">{{resume.location}}</p>
+            <i class="fas fa-phone-square text-muted ml-3"></i>
+            <p class="ml-1 text-muted">{{resume.contactNumber}}</p>
+            <i class="fas fa-at text-muted ml-3"></i>
+            <p class="ml-1 text-muted">{{resume.email}}</p>
           </div>
-          <div class="col-md-4">
-            {{!-- Start of Lang --}}
-            <div class="col-md-12 bg-op-3 bg-primary rounded pb-3">
-              <div class="row justify-content-between">
-                <div class="col-md-12">
-                  <div id="lang-msg"></div>
-                </div>
-                <div class="col-md-8">
-                  <div class="text-left rounded mb-2 mt-2">
-                    <h4 class="text-blue-dark display-4" id="resume-heading">Languages</h4>
-                    <div class="under-heading text-blue "></div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-lang-btn">Add Language</button>
-                </div>
-              </div>
-              <div class="row">
-                {{!-- add Lang --}}
-                <div class="col-md-12">
-                  <div id="langs">
-                    <div class="lang-new-area shadow bg-op-5 bg-purple mb-3 rounded">
-                      <div class="p-3">
-                        <form method="post" action="/candidate-resume/languages" id="add-lang">
-                          <div class="form-group row">
-                            <div class="col-md-6">
-                              <input type="text" class="form-control border-op-8 border-grey" placeholder="Name" name="name"
-                                required />
-                            </div>
-                            <div class="col-md-6">
-                              <select class="custom-select d-block border-op-1 border-light bg-warning bg-op-5" name="level"
-                                required>
-                                <option value="native" selected>Native Language</option>
-                                <option value="intermediate">Intermediate </option>
-                                <option value="fluent">Fluent</option>
-                              </select>
-                            </div>
-                          </div>
-                          <input type="submit" value="Save" class="btn btn-success" />
-                          <input type="button" value="Cancel" class="btn btn-warning lang-cxl-add-btn" />
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                  {{!-- end Add Lang --}}
-                  <ul class="list-group" id="lang-list">
-                    {{#each language}}
-                    <li class="mb-0 list-group-item p-2">
-                      <h6>{{this.name}}<span class="badge badge-pill badge-warning text-capitalize ml-2 p-1">{{this.level}}</span>
-                        <span class="w-5">
-                          <form action="/candidate-resume/languages/{{this.id}}" method="post" class="delete-lang-form float-left">
-                            <button type="submit" id="" class="fabutton-skills">
-                              <i class="far fa-trash-alt text-danger"></i>
-                            </button>
-                          </form>
-                        </span></h6>
-                    </li>
-                    {{/each}}
-                  </ul>
-                </div>
-              </div>
+          <button class="btn btn-outline-primary edit-basic-btn btn-sm mx-auto d-block">Edit</button>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-12">
+      <div id="resume-about-messages" style="position: relative;float: right;"></div>
+      <ul class="list-group  pt-2 pb-2" id="edit-basic-about-resume">
+        <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-about-edit">
+          <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-about-form p-2">
+            <h4 class="text-blue-dark display-4" id="resume-heading">About Me</h4>
+            <div class="under-heading text-blue"></div>
+            <div class="form-group text-center mt-2">
+              <textarea class="w-100" name="resume[bio]" rows="5">{{resume.bio}}</textarea>
             </div>
-            {{!-- End of Lang --}}
-            {{!-- Start of Skills --}}
-            <div class="col-md-12 bg-op-3 bg-primary rounded pb-3 mt-2">
-              <div class="row justify-content-between">
-                <div class="col-md-12">
-                  <div class="w-100" id="skill-msg"></div>
-                </div>
-                <div class="col-md-8">
-                  <div class="text-left rounded mt-2 mb-2">
-                    <h4 class="text-blue-dark display-4" id="resume-heading">Skills</h4>
-                    <div class="under-heading text-blue "></div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-skill-btn">Add Skill</button>
-                </div>
-              </div>
-              <div class="row">
-                {{!-- add Skills --}}
-                <div class="col-md-12">
-                  <div id="skills">
-                    <div class="skill-new-area shadow bg-op-5 bg-purple mb-3 rounded">
-                      <div class="p-3">
-                        <form method="post" action="/candidate-resume/skills" id="add-skill">
-                          <div class="form-group row">
-                            <div class="col-md-6">
-                              <input type="text" class="form-control border-op-8 border-grey" placeholder="Skill Name"
-                                name="name" required />
-                            </div>
-                            <div class="col-md-6">
-                              <input type="text" class="form-control border-op-8 border-grey" placeholder="Level" name="level"
-                                required />
-                            </div>
-                          </div>
-                          <input type="submit" value="Save" class="btn btn-success" />
-                          <input type="button" value="Cancel" class="btn btn-warning skill-cxl-add-btn" />
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                  {{!-- end Add Skills --}}
-                  <ul class="list-group" id="skills-list">
-                    {{#each skill}}
-                    <li class="mb-0 list-group-item p-2">
-                      <div class="progress bg-white">
-                        <span class="font-weight-bold w-30 text-capitalize">{{this.name}}</span>
-                        <span class="w-5">
-                          <form action="/candidate-resume/skills/{{this.id}}" method="post" class="delete-skill-form float-right">
-                            <button type="submit" id="save-job" class="fabutton-skills">
-                              <i class="far fa-trash-alt text-danger"></i>
-                            </button>
-                          </form>
-                        </span>
-                        <span class="w-60">
-                          <div class="progress-bar w-{{this.level}}" role="progressbar" aria-valuenow="{{this.level}}"
-                            aria-valuemin="0" aria-valuemax="100">{{this.level}}% </div>
-                        </span>
-                      </div>
-                    </li>
-                    {{/each}}
-                  </ul>
-                </div>
-              </div>
-            </div>
-            {{!-- End of Skills --}}
-            {{!-- Start of Awards --}}
-            <div class="col-md-12 bg-op-3 bg-primary rounded pb-3 mt-2">
-              <div class="row justify-content-between">
-                <div class="col-md-12">
-                  <div class="w-100" id="award-msg"></div>
-                </div>
-                <div class="col-md-8">
-                  <div class="text-left rounded mt-2 mb-2">
-                    <h4 class="text-blue-dark display-4" id="resume-heading">Awards</h4>
-                    <div class="under-heading text-blue "></div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-award-btn">Add Award</button>
-                </div>
-              </div>
-              <div class="row">
-                {{!-- add Award --}}
-                <div class="col-md-12">
-                  <div id="awards">
-                    <div class="award-new-area shadow bg-op-5 bg-purple mb-3 rounded">
-                      <div class="p-3">
-                        <form method="post" action="/candidate-resume/awards" id="add-award">
-                          <div class="form-group row">
-                            <div class="col-md-12">
-                              <input type="text" class="form-control border-op-8 border-grey" placeholder="Award Name"
-                                name="name" required />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <div class="col-md-6">
-                              <input type="text" class="form-control border-op-8 border-grey" placeholder="Awarder"
-                                name="awarder" required />
-                            </div>
-                            <div class="col-md-6">
-                              <input type="text" class="form-control border-op-8 border-grey" placeholder="Year eg:2012"
-                                name="awardedOn" required />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <div class="col-md-12">
-                              <textarea name="summary" id="" cols="30" rows="2" class="w-100 form-control" placeholder="Summary"></textarea>
-                            </div>
-                          </div>
-                          <input type="submit" value="Save" class="btn btn-success" />
-                          <input type="button" value="Cancel" class="btn btn-warning award-cxl-add-btn" />
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                  {{!-- end Add awards --}}
-                  <ul class="list-group" id="awards-list">
-                    {{#each award}}
-                    <li class="mb-1 rounded list-group-item p-2">
-                      <h5>{{name}} @
-                        <span class="text-blue">{{awarder}} / {{this.awardedOn}}</span>
-                      </h5>
-                      <p class="mb-0">{{this.summary}}</p>
-                      <form action="/candidate-resume/awards/{{this.id}}" method="post" class="delete-award-form float-left">
-                        <button type="submit" id="remove-award" class="fabutton-skills">
-                          <i class="far fa-trash-alt text-danger"></i>
-                        </button>
-                      </form>
-                    </li>
-                    {{/each}}
-                  </ul>
-                </div>
-              </div>
-            </div>
-            {{!-- End of awards --}}
+            <input type="submit" value="Save" class="btn btn-success" />
+            <input type="button" value="Cancel" class="btn btn-secondary cxl-about-resume" />
+          </form>
+        </li>
+        <li class="list-group-item" id="basic-info-resume-about-area">
+          <div class="text-grey-dark mt-3">
+            <h4 class="text-blue-dark display-4" id="resume-heading">About Me</h4>
+            <div class="under-heading text-blue"></div>
+            <p>{{{resume.bio}}}</p>
           </div>
+          <button class="btn btn-outline-primary edit-basic-about-btn btn-sm">Edit</button>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <div class="bg-primary bg-op-4 p-2 mb-2 mt-3 rounded">
+        <div id="exp-msg"></div>
+        <div class="text-left">
+          <span class="">
+            <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Experience</h4><span><i class="fas fa-plus-circle d-inline-block icon-1x text-purple"
+                id="add-exp-btn" style="float:right;"></i></span>
+          </span>
+          <div class="under-heading text-blue "></div>
         </div>
-      </div>
-      {{/if}}
-      {{#if resumeSimple}}
-      <div class="row pt-3">
-        <div class="col-md-2 col-lg-2" id="resume-side">
-          <ul class="list-group  pt-2 pb-2" id="edit-basic-pic-resume">
-            <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-pic-edit">
-              <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-pic-form p-2"
-                enctype="multipart/form-data">
-                <div class="form-group text-center mt-2">
-                  <input type="file" name="picture" id="">
-                </div>
-                <input type="submit" value="Upload" class="btn btn-success" />
-                <input type="button" value="Cancel" class="btn btn-secondary cxl-pic-resume" />
-              </form>
-            </li>
-            <li class="list-group-item" id="basic-info-resume-pic-area">
-              <div class="text-grey-dark">
-                <img class="rounded" src="{{resume.pictureUrl}}" alt="">
-              </div>
-              <button class="btn btn-outline-primary edit-basic-pic-btn">Edit</button>
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-10 col-lg-10">
-          <ul class="list-group  pt-2 pb-2" id="edit-basic-resume">
-            <li class="list-group-item bg-light" id="basic-info-resume-area-edit">
-              <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-form p-2">
-                <div class="form-group text-center">
-                  <input class="border-op-8 border-grey display-4" type="text" name="resume[fullName]" value="{{resume.fullName}}">
-                </div>
-                <div class="form-group text-center">
-                  <input class="border-op-8 border-grey display-4 text-muted" type="text" name="resume[jobTitle]" value="{{resume.jobTitle}}">
-                </div>
-                <div class="form-group row text-center">
-                  <div class="col-md-4">
-                    <i class="fas fa-map-marker-alt text-muted mr-2"></i>
-                    <input class="border-op-8 border-grey text-muted" type="text" name="resume[location]" value="{{resume.location}}">
-                  </div>
-                  <div class="col-md-4">
-                    <i class="fas fa-phone-square text-muted mr-2"></i>
-                    <input class="border-op-8 border-grey text-muted" type="text" name="resume[contactNumber]" value="{{resume.contactNumber}}">
-                  </div>
-                  <div class="col-md-4">
-                    <i class="fas fa-at text-muted mr-2"></i>
-                    <input class="border-op-8 border-grey text-muted" type="text" name="resume[email]" value="{{resume.email}}">
-                  </div>
-                </div>
-                <input type="submit" value="Save" class="btn btn-success" />
-                <input type="button" value="Cancel" class="btn btn-warning cxl-basic-resume-info" />
-              </form>
-            </li>
-            <li class="list-group-item" id="basic-info-resume-area">
-              <div class="resume-title mb-3">
-                <div class="pt-5 text-center rounded-bottom">
-                  <h3 class="display-3 text-dark mb-2">
-                    <strong>{{resume.fullName}}</strong>
-                  </h3>
-                  <h6 class="display-4 text-muted">{{resume.jobTitle}}</h6>
-                </div>
-              </div>
-              <div class=" row justify-content-center">
-                <i class="fas fa-map-marker-alt text-muted"></i>
-                <p class="ml-1 text-muted">{{resume.location}}</p>
-                <i class="fas fa-phone-square text-muted ml-3"></i>
-                <p class="ml-1 text-muted">{{resume.contactNumber}}</p>
-                <i class="fas fa-at text-muted ml-3"></i>
-                <p class="ml-1 text-muted">{{resume.email}}</p>
-              </div>
-              <button class="btn btn-outline-primary edit-basic-btn">Edit</button>
-            </li>
-          </ul>
-        </div>
-        {{!-- Profile Start --}}
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-12">
-              <div id="resume-about-messages" style="position: relative;float: right;"></div>
-            </div>
-          </div>
-          <ul class="list-group  pt-2 pb-2" id="edit-basic-about-resume">
-            <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-about-edit">
-              <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-about-form p-2">
-                <h4 class="text-blue-dark display-4" id="resume-heading">About Me</h4>
-                <div class="under-heading text-blue"></div>
-                <div class="form-group text-center mt-2">
-                  <textarea class="w-100" name="resume[bio]" rows="5">{{resume.bio}}</textarea>
-                </div>
-                <input type="submit" value="Save" class="btn btn-success" />
-                <input type="button" value="Cancel" class="btn btn-secondary cxl-about-resume" />
-              </form>
-            </li>
-            <li class="list-group-item" id="basic-info-resume-about-area">
-              <div class="text-grey-dark mt-3">
-                <h4 class="text-blue-dark display-4" id="resume-heading">About</h4>
-                <div class="under-heading text-blue"></div>
-                <p>{{{resume.bio}}}</p>
-              </div>
-              <button class="btn btn-outline-primary edit-basic-about-btn">Edit</button>
-            </li>
-          </ul>
-        </div>
-        {{!-- Profile End --}} {{!-- Start of Experience --}}
-        <div class="col-md-12 bg-op-1 bg-green pb-3">
-          <div class="row justify-content-between">
-            <div class="col-md-12">
-              <div id="exp-msg"></div>
-            </div>
-            <div class="col-md-8">
-              <div class="text-left rounded p-3">
-                <h4 class="text-blue-dark display-4" id="resume-heading">Experience</h4>
-                <div class="under-heading text-blue "></div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-exp-btn"> Add Experiance</button>
-            </div>
-          </div>
-          {{!-- add Exp --}}
-          <div class="col-md-12">
-            <div id="experience">
-              <div class="exp-new-area shadow bg-op-5 bg-purple m-3">
-                <div class="p-3">
-                  <form method="post" action="/candidate-resume/experience" id="add-exp">
-                    <div class="form-group row">
-                      <div class="col-md-4">
-                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Job Title" name="title"
-                          required />
-                      </div>
-                      <div class="col-md-4">
-                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Company" name="company"
-                          required />
-                      </div>
-                      <div class="col-md-4">
-                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-5">
-                        <h6>From Date</h6>
-                        <input type="date" class="form-control border-op-8 border-grey" name="from" />
-                      </div>
-                      <div class="col-md-7">
-                        <h6>To Date</h6>
-                        <div class="row">
-                          <div class="col-md-7 to-date-exp">
-                            <input type="date" class="form-control border-op-8 border-grey" name="to" />
-                          </div>
-                          <div class="col-md-5 ">
-                            <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                              <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-exp" />
-                              <label class="form-check-label" for="current">Current Job</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <textarea class="form-control border-op-8 border-grey" placeholder="Some of your responsabilities, Job description"
-                          name="description"></textarea>
-                      </div>
-                    </div>
-                    <input type="submit" value="Save" class="btn btn-success" />
-                    <input type="button" value="Cancel" class="btn btn-warning exp-cxl-add-btn" />
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{!-- end Add Exp --}} {{!-- Exp List Start --}}
-          <ul class="list-group" id="exp-list">
-            {{#each experiance}}
-            <li class="list-group-item">
-              <div class="row m-2">
-                <div class="col-sm-9 col-md-8 col-lg-8">
-                  <div class=" text-left pt-2 pb-2">
-                    <h5>{{title}} @
-                      <span class="text-blue  ">{{company}} - {{location}}</span>
-                    </h5>
-                  </div>
-                </div>
-                <div class="col-sm-3 col-md-4 col-lg-4">
-                  <div class="float-right pt-2 pb-2">
-                    {{#if this.to}}
-                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
-                    {{else}}
-                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
-                    {{/if}}
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="text-grey-dark">
-                    <p>{{this.description}}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="m-4">
-                <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
-                <form style="display: inline" method="POST" action="/candidate-resume/experience/{{this.id}}" class="delete-exp-form">
-                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                </form>
-              </div>
-              {{!-- Edit - Update Form --}}
-              <form method="POST" action="/candidate-resume/experience/{{this.id}}" class="edit-exp-form p-4 bg-op-5 bg-lime rounded m-2">
+        {{!-- add Exp --}}
+        <div id="experience">
+          <div class="exp-new-area shadow bg-op-5 bg-purple mb-3 mt-1">
+            <div class="p-3">
+              <form method="post" action="/candidate-resume/experience" id="add-exp">
                 <div class="form-group row">
                   <div class="col-md-4">
-                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.title}}" name="exper[title]"
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Job Title" name="title"
                       required />
                   </div>
                   <div class="col-md-4">
-                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.company}}" name="exper[company]"
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Company" name="company"
                       required />
                   </div>
                   <div class="col-md-4">
-                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="exper[location]" />
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-md-5">
                     <h6>From Date</h6>
-                    <input type="date" class="form-control border-op-8 border-grey" name="exper[from]" />
+                    <input type="date" class="form-control border-op-8 border-grey" name="from" />
                   </div>
                   <div class="col-md-7">
                     <h6>To Date</h6>
                     <div class="row">
                       <div class="col-md-7 to-date-exp">
-                        <input type="date" class="form-control border-op-8 border-grey" name="exper[to]" />
+                        <input type="date" class="form-control border-op-8 border-grey" name="to" />
                       </div>
                       <div class="col-md-5 ">
                         <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                          <input class="form-check-input" type="checkbox" name="exper[current]" value="Till Now" id="current-exp-edit" />
+                          <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-exp" />
                           <label class="form-check-label" for="current">Current Job</label>
                         </div>
                       </div>
@@ -944,155 +236,143 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-md-12">
-                    <textarea class="form-control border-op-8 border-grey" name="exper[description]">{{this.description}}</textarea>
+                    <textarea class="form-control border-op-8 border-grey" placeholder="Some of your responsabilities, Job description"
+                      name="description"></textarea>
                   </div>
                 </div>
-                <input type="submit" value="Update" class="btn btn-success" />
-                <input type="button" value="cancel" class="btn btn-warning exp-cxl-edit-btn" />
+                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="button" value="Cancel" class="btn btn-warning exp-cxl-add-btn" />
               </form>
-              {{!-- End of Edit Form --}}
-            </li>
-            {{/each}}
-          </ul>
-          {{!-- Exp List End --}}
+            </div>
+          </div>
         </div>
-        {{!-- End of Experience --}} {{!-- Start of Education --}}
-        <div class="col-md-12 bg-op-1 bg-green pb-3">
-          <div class="row justify-content-between">
-            <div class="col-md-12">
-              <div id="educ-msg"></div>
-            </div>
-            <div class="col-md-8">
-              <div class="text-left rounded p-3">
-                <h4 class="text-blue-dark display-4" id="resume-heading">Education</h4>
-                <div class="under-heading text-blue "></div>
+        {{!-- end Add Exp --}}
+        <ul class="list-group" id="exp-list">
+          {{#each experiance}}
+          <li class="list-group-item mt-1">
+            <div class="row">
+              <div class="col-sm-9 col-md-8 col-lg-8">
+                <div class=" text-left pt-2 pb-2">
+                  <h5>{{title}} @
+                    <span class="text-blue  ">{{company}} - {{location}}</span>
+                  </h5>
+                </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-educ-btn">Add Education</button>
-            </div>
-          </div>
-          {{!-- add Education --}}
-          <div class="col-md-12">
-            <div id="education">
-              <div class="educ-new-area shadow bg-op-5 bg-purple m-3 rounded">
-                <div class="p-3">
-                  <form method="post" action="/candidate-resume/education" id="add-educ">
-                    <div class="form-group row">
-                      <div class="col-md-3">
-                        <input type="text" class="form-control border-op-8 border-grey" placeholder="School / Collage"
-                          name="school" required />
-                      </div>
-                      <div class="col-md-3">
-                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Degree" name="degree"
-                          required />
-                      </div>
-                      <div class="col-md-3">
-                        <input type="text" class="form-control border-op-8 border-grey" placeholder="field of study"
-                          name="fieldofstudy" />
-                      </div>
-                      <div class="col-md-3">
-                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-5">
-                        <h6>From Date</h6>
-                        <input type="date" class="form-control border-op-8 border-grey" name="from" />
-                      </div>
-                      <div class="col-md-7">
-                        <h6>To Date</h6>
-                        <div class="row">
-                          <div class="col-md-7 to-date-exp">
-                            <input type="date" class="form-control border-op-8 border-grey" name="to" />
-                          </div>
-                          <div class="col-md-5 ">
-                            <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                              <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-educ" />
-                              <label class="form-check-label" for="current">Current Job</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <textarea class="form-control border-op-8 border-grey" placeholder="Description" name="description"></textarea>
-                      </div>
-                    </div>
-                    <input type="submit" value="Save" class="btn btn-success" />
-                    <input type="button" value="Cancel" class="btn btn-warning educ-cxl-add-btn" />
-                  </form>
+              <div class="col-sm-3 col-md-4 col-lg-4">
+                <div class="float-right pt-2 pb-2">
+                  {{#if this.to}}
+                  <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                  {{else}}
+                  <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                  {{/if}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="text-grey-dark">
+                  <p>{{this.description}}</p>
                 </div>
               </div>
             </div>
-          </div>
-          {{!-- end Add Education --}} {{!-- Education List Start --}}
-          <ul class="list-group" id="educ-list">
-            {{#each education}}
-            <li class="list-group-item p-2">
-              <div class="row m-2">
-                <div class="col-sm-9 col-md-8 col-lg-8">
-                  <div class=" text-left pt-2 pb-2">
-                    <h5>{{school}}-
-                      <span class="text-blue"> {{degree}} Degree - {{fieldofstudy}} - {{location}}</span>
-                    </h5>
+            <div class="">
+              <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
+              <form style="display: inline" method="POST" action="/candidate-resume/experience/{{this.id}}" class="delete-exp-form">
+                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+              </form>
+            </div>
+            {{!-- Edit - Update Form --}}
+            <form method="POST" action="/candidate-resume/experience/{{this.id}}" class="edit-exp-form p-3 bg-op-5 bg-lime rounded mt-2">
+              <div class="form-group row">
+                <div class="col-md-4">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.title}}" name="exper[title]"
+                    required />
+                </div>
+                <div class="col-md-4">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.company}}" name="exper[company]"
+                    required />
+                </div>
+                <div class="col-md-4">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="exper[location]" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-5">
+                  <h6>From Date</h6>
+                  <input type="date" class="form-control border-op-8 border-grey" name="exper[from]" />
+                </div>
+                <div class="col-md-7">
+                  <h6>To Date</h6>
+                  <div class="row">
+                    <div class="col-md-7 to-date-exp">
+                      <input type="date" class="form-control border-op-8 border-grey" name="exper[to]" />
+                    </div>
+                    <div class="col-md-5 ">
+                      <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                        <input class="form-check-input" type="checkbox" name="exper[current]" value="Till Now" id="current-exp-edit" />
+                        <label class="form-check-label" for="current">Current Job</label>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-4 col-lg-4">
-                  <div class="float-right pt-2 pb-2">
-                    {{#if this.to}}
-                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
-                    {{else}}
-                    <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
-                    {{/if}}
-                  </div>
-                </div>
+              </div>
+              <div class="form-group row">
                 <div class="col-md-12">
-                  <div class="text-grey-dark">
-                    <p>{{this.description}}</p>
-                  </div>
+                  <textarea class="form-control border-op-8 border-grey" name="exper[description]">{{this.description}}</textarea>
                 </div>
               </div>
-              <div class="m-4">
-                <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
-                <form style="display: inline" method="POST" action="/candidate-resume/education/{{this.id}}" class="delete-educ-form">
-                  <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                </form>
-              </div>
-              {{!-- Edit - Update Form --}}
-              <form method="POST" action="/candidate-resume/education/{{this.id}}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
+              <input type="submit" value="Update" class="btn btn-success" />
+              <input type="button" value="cancel" class="btn btn-warning exp-cxl-edit-btn" />
+            </form>
+            {{!-- End of Edit Form --}}
+          </li>
+          {{/each}}
+        </ul>
+        {{!-- Exp List End --}}
+      </div>
+      <div class="bg-primary bg-op-4 p-2 mb-2 rounded">
+        <div id="educ-msg"></div>
+        <div class="text-left">
+          <span class="">
+            <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Education</h4><span><i class="fas fa-plus-circle icon-1x d-inline-block text-purple"
+                id="add-educ-btn" style="float: right;"></i></span>
+          </span>
+          <div class="under-heading text-blue "></div>
+        </div>
+        {{!-- add Education --}}
+        <div id="education">
+          <div class="educ-new-area shadow bg-op-5 bg-purple mb-3 rounded mt-1">
+            <div class="p-3">
+              <form method="post" action="/candidate-resume/education" id="add-educ">
                 <div class="form-group row">
                   <div class="col-md-3">
-                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.school}}" name="education[school]"
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="School / Collage" name="school"
                       required />
                   </div>
                   <div class="col-md-3">
-                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.degree}}" name="education[degree]"
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Degree" name="degree"
                       required />
                   </div>
                   <div class="col-md-3">
-                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.fieldofstudy}}" name="education[fieldofstudy]" />
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="field of study" name="fieldofstudy" />
                   </div>
                   <div class="col-md-3">
-                    <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="education[location]" />
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-md-5">
                     <h6>From Date</h6>
-                    <input type="date" class="form-control border-op-8 border-grey" name="education[from]" value="{{formatDate this.from 'DD MM YYYY'}}" />
+                    <input type="date" class="form-control border-op-8 border-grey" name="from" />
                   </div>
                   <div class="col-md-7">
                     <h6>To Date</h6>
                     <div class="row">
                       <div class="col-md-7 to-date-exp">
-                        <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
+                        <input type="date" class="form-control border-op-8 border-grey" name="to" />
                       </div>
                       <div class="col-md-5 ">
                         <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
-                          <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ" />
-                          <label class="form-check-label" for="current">Current Study</label>
+                          <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-educ" />
+                          <label class="form-check-label" for="current">Current Job</label>
                         </div>
                       </div>
                     </div>
@@ -1100,216 +380,845 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-md-12">
-                    <textarea class="form-control border-op-8 border-grey" name="education[description]">{{this.description}}</textarea>
+                    <textarea class="form-control border-op-8 border-grey" placeholder="Description" name="description"></textarea>
                   </div>
                 </div>
-                <input type="submit" value="Update" class="btn btn-success" />
-                <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
+                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="button" value="Cancel" class="btn btn-warning educ-cxl-add-btn" />
               </form>
-              {{!-- End of Edit Form --}}
-            </li>
-            {{/each}}
-          </ul>
-          {{!-- Exp List End --}}
-        </div>{{!-- end of Education --}}
-        {{!-- Start of Lang --}}
-        <div class="col-md-12 bg-op-1 bg-green pb-3">
-          <div class="row justify-content-between">
-            <div class="col-md-12">
-              <div id="lang-msg"></div>
-            </div>
-            <div class="col-md-8">
-              <div class="text-left rounded p-3">
-                <h4 class="text-blue-dark display-4" id="resume-heading">Languages</h4>
-                <div class="under-heading text-blue "></div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-lang-btn">Add Language</button>
-            </div>
-          </div>
-          <div class="row">
-            {{!-- add Lang --}}
-            <div class="col-md-12">
-              <div id="langs">
-                <div class="lang-new-area shadow bg-op-5 bg-purple mb-3 rounded">
-                  <div class="p-3">
-                    <form method="post" action="/candidate-resume/languages" id="add-lang">
-                      <div class="form-group row">
-                        <div class="col-md-6">
-                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Name" name="name"
-                            required />
-                        </div>
-                        <div class="col-md-6">
-                          <select class="custom-select d-block border-op-1 border-light bg-warning bg-op-5" name="level"
-                            required>
-                            <option value="native" selected>Native Language</option>
-                            <option value="intermediate">Intermediate </option>
-                            <option value="fluent">Fluent</option>
-                          </select>
-                        </div>
-                      </div>
-                      <input type="submit" value="Save" class="btn btn-success" />
-                      <input type="button" value="Cancel" class="btn btn-warning lang-cxl-add-btn" />
-                    </form>
-                  </div>
-                </div>
-              </div>
-              {{!-- end Add Lang --}}
-              <ul class="list-group" id="lang-list">
-                {{#each language}}
-                <li class="mb-0 list-group-item p-2">
-                  <h6>{{this.name}}<span class="badge badge-pill badge-warning text-capitalize ml-2 p-1">{{this.level}}</span>
-                    <span class="w-5">
-                      <form action="/candidate-resume/languages/{{this.id}}" method="post" class="delete-lang-form float-left">
-                        <button type="submit" id="" class="fabutton-skills">
-                          <i class="far fa-trash-alt text-danger"></i>
-                        </button>
-                      </form>
-                    </span></h6>
-                </li>
-                {{/each}}
-              </ul>
             </div>
           </div>
         </div>
-        {{!-- End of Lang --}}
-        {{!-- Start of Skills --}}
-        <div class="col-md-12 bg-op-1 bg-green pb-3">
-          <div class="row justify-content-between">
-            <div class="col-md-12">
-              <div id="skill-msg"></div>
-            </div>
-            <div class="col-md-8">
-              <div class="text-left rounded p-3">
-                <h4 class="text-blue-dark display-4" id="resume-heading">Skills</h4>
-                <div class="under-heading text-blue "></div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-skill-btn">Add Skill</button>
-            </div>
-          </div>
-          <div class="row">
-            {{!-- add Skills --}}
-            <div class="col-md-12">
-              <div id="skills">
-                <div class="skill-new-area shadow bg-op-5 bg-purple mb-3 rounded">
-                  <div class="p-3">
-                    <form method="post" action="/candidate-resume/skills" id="add-skill">
-                      <div class="form-group row">
-                        <div class="col-md-6">
-                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Skill Name" name="name"
-                            required />
-                        </div>
-                        <div class="col-md-6">
-                          <input type="text" class="form-control border-op-8 border-grey" placeholder="Level" name="level"
-                            required />
-                        </div>
-                      </div>
-                      <input type="submit" value="Save" class="btn btn-success" />
-                      <input type="button" value="Cancel" class="btn btn-warning skill-cxl-add-btn" />
-                    </form>
-                  </div>
+        {{!-- end Add Education --}}
+        {{!-- Education List Start --}}
+        <ul class="list-group" id="educ-list">
+          {{#each education}}
+          <li class="list-group-item mt-1">
+            <div class="row">
+              <div class="col-sm-9 col-md-8 col-lg-8">
+                <div class=" text-left pt-2 pb-2">
+                  <h5>{{school}}-
+                    <span class="text-blue"> {{degree}} Degree - {{fieldofstudy}} - {{location}}</span>
+                  </h5>
                 </div>
               </div>
-              {{!-- end Add Skills --}}
-              <ul class="list-group" id="skills-list">
-                {{#each skill}}
-                <li class="mb-0 list-group-item p-2">
-                  <div class="progress bg-white">
-                    <span class="font-weight-bold w-30 text-capitalize">{{this.name}}</span>
-                    <span class="w-5">
-                      <form action="/candidate-resume/skills/{{this.id}}" method="post" class="delete-skill-form float-right">
-                        <button type="submit" id="save-job" class="fabutton-skills">
-                          <i class="far fa-trash-alt text-danger"></i>
-                        </button>
-                      </form>
-                    </span>
-                    <span class="w-60">
-                      <div class="progress-bar w-{{this.level}}" role="progressbar" aria-valuenow="{{this.level}}"
-                        aria-valuemin="0" aria-valuemax="100">{{this.level}}% </div>
-                    </span>
-                  </div>
-                </li>
-                {{/each}}
-              </ul>
-            </div>
-          </div>
-        </div>
-        {{!-- End of Skills --}}
-        {{!-- Start of Awards --}}
-            <div class="col-md-12 bg-op-1 bg-primary rounded pb-3 mt-2">
-              <div class="row justify-content-between">
-                <div class="col-md-12">
-                  <div class="w-100" id="award-msg"></div>
-                </div>
-                <div class="col-md-8">
-                  <div class="text-left rounded mt-2 mb-2">
-                    <h4 class="text-blue-dark display-4" id="resume-heading">Awards</h4>
-                    <div class="under-heading text-blue "></div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <button type="button" class="btn btn-purple btn-sm btn-shadow mt-3" id="add-award-btn">Add Award</button>
+              <div class="col-sm-3 col-md-4 col-lg-4">
+                <div class="float-right pt-2 pb-2">
+                  {{#if this.to}}
+                  <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                  {{else}}
+                  <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                  {{/if}}
                 </div>
               </div>
-              <div class="row">
-                {{!-- add Award --}}
-                <div class="col-md-12">
-                  <div id="awards">
-                    <div class="award-new-area shadow bg-op-5 bg-purple mb-3 rounded">
-                      <div class="p-3">
-                        <form method="post" action="/candidate-resume/awards" id="add-award">
-                          <div class="form-group row">
-                            <div class="col-md-12">
-                              <input type="text" class="form-control border-op-8 border-grey" placeholder="Award Name"
-                                name="name" required />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <div class="col-md-6">
-                              <input type="text" class="form-control border-op-8 border-grey" placeholder="Awarder"
-                                name="awarder" required />
-                            </div>
-                            <div class="col-md-6">
-                              <input type="text" class="form-control border-op-8 border-grey" placeholder="Year eg:2012"
-                                name="awardedOn" required />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <div class="col-md-12">
-                              <textarea name="summary" id="" cols="30" rows="2" class="w-100 form-control" placeholder="Summary"></textarea>
-                            </div>
-                          </div>
-                          <input type="submit" value="Save" class="btn btn-success" />
-                          <input type="button" value="Cancel" class="btn btn-warning award-cxl-add-btn" />
-                        </form>
+              <div class="col-md-12">
+                <div class="text-grey-dark">
+                  <p>{{this.description}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
+              <form style="display: inline" method="POST" action="/candidate-resume/education/{{this.id}}" class="delete-educ-form">
+                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+              </form>
+            </div>
+            {{!-- Edit - Update Form --}}
+            <form method="POST" action="/candidate-resume/education/{{this.id}}" class="edit-educ-form bg-op-5 p-3 bg-lime rounded mt-2">
+              <div class="form-group row">
+                <div class="col-md-3">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.school}}" name="education[school]"
+                    required />
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.degree}}" name="education[degree]"
+                    required />
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.fieldofstudy}}" name="education[fieldofstudy]" />
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="education[location]" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-5">
+                  <h6>From Date</h6>
+                  <input type="date" class="form-control border-op-8 border-grey" name="education[from]" value="{{formatDate this.from 'DD MM YYYY'}}" />
+                </div>
+                <div class="col-md-7">
+                  <h6>To Date</h6>
+                  <div class="row">
+                    <div class="col-md-7 to-date-exp">
+                      <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
+                    </div>
+                    <div class="col-md-5 ">
+                      <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                        <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ" />
+                        <label class="form-check-label" for="current">Current Study</label>
                       </div>
                     </div>
                   </div>
-                  {{!-- end Add awards --}}
-                  <ul class="list-group" id="awards-list">
-                    {{#each award}}
-                    <li class="mb-1 rounded list-group-item p-2">
-                      <h5>{{name}} @
-                        <span class="text-blue">{{awarder}} / {{this.awardedOn}}</span>
-                      </h5>
-                      <p class="mb-0">{{this.summary}}</p>
-                      <form action="/candidate-resume/awards/{{this.id}}" method="post" class="delete-award-form float-left">
-                        <button type="submit" id="remove-award" class="fabutton-skills">
-                          <i class="far fa-trash-alt text-danger"></i>
-                        </button>
-                      </form>
-                    </li>
-                    {{/each}}
-                  </ul>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <textarea class="form-control border-op-8 border-grey" name="education[description]">{{this.description}}</textarea>
+                </div>
+              </div>
+              <input type="submit" value="Update" class="btn btn-success" />
+              <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
+            </form>
+            {{!-- End of Edit Form --}}
+          </li>
+          {{!-- Exp List End --}}
+          {{/each}}
+        </ul>
+      </div>{{!-- end of Education --}}
+    </div>
+    <div class="col-md-4">
+      <div class="bg-primary bg-op-4 p-2 mb-2 mt-3 rounded">
+        <div class="">
+          <span class="">
+            <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Language</h4><span><i class="fas fa-plus-circle icon-1x d-inline-block text-purple"
+                id="add-lang-btn" style="float:right;"></i></span>
+          </span>
+          <div class="under-heading text-blue "></div>
+        </div>
+        <div id="langs">
+          <div class="lang-new-area shadow bg-op-5 bg-purple mb-3 mt-1 rounded">
+            <div class="p-3">
+              <form method="post" action="/candidate-resume/languages" id="add-lang">
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Name" name="name"
+                      required />
+                  </div>
+                  <div class="col-md-6">
+                    <select class="custom-select d-block border-op-1 border-light bg-warning bg-op-5" name="level"
+                      required>
+                      <option value="native" selected>Native Language</option>
+                      <option value="intermediate">Intermediate </option>
+                      <option value="fluent">Fluent</option>
+                    </select>
+                  </div>
+                </div>
+                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="button" value="Cancel" class="btn btn-warning lang-cxl-add-btn" />
+              </form>
+            </div>
+          </div>
+        </div>
+        <ul class="list-group" id="lang-list">
+          {{#each language}}
+          <li class="mb-0 list-group-item p-2 mt-1">
+            <h6>{{this.name}}<span class="badge badge-pill badge-warning text-capitalize ml-2 p-1">{{this.level}}</span>
+              <span class="w-5">
+                <form action="/candidate-resume/languages/{{this.id}}" method="post" class="delete-lang-form float-left">
+                  <button type="submit" id="" class="fabutton-skills">
+                    <i class="far fa-trash-alt text-danger"></i>
+                  </button>
+                </form>
+              </span></h6>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="bg-primary bg-op-4 p-2 mb-2 mt-3 rounded">
+        <div class="text-left">
+          <span class="">
+            <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Skills</h4><span><i class="fas fa-plus-circle icon-1x d-inline-block text-purple"
+                id="add-skill-btn" style="float:right;"></i></span>
+          </span>
+          <div class="under-heading text-blue "></div>
+        </div>
+        <div id="skills">
+          <div class="skill-new-area shadow bg-op-5 bg-purple mb-3 mt-1 rounded">
+            <div class="p-3">
+              <form method="post" action="/candidate-resume/skills" id="add-skill">
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Skill Name" name="name"
+                      required />
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Level" name="level"
+                      required />
+                  </div>
+                </div>
+                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="button" value="Cancel" class="btn btn-warning skill-cxl-add-btn" />
+              </form>
+            </div>
+          </div>
+        </div>
+        <ul class="list-group" id="skills-list">
+          {{#each skill}}
+          <li class="mb-0 list-group-item p-2 mt-1 rounded">
+            <div class="progress bg-white">
+              <span class="font-weight-bold w-30 text-capitalize">{{this.name}}</span>
+              <span class="w-5">
+                <form action="/candidate-resume/skills/{{this.id}}" method="post" class="delete-skill-form float-right">
+                  <button type="submit" id="save-job" class="fabutton-skills">
+                    <i class="far fa-trash-alt text-danger"></i>
+                  </button>
+                </form>
+              </span>
+              <span class="w-60">
+                <div class="progress-bar w-{{this.level}}" role="progressbar" aria-valuenow="{{this.level}}"
+                  aria-valuemin="0" aria-valuemax="100">{{this.level}}% </div>
+              </span>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="bg-primary bg-op-4 p-2 mt-3 mb-2 rounded">
+        <div class="text-left ">
+          <span class="">
+            <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Awards</h4><span><i class="fas fa-plus-circle icon-1x d-inline-block text-purple"
+                id="add-award-btn" style="float:right;"></i></span>
+          </span>
+          <div class="under-heading text-blue "></div>
+        </div>
+        <div id="awards">
+          <div class="award-new-area shadow bg-op-5 bg-purple mb-3 mt-1 rounded">
+            <div class="p-3">
+              <form method="post" action="/candidate-resume/awards" id="add-award">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Award Name" name="name"
+                      required />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Awarder" name="awarder"
+                      required />
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control border-op-8 border-grey" placeholder="Year eg:2012" name="awardedOn"
+                      required />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <textarea name="summary" id="" cols="30" rows="2" class="w-100 form-control" placeholder="Summary"></textarea>
+                  </div>
+                </div>
+                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="button" value="Cancel" class="btn btn-warning award-cxl-add-btn" />
+              </form>
+            </div>
+          </div>
+        </div>
+        <ul class="list-group" id="awards-list">
+          {{#each award}}
+          <li class="mb-1 rounded list-group-item p-2 mt-1">
+            <h5>{{name}} @
+              <span class="text-blue">{{awarder}} / {{this.awardedOn}}</span>
+            </h5>
+            <p class="mb-0">{{this.summary}}</p>
+            <form action="/candidate-resume/awards/{{this.id}}" method="post" class="delete-award-form float-left">
+              <button type="submit" id="remove-award" class="fabutton-skills">
+                <i class="far fa-trash-alt text-danger"></i>
+              </button>
+            </form>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if resumeSimple}}
+    <div class="row pt-3">
+      <div class="col-md-2 col-lg-2" id="resume-side">
+        <ul class="list-group  pt-2 pb-2" id="edit-basic-pic-resume">
+          <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-pic-edit">
+            <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-pic-form p-2" enctype="multipart/form-data">
+              <div class="form-group text-center mt-2">
+                <input type="file" name="picture" id="">
+              </div>
+              <input type="submit" value="Upload" class="btn btn-success" />
+              <input type="button" value="Cancel" class="btn btn-secondary cxl-pic-resume" />
+            </form>
+          </li>
+          <li class="list-group-item" id="basic-info-resume-pic-area">
+            <div class="text-grey-dark">
+              <img class="rounded" src="{{resume.pictureUrl}}" alt="">
+            </div>
+            <button class="btn btn-outline-primary edit-basic-pic-btn">Edit</button>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-10 col-lg-10">
+        <ul class="list-group  pt-2 pb-2" id="edit-basic-resume">
+          <li class="list-group-item bg-light" id="basic-info-resume-area-edit">
+            <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-form p-2">
+              <div class="form-group text-center">
+                <input class="border-op-8 border-grey display-4" type="text" name="resume[fullName]" value="{{resume.fullName}}">
+              </div>
+              <div class="form-group text-center">
+                <input class="border-op-8 border-grey display-4 text-muted" type="text" name="resume[jobTitle]" value="{{resume.jobTitle}}">
+              </div>
+              <div class="form-group row text-center">
+                <div class="col-md-4">
+                  <i class="fas fa-map-marker-alt text-muted mr-2"></i>
+                  <input class="border-op-8 border-grey text-muted" type="text" name="resume[location]" value="{{resume.location}}">
+                </div>
+                <div class="col-md-4">
+                  <i class="fas fa-phone-square text-muted mr-2"></i>
+                  <input class="border-op-8 border-grey text-muted" type="text" name="resume[contactNumber]" value="{{resume.contactNumber}}">
+                </div>
+                <div class="col-md-4">
+                  <i class="fas fa-at text-muted mr-2"></i>
+                  <input class="border-op-8 border-grey text-muted" type="text" name="resume[email]" value="{{resume.email}}">
+                </div>
+              </div>
+              <input type="submit" value="Save" class="btn btn-success" />
+              <input type="button" value="Cancel" class="btn btn-warning cxl-basic-resume-info" />
+            </form>
+          </li>
+          <li class="list-group-item" id="basic-info-resume-area">
+            <div class="resume-title mb-3">
+              <div class="pt-5 text-center rounded-bottom">
+                <h3 class="display-3 text-dark mb-2">
+                  <strong>{{resume.fullName}}</strong>
+                </h3>
+                <h6 class="display-4 text-muted">{{resume.jobTitle}}</h6>
+              </div>
+            </div>
+            <div class=" row justify-content-center">
+              <i class="fas fa-map-marker-alt text-muted"></i>
+              <p class="ml-1 text-muted">{{resume.location}}</p>
+              <i class="fas fa-phone-square text-muted ml-3"></i>
+              <p class="ml-1 text-muted">{{resume.contactNumber}}</p>
+              <i class="fas fa-at text-muted ml-3"></i>
+              <p class="ml-1 text-muted">{{resume.email}}</p>
+            </div>
+            <button class="btn btn-outline-primary edit-basic-btn">Edit</button>
+          </li>
+        </ul>
+      </div>
+      {{!-- Profile Start --}}
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <div id="resume-about-messages" style="position: relative;float: right;"></div>
+          </div>
+        </div>
+        <ul class="list-group  pt-2 pb-2" id="edit-basic-about-resume">
+          <li class="list-group-item bg-warning bg-op-7" id="basic-info-resume-about-edit">
+            <form method="post" action="/candidate-resume/{{resume.id}}" class="basic-info-resume-about-form p-2">
+              <h4 class="text-blue-dark display-4" id="resume-heading">About Me</h4>
+              <div class="under-heading text-blue"></div>
+              <div class="form-group text-center mt-2">
+                <textarea class="w-100" name="resume[bio]" rows="5">{{resume.bio}}</textarea>
+              </div>
+              <input type="submit" value="Save" class="btn btn-success" />
+              <input type="button" value="Cancel" class="btn btn-secondary cxl-about-resume" />
+            </form>
+          </li>
+          <li class="list-group-item" id="basic-info-resume-about-area">
+            <div class="text-grey-dark mt-3">
+              <h4 class="text-blue-dark display-4" id="resume-heading">About</h4>
+              <div class="under-heading text-blue"></div>
+              <p>{{{resume.bio}}}</p>
+            </div>
+            <button class="btn btn-outline-primary edit-basic-about-btn">Edit</button>
+          </li>
+        </ul>
+      </div>
+      {{!-- Profile End --}} {{!-- Start of Experience --}}
+      <div class="col-md-12 bg-op-1 bg-green pb-3 mb-2 rounded">
+        <div class="row justify-content-between mt-3">
+          <div class="col-md-12">
+            <div id="exp-msg"></div>
+          </div>
+          <div class="col-md-12">
+            <div class="text-left rounded">
+              <span class="">
+                <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Experience</h4><span><i class="fas fa-plus-circle d-inline-block icon-1x text-purple"
+                    id="add-exp-btn" style="float:right;"></i></span>
+              </span>
+              <div class="under-heading text-blue "></div>
+            </div>
+          </div>
+        </div>
+        {{!-- add Exp --}}
+        <div class="col-md-12">
+          <div id="experience">
+            <div class="exp-new-area shadow bg-op-5 bg-purple mt-3">
+              <div class="p-3">
+                <form method="post" action="/candidate-resume/experience" id="add-exp">
+                  <div class="form-group row">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control border-op-8 border-grey" placeholder="Job Title" name="title"
+                        required />
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control border-op-8 border-grey" placeholder="Company" name="company"
+                        required />
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-5">
+                      <h6>From Date</h6>
+                      <input type="date" class="form-control border-op-8 border-grey" name="from" />
+                    </div>
+                    <div class="col-md-7">
+                      <h6>To Date</h6>
+                      <div class="row">
+                        <div class="col-md-7 to-date-exp">
+                          <input type="date" class="form-control border-op-8 border-grey" name="to" />
+                        </div>
+                        <div class="col-md-5 ">
+                          <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                            <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-exp" />
+                            <label class="form-check-label" for="current">Current Job</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <textarea class="form-control border-op-8 border-grey" placeholder="Some of your responsabilities, Job description"
+                        name="description"></textarea>
+                    </div>
+                  </div>
+                  <input type="submit" value="Save" class="btn btn-success" />
+                  <input type="button" value="Cancel" class="btn btn-warning exp-cxl-add-btn" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{!-- end Add Exp --}} {{!-- Exp List Start --}}
+        <ul class="list-group" id="exp-list">
+          {{#each experiance}}
+          <li class="list-group-item mt-2">
+            <div class="row">
+              <div class="col-sm-9 col-md-8 col-lg-8">
+                <div class=" text-left pt-2 pb-2">
+                  <h5>{{title}} @
+                    <span class="text-blue  ">{{company}} - {{location}}</span>
+                  </h5>
+                </div>
+              </div>
+              <div class="col-sm-3 col-md-4 col-lg-4">
+                <div class="float-right pt-2 pb-2">
+                  {{#if this.to}}
+                  <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                  {{else}}
+                  <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                  {{/if}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="text-grey-dark">
+                  <p>{{this.description}}</p>
                 </div>
               </div>
             </div>
-            {{!-- End of awards --}}
+            <div class="">
+              <button type="button" class="btn btn-outline-primary btn-sm edit-button">Edit</button>
+              <form style="display: inline" method="POST" action="/candidate-resume/experience/{{this.id}}" class="delete-exp-form">
+                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+              </form>
+            </div>
+            {{!-- Edit - Update Form --}}
+            <form method="POST" action="/candidate-resume/experience/{{this.id}}" class="edit-exp-form p-4 bg-op-5 bg-lime rounded m-2">
+              <div class="form-group row">
+                <div class="col-md-4">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.title}}" name="exper[title]"
+                    required />
+                </div>
+                <div class="col-md-4">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.company}}" name="exper[company]"
+                    required />
+                </div>
+                <div class="col-md-4">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="exper[location]" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-5">
+                  <h6>From Date</h6>
+                  <input type="date" class="form-control border-op-8 border-grey" name="exper[from]" />
+                </div>
+                <div class="col-md-7">
+                  <h6>To Date</h6>
+                  <div class="row">
+                    <div class="col-md-7 to-date-exp">
+                      <input type="date" class="form-control border-op-8 border-grey" name="exper[to]" />
+                    </div>
+                    <div class="col-md-5 ">
+                      <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                        <input class="form-check-input" type="checkbox" name="exper[current]" value="Till Now" id="current-exp-edit" />
+                        <label class="form-check-label" for="current">Current Job</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <textarea class="form-control border-op-8 border-grey" name="exper[description]">{{this.description}}</textarea>
+                </div>
+              </div>
+              <input type="submit" value="Update" class="btn btn-success" />
+              <input type="button" value="cancel" class="btn btn-warning exp-cxl-edit-btn" />
+            </form>
+            {{!-- End of Edit Form --}}
+          </li>
+          {{/each}}
+        </ul>
+        {{!-- Exp List End --}}
       </div>
-      {{/if}}
+      {{!-- End of Experience --}} {{!-- Start of Education --}}
+      <div class="col-md-12 bg-op-1 bg-green pb-3 mb-2 rounded">
+        <div class="row justify-content-between mt-3">
+          <div class="col-md-12">
+            <div id="educ-msg"></div>
+          </div>
+          <div class="col-md-12">
+            <span class="">
+              <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Education</h4><span><i class="fas fa-plus-circle icon-1x d-inline-block text-purple"
+                  id="add-educ-btn" style="float: right;"></i></span>
+            </span>
+            <div class="under-heading text-blue "></div>
+          </div>
+        </div>
+        {{!-- add Education --}}
+        <div class="col-md-12">
+          <div id="education">
+            <div class="educ-new-area shadow bg-op-5 bg-purple mb-3 mt-1 rounded">
+              <div class="p-3">
+                <form method="post" action="/candidate-resume/education" id="add-educ">
+                  <div class="form-group row">
+                    <div class="col-md-3">
+                      <input type="text" class="form-control border-op-8 border-grey" placeholder="School / Collage"
+                        name="school" required />
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control border-op-8 border-grey" placeholder="Degree" name="degree"
+                        required />
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control border-op-8 border-grey" placeholder="field of study" name="fieldofstudy" />
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control border-op-8 border-grey" placeholder="Location" name="location" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-5">
+                      <h6>From Date</h6>
+                      <input type="date" class="form-control border-op-8 border-grey" name="from" />
+                    </div>
+                    <div class="col-md-7">
+                      <h6>To Date</h6>
+                      <div class="row">
+                        <div class="col-md-7 to-date-exp">
+                          <input type="date" class="form-control border-op-8 border-grey" name="to" />
+                        </div>
+                        <div class="col-md-5 ">
+                          <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                            <input class="form-check-input" type="checkbox" name="current" value="Till Now" id="current-educ" />
+                            <label class="form-check-label" for="current">Current Job</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                      <textarea class="form-control border-op-8 border-grey" placeholder="Description" name="description"></textarea>
+                    </div>
+                  </div>
+                  <input type="submit" value="Save" class="btn btn-success" />
+                  <input type="button" value="Cancel" class="btn btn-warning educ-cxl-add-btn" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{!-- end Add Education --}} {{!-- Education List Start --}}
+        <ul class="list-group" id="educ-list">
+          {{#each education}}
+          <li class="list-group-item p-2 mt-2">
+            <div class="row">
+              <div class="col-sm-9 col-md-8 col-lg-8">
+                <div class=" text-left pt-2 pb-2">
+                  <h5>{{school}}-
+                    <span class="text-blue"> {{degree}} Degree - {{fieldofstudy}} - {{location}}</span>
+                  </h5>
+                </div>
+              </div>
+              <div class="col-sm-3 col-md-4 col-lg-4">
+                <div class="float-right pt-2 pb-2">
+                  {{#if this.to}}
+                  <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{formatDate this.to 'MMM YYYY'}}</h6>
+                  {{else}}
+                  <h6 class="text-green">{{formatDate this.from 'MMM YYYY'}} - {{ this.current}}</h6>
+                  {{/if}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="text-grey-dark">
+                  <p>{{this.description}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <button type="button" class="btn btn-outline-primary btn-sm edit-educ-button">Edit</button>
+              <form style="display: inline" method="POST" action="/candidate-resume/education/{{this.id}}" class="delete-educ-form">
+                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+              </form>
+            </div>
+            {{!-- Edit - Update Form --}}
+            <form method="POST" action="/candidate-resume/education/{{this.id}}" class="edit-educ-form p-4 bg-op-5 bg-lime rounded m-2">
+              <div class="form-group row">
+                <div class="col-md-3">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.school}}" name="education[school]"
+                    required />
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.degree}}" name="education[degree]"
+                    required />
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.fieldofstudy}}" name="education[fieldofstudy]" />
+                </div>
+                <div class="col-md-3">
+                  <input type="text" class="form-control border-op-8 border-grey" value="{{this.location}}" name="education[location]" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-5">
+                  <h6>From Date</h6>
+                  <input type="date" class="form-control border-op-8 border-grey" name="education[from]" value="{{formatDate this.from 'DD MM YYYY'}}" />
+                </div>
+                <div class="col-md-7">
+                  <h6>To Date</h6>
+                  <div class="row">
+                    <div class="col-md-7 to-date-exp">
+                      <input type="date" class="form-control border-op-8 border-grey" name="education[to]" />
+                    </div>
+                    <div class="col-md-5 ">
+                      <div class="form-check mb-4 mr-sm-4 mb-sm-2 mt-2">
+                        <input class="form-check-input" type="checkbox" name="education[current]" value="Till Now" id="current-educ" />
+                        <label class="form-check-label" for="current">Current Study</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <textarea class="form-control border-op-8 border-grey" name="education[description]">{{this.description}}</textarea>
+                </div>
+              </div>
+              <input type="submit" value="Update" class="btn btn-success" />
+              <input type="button" value="cancel" class="btn btn-warning educ-cxl-edit-btn" />
+            </form>
+            {{!-- End of Edit Form --}}
+          </li>
+          {{/each}}
+        </ul>
+        {{!-- Exp List End --}}
+      </div>{{!-- end of Education --}}
+      {{!-- Start of Lang --}}
+      <div class="col-md-12 bg-op-1 bg-green pb-3 mb-2 rounded">
+        <div class="row justify-content-between mt-3">
+          <div id="lang-msg"></div>
+          <div class="col-md-12">
+            <span class="">
+              <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Language</h4><span><i class="fas fa-plus-circle icon-1x d-inline-block text-purple"
+                  id="add-lang-btn" style="float:right;"></i></span>
+            </span>
+            <div class="under-heading text-blue "></div>
+          </div>
+        </div>
+        <div class="row">
+          {{!-- add Lang --}}
+          <div class="col-md-12">
+            <div id="langs">
+              <div class="lang-new-area shadow bg-op-5 bg-purple mb-3 mt-1 rounded">
+                <div class="p-3">
+                  <form method="post" action="/candidate-resume/languages" id="add-lang">
+                    <div class="form-group row">
+                      <div class="col-md-6">
+                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Name" name="name"
+                          required />
+                      </div>
+                      <div class="col-md-6">
+                        <select class="custom-select d-block border-op-1 border-light bg-warning bg-op-5" name="level"
+                          required>
+                          <option value="native" selected>Native Language</option>
+                          <option value="intermediate">Intermediate </option>
+                          <option value="fluent">Fluent</option>
+                        </select>
+                      </div>
+                    </div>
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    <input type="button" value="Cancel" class="btn btn-warning lang-cxl-add-btn" />
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{!-- end Add Lang --}}
+            <ul class="list-group" id="lang-list">
+              {{#each language}}
+              <li class="mb-0 list-group-item p-2 mt-1">
+                <h6>{{this.name}}<span class="badge badge-pill badge-warning text-capitalize ml-2 p-1">{{this.level}}</span>
+                  <span class="w-5">
+                    <form action="/candidate-resume/languages/{{this.id}}" method="post" class="delete-lang-form float-left">
+                      <button type="submit" id="" class="fabutton-skills">
+                        <i class="far fa-trash-alt text-danger"></i>
+                      </button>
+                    </form>
+                  </span></h6>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {{!-- End of Lang --}}
+      {{!-- Start of Skills --}}
+      <div class="col-md-12 bg-op-1 bg-green pb-3 mb-2 rounded">
+        <div class="row justify-content-between mt-3">
+          <div id="skill-msg"></div>
+          <div class="col-md-12">
+            <span class="">
+              <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Skills</h4><span><i class="fas fa-plus-circle icon-1x d-inline-block text-purple"
+                  id="add-skill-btn" style="float:right;"></i></span>
+            </span>
+            <div class="under-heading text-blue "></div>
+          </div>
+        </div>
+        <div class="row">
+          {{!-- add Skills --}}
+          <div class="col-md-12">
+            <div id="skills">
+              <div class="skill-new-area shadow bg-op-5 bg-purple mb-3 mt-1 rounded">
+                <div class="p-3">
+                  <form method="post" action="/candidate-resume/skills" id="add-skill">
+                    <div class="form-group row">
+                      <div class="col-md-6">
+                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Skill Name" name="name"
+                          required />
+                      </div>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Level" name="level"
+                          required />
+                      </div>
+                    </div>
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    <input type="button" value="Cancel" class="btn btn-warning skill-cxl-add-btn" />
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{!-- end Add Skills --}}
+            <ul class="list-group" id="skills-list">
+              {{#each skill}}
+              <li class="mb-0 list-group-item p-2 mt-1">
+                <div class="progress bg-white">
+                  <span class="font-weight-bold w-30 text-capitalize">{{this.name}}</span>
+                  <span class="w-5">
+                    <form action="/candidate-resume/skills/{{this.id}}" method="post" class="delete-skill-form float-right">
+                      <button type="submit" id="save-job" class="fabutton-skills">
+                        <i class="far fa-trash-alt text-danger"></i>
+                      </button>
+                    </form>
+                  </span>
+                  <span class="w-60">
+                    <div class="progress-bar w-{{this.level}}" role="progressbar" aria-valuenow="{{this.level}}"
+                      aria-valuemin="0" aria-valuemax="100">{{this.level}}% </div>
+                  </span>
+                </div>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {{!-- End of Skills --}}
+      {{!-- Start of Awards --}}
+      <div class="col-md-12 bg-op-1 bg-primary rounded pb-3 mb-2 rounded">
+        <div class="row justify-content-between mt-3">
+          <div class="w-100" id="award-msg"></div>
+          <div class="col-md-12">
+            <span class="">
+              <h4 class="text-blue-dark display-4 d-inline-block" id="resume-heading">Awards</h4><span><i class="fas fa-plus-circle icon-1x d-inline-block text-purple"
+                  id="add-award-btn" style="float:right;"></i></span>
+            </span>
+            <div class="under-heading text-blue "></div>
+          </div>
+        </div>
+        <div class="row">
+          {{!-- add Award --}}
+          <div class="col-md-12">
+            <div id="awards">
+              <div class="award-new-area shadow bg-op-5 bg-purple mb-3 mt-1 rounded">
+                <div class="p-3">
+                  <form method="post" action="/candidate-resume/awards" id="add-award">
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Award Name" name="name"
+                          required />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-6">
+                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Awarder" name="awarder"
+                          required />
+                      </div>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control border-op-8 border-grey" placeholder="Year eg:2012" name="awardedOn"
+                          required />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <textarea name="summary" id="" cols="30" rows="2" class="w-100 form-control" placeholder="Summary"></textarea>
+                      </div>
+                    </div>
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    <input type="button" value="Cancel" class="btn btn-warning award-cxl-add-btn" />
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{!-- end Add awards --}}
+            <ul class="list-group" id="awards-list">
+              {{#each award}}
+              <li class="mb-1 rounded list-group-item p-2 mt-1">
+                <h5>{{name}} @
+                  <span class="text-blue">{{awarder}} / {{this.awardedOn}}</span>
+                </h5>
+                <p class="mb-0">{{this.summary}}</p>
+                <form action="/candidate-resume/awards/{{this.id}}" method="post" class="delete-award-form float-left">
+                  <button type="submit" id="remove-award" class="fabutton-skills">
+                    <i class="far fa-trash-alt text-danger"></i>
+                  </button>
+                </form>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {{!-- End of awards --}}
     </div>
+    {{/if}}
   </div>
+</div>
 </div>

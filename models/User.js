@@ -1,29 +1,31 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 //Create Schema
 const UserSchema = new Schema({
   email: { type: String, unique: true, lowercase: true },
-  googleID:String,
+  googleID: String,
   facebook: String,
   tokens: Array,
   name: { type: String },
   picture: { type: String },
-  password:{
+  password: {
     type: String,
-   
   },
-  role:{
-    type:String,
-    default:'candidate'
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+  role: {
+    type: String,
+    default: 'candidate'
   },
-  admin:{
-    type:Boolean,
-    default:false
+  admin: {
+    type: Boolean,
+    default: false
   },
-  activities:[{
-    activityName:{
-      type:String
+  activities: [{
+    activityName: {
+      type: String
     },
     activityBody: {
       type: String,
@@ -36,8 +38,7 @@ const UserSchema = new Schema({
       default: Date.now
     },
   }],
-})
-
+});
 //create collection and add schema
 exports.UserSchema = UserSchema;
-mongoose.model('users', UserSchema,'users');
+mongoose.model('users', UserSchema, 'users');
