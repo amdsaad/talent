@@ -24,10 +24,6 @@ cloudinary.config({
   api_secret: keys.cloudinary.api_secret
 });
 
-var mailgun = require("mailgun-js");
-var api_key = keys.mailgun.api_key;
-var DOMAIN = 'sandbox0c8fd842922b4dacb9fd7f621d9dc745.mailgun.org';
-var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
 
 // Add Resume Form
 router.get('/add', ensureAuthenticated, (req, res) => {
@@ -74,17 +70,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
       if (req.body.style) profileFields.style = req.body.style;
       new Resume(profileFields)
         .save()
-        .then(resume => {
-         /* var data = {
-            from: 'talentliken<hello@talentliken.com>',
-            to: 'saadamd@gmail.com',
-            subject: 'your Resume at talentliken',
-            text: 'Testing some Mailgun awesomness!',
-            html: "<html>HTML version of the body</html>",
-          };
-          mailgun.messages().send(data, function (error, body) {
-            console.log(body);
-          }); */       
+        .then(resume => {      
           res.redirect(`/candidate-resume/manage-my-resume/${resume.id}`);
         });
     });
