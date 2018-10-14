@@ -178,8 +178,8 @@ router.post('/candidate/register', (req, res) => {
     });
   } else {
     User.findOne({ email: req.body.email })
-      .then(employer => {
-        if (employer) {
+      .then(candidate => {
+        if (candidate) {
           req.flash('error_msg', 'Email already regsitered');
           res.redirect('/auth/candidate/register');
         } else {
@@ -193,7 +193,7 @@ router.post('/candidate/register', (req, res) => {
               if (err) throw err;
               newUser.password = hash;
               newUser.save()
-                .then(employer => {
+                .then(candidate => {
                   req.flash('success_msg', 'You are now registered and can log in');
                   res.redirect('/auth/login');
                 })
