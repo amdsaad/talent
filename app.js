@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
+var secure = require('ssl-express-www');
+
 
 
 //load models
@@ -60,6 +62,8 @@ mongoose.connect(keys.mongoURI, {
   .catch(err => console.log(err));
 
 const app = express();
+app.use(secure);
+
 
 //Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
