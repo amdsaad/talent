@@ -70,11 +70,18 @@ router.get('/employers/login', (req, res) => {
 
 // Login Form POST
 router.post('/employers/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/employer-dashboard',
-    failureRedirect: '/auth/employers/login',
-    failureFlash: true
-  })(req, res, next);
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (user.role == 'candidate') {
+      req.flash('error_msg', 'invalid Employer login');
+      return res.redirect('/auth/login');
+    } else {
+      passport.authenticate('local', {
+        successRedirect: '/employer-dashboard',
+        failureRedirect: '/auth/employers/login',
+        failureFlash: true
+      })(req, res, next);
+    }
+  });
 });
 
 // Register Form POST
@@ -201,17 +208,24 @@ router.get('/candidate/register', (req, res) => {
   }
   else {
     res.render('candidate/register');
-
   }
 });
 
 // Login Form POST
 router.post('/candidate/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/auth/login',
-    failureFlash: true
-  })(req, res, next);
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (user.role == 'employer') {
+      req.flash('error_msg', 'invalid candidate login');
+      return res.redirect('/auth/login');
+    } else {
+      passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/auth/login',
+        failureFlash: true
+      })(req, res, next);
+
+    }
+  });
 });
 
 // Register Form POST
