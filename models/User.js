@@ -16,6 +16,7 @@ const UserSchema = new Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   secretCode:String,
+  secretCodeExpires: Date,
   active:{
     type:Boolean,
     default:false

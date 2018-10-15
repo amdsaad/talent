@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const async = require("async");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
+const keys = require('../config/keys');
+
 
 
 // Load User Model
@@ -103,12 +105,14 @@ router.post('/employers/register', async (req, res) => {
           res.redirect('/auth/employers/register');
         } else {
           let sCode = Math.random().toString(36).substring(7);
+          let sCodeExpires = Date.now() + 3600000; // 1 hour
           const newUser = new User({
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
             role: 'employer',
             secretCode: sCode,
+            secretCodeExpires: sCodeExpires,
           });
 
           bcrypt.genSalt(10, (err, salt) => {
@@ -118,16 +122,16 @@ router.post('/employers/register', async (req, res) => {
               newUser.save()
                 .then(employer => {
                   var smtpTransport = nodemailer.createTransport({
-                    service: 'Gmail',
+                    service: "Outlook365",
                     auth: {
-                      user: 'saadamd@gmail.com',
-                      pass: 'eazhdbudhszsxvzw'
+                      user: keys.gmail.user,
+                      pass: keys.gmail.pass
                     }
                   });
                   var mailOptions = {
                     to: employer.email,
-                    from: 'saadamd@gmail.com',
-                    subject: 'Talentliken : Account Activation',
+                    from: '"account@TL 👋" <hello@talentliken.com>',
+                    subject: 'Talentliken : Account Activation ☺️',
                     html: `<b>Hello,${employer.name},</p><br>
                     <b>Your secret code to activate your account is:<br><strong>${employer.secretCode}</strong></p>`
                   };
@@ -149,36 +153,36 @@ router.post('/employers/register', async (req, res) => {
 });
 
 router.get('/employer/activate/:id', (req, res) => {
-  User.findOne({ _id: req.params.id }, function (err, employer) {
+  User.findOne({ _id: req.params.id, secretCodeExpires: { $gt: Date.now() } }, function (err, employer) {
     if (employer) {
       res.render('employers/activate', {
         employer,
       })
     } else {
-      req.flash('error_msg', 'invalid data:)');
-      res.redirect('/auth/employers/register');
+      req.flash('error_msg', 'invalid user or secret code has expired.');
+      return res.redirect('back');
     }
   })
-
 });
 
 router.post('/employer/activate/:id', (req, res) => {
-  User.findOne({ _id: req.params.id }, function (err, employer) {
-    if (employer) {
+  User.findOne({ _id: req.params.id, secretCodeExpires: { $gt: Date.now() } }, function (err, employer) {
+    if (!employer) {
+      req.flash('error_msg', 'Password reset token is invalid or has expired.');
+      return res.redirect('back');
+    } else {
       if (req.body.secretCode == employer.secretCode) {
-        employer.active = true,
-        employer.secretCode = ''
-        employer.save().then(employer =>{
+        employer.active = true;
+        employer.secretCode = undefined;
+        employer.secretCodeExpires = undefined;        
+        employer.save().then(employer => {
           req.flash('success_msg', 'Account Activated and you can login)');
           res.redirect('/auth/employers/login')
         })
       } else {
-        req.flash("error_msg", "invalid Code.");
-        res.redirect(`/employer/activate/${req.params.id}`)
+        req.flash('error_msg', 'invalid secret code.');
+        return res.redirect('back');
       }
-    } else {
-      req.flash("error_msg", "invalid user.");
-      res.redirect(`/employer/activate/${req.params.id}`)
     }
   });
 
@@ -286,16 +290,16 @@ router.post('/forgot', function (req, res, next) {
     },
     function (token, user, done) {
       var smtpTransport = nodemailer.createTransport({
-        service: 'Gmail',
+        service: "Outlook365",
         auth: {
-          user: 'saadamd@gmail.com',
-          pass: 'eazhdbudhszsxvzw'
+          user: keys.gmail.user,
+          pass: keys.gmail.pass
         }
       });
       var mailOptions = {
         to: user.email,
-        from: 'saadamd@gmail.com',
-        subject: 'Talentliken Password Reset',
+        from: '"account@TL 👋" <hello@talentliken.com>',
+        subject: 'Talentliken : Password reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
           'http://' + req.headers.host + '/auth/reset/' + token + '\n\n' +
@@ -357,16 +361,16 @@ router.post('/reset/:token', function (req, res) {
     },
     function (user, done) {
       var smtpTransport = nodemailer.createTransport({
-        service: 'Gmail',
+        service: "Outlook365",
         auth: {
-          user: 'saadamd@gmail.com',
-          pass: 'eazhdbudhszsxvzw'
+          user: keys.gmail.user,
+          pass: keys.gmail.pass
         }
       });
       var mailOptions = {
         to: user.email,
-        from: 'saadamd@gmail.com',
-        subject: 'Your password has been changed',
+        from: '"account@TL 👋" <hello@talentliken.com>',
+        subject: 'Talentliken : Password changed',
         text: 'Hello,\n\n' +
           'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
       };
