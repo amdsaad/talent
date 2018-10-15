@@ -122,15 +122,20 @@ router.post('/employers/register', async (req, res) => {
               newUser.save()
                 .then(employer => {
                   var smtpTransport = nodemailer.createTransport({
-                    service: "Outlook365",
+                    host: 'smtp.office365.com', // Office 365 server
+                    port: 587,     // secure SMTP
+                    secure: false, // false for TLS - as a boolean not string - but the default is false so just remove this completely
                     auth: {
                       user: keys.outlook.user,
                       pass: keys.outlook.pass
+                    },
+                    tls: {
+                      ciphers: 'SSLv3'
                     }
                   });
                   var mailOptions = {
                     to: employer.email,
-                    from: '"account@TL 👋" <hello@talentliken.com>',
+                    from: '"account@TL" <hello@talentliken.com>',
                     subject: 'Talentliken : Account Activation ☺️',
                     html: `<b>Hello,${employer.name},</p><br>
                     <b>Your secret code to activate your account is:<br><strong>${employer.secretCode}</strong></p>`
@@ -174,7 +179,7 @@ router.post('/employer/activate/:id', (req, res) => {
       if (req.body.secretCode == employer.secretCode) {
         employer.active = true;
         employer.secretCode = undefined;
-        employer.secretCodeExpires = undefined;        
+        employer.secretCodeExpires = undefined;
         employer.save().then(employer => {
           req.flash('success_msg', 'Account Activated and you can login)');
           res.redirect('/auth/employers/login')
@@ -290,7 +295,7 @@ router.post('/forgot', function (req, res, next) {
     },
     function (token, user, done) {
       var smtpTransport = nodemailer.createTransport({
-        service: "Outlook365",
+        service: "Godaddy",
         auth: {
           user: keys.outlook.user,
           pass: keys.outlook.pass
@@ -298,7 +303,7 @@ router.post('/forgot', function (req, res, next) {
       });
       var mailOptions = {
         to: user.email,
-        from: '"account@TL 👋" <hello@talentliken.com>',
+        from: '"account@TL" <hello@talentliken.com>',
         subject: 'Talentliken : Password reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -361,7 +366,7 @@ router.post('/reset/:token', function (req, res) {
     },
     function (user, done) {
       var smtpTransport = nodemailer.createTransport({
-        service: "Outlook365",
+        service: "Godaddy",
         auth: {
           user: keys.outlook.user,
           pass: keys.outlook.pass
@@ -369,7 +374,7 @@ router.post('/reset/:token', function (req, res) {
       });
       var mailOptions = {
         to: user.email,
-        from: '"account@TL 👋" <hello@talentliken.com>',
+        from: '"account@TL" <hello@talentliken.com>',
         subject: 'Talentliken : Password changed',
         text: 'Hello,\n\n' +
           'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
