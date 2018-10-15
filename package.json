@@ -20,6 +20,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "express-sslify": "^1.2.0",
+    "heroku-ssl-redirect": "0.0.4",
     "mailgun-js": "^0.21.0",
     "method-override": "^3.0.0",
     "moment": "^2.22.2",
