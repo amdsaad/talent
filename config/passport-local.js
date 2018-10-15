@@ -13,6 +13,8 @@ module.exports = function(passport){
     }).then(user => {
       if(!user){
         return done(null, false, {message: 'No User Found'});
+      }else if(!user.active){
+        return done(null, false, {message: 'your account is not active, please activate your account to login'});
       }
       // Match password
       bcrypt.compare(password, user.password, (err, isMatch) => {

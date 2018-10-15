@@ -5,21 +5,21 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const mongoose = require('mongoose');
 const keys = require('./keys');
- 
+
 //load user moel
 const User = mongoose.model('users');
 
 module.exports = function (passport) {
 
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function (user, done) {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
       done(err, user);
     });
-  }); 
+  });
 
   passport.use(new FacebookStrategy({
     clientID: keys.facebook.clientID,
@@ -53,11 +53,7 @@ module.exports = function (passport) {
     callbackURL: '/auth/google/callback',
     proxy: true
   }, (accessToken, refreshToken, profile, done) => {
-    // console.log(accessToken);
-    // console.log(profile);
-
     const image = profile.photos[0].value.substring(0, profile.photos[0].value.indexOf('?'));
-
     const newUser = {
       email: profile.emails[0].value,
       googleID: profile.id,
@@ -66,17 +62,20 @@ module.exports = function (passport) {
     }
 
     // Check for existing user
-    User.findOne({
-      googleID: profile.id
-    }).then(user => {
+    User.findOne({ googleID: profile.id }).then(user => {
       if (user) {
-        // Return user
         done(null, user);
       } else {
+        User.findOne({email: profile.emails[0].value}).then(user =>{
+          if(user){
+            done(null,user)
+          }else{
         // Create user
         new User(newUser)
           .save()
           .then(user => done(null, user));
+          }
+        })
       }
     })
   })

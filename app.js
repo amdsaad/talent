@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
+var http = require('http');
+var enforce = require('express-sslify');
 
 
 
@@ -61,6 +63,8 @@ mongoose.connect(keys.mongoURI, {
   .catch(err => console.log(err));
 
 const app = express();
+app.use(enforce.HTTPS());
+app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 
 //Body Parser Middleware

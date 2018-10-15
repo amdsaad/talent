@@ -15,6 +15,11 @@ const UserSchema = new Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  secretCode:String,
+  active:{
+    type:Boolean,
+    default:false
+  },
   role: {
     type: String,
     default: 'candidate'
