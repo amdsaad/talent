@@ -124,8 +124,8 @@ router.post('/employers/register', async (req, res) => {
                   var smtpTransport = nodemailer.createTransport({
                     service: "Outlook365",
                     auth: {
-                      user: keys.gmail.user,
-                      pass: keys.gmail.pass
+                      user: keys.outlook.user,
+                      pass: keys.outlook.pass
                     }
                   });
                   var mailOptions = {
@@ -292,8 +292,8 @@ router.post('/forgot', function (req, res, next) {
       var smtpTransport = nodemailer.createTransport({
         service: "Outlook365",
         auth: {
-          user: keys.gmail.user,
-          pass: keys.gmail.pass
+          user: keys.outlook.user,
+          pass: keys.outlook.pass
         }
       });
       var mailOptions = {
@@ -363,8 +363,8 @@ router.post('/reset/:token', function (req, res) {
       var smtpTransport = nodemailer.createTransport({
         service: "Outlook365",
         auth: {
-          user: keys.gmail.user,
-          pass: keys.gmail.pass
+          user: keys.outlook.user,
+          pass: keys.outlook.pass
         }
       });
       var mailOptions = {
