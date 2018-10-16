@@ -1,0 +1,14 @@
+{{> _headerDark}}
+
+<div class="container no-page-header">
+	<div class="row justify-content-md-center">
+		<div class="col-md-6">
+			<form action="/auth/candidate/code-reset/{{candidate.id}}" method="POST" class="py-5">
+				<legend class="text-muted Text-center">New security code</legend>
+				<div class="form-group">
+					<input type="submit" class="btn btn-danger btn-lg" value="Send Me New Secret Code">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

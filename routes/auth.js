@@ -67,7 +67,6 @@ router.get('/employers/login', (req, res) => {
     res.render('employers/login');
   }
 });
-
 // Login Form POST
 router.post('/employers/login', (req, res, next) => {
   User.findOne({ email: req.body.email }, function (err, user) {
@@ -83,7 +82,6 @@ router.post('/employers/login', (req, res, next) => {
     }
   });
 });
-
 // Register Form POST
 router.post('/employers/register', async (req, res) => {
   let errors = [];
@@ -128,6 +126,7 @@ router.post('/employers/register', async (req, res) => {
               newUser.password = hash;
               newUser.save()
                 .then(employer => {
+                  var code = employer.secretCode.toUpperCase();
                   var smtpTransport = nodemailer.createTransport({
                     host: 'smtp.office365.com', // Office 365 server
                     port: 587,     // secure SMTP
@@ -140,12 +139,17 @@ router.post('/employers/register', async (req, res) => {
                       ciphers: 'SSLv3'
                     }
                   });
+                  const output = `
+                  <p>Hello ${employer.name}</p>
+                  <h4>PLease activate your account</h4>
+                  <h5>SECRET CODE : ${code}</h5>
+                  <p>this code is valid for 1 hour only</p>
+                `;
                   var mailOptions = {
                     to: employer.email,
                     from: '"account@TL" <hello@talentliken.com>',
                     subject: 'Talentliken : Account Activation ☺️',
-                    html: `<b>Hello,${employer.name},</p><br>
-                    <b>Your secret code to activate your account is:<br><strong>${employer.secretCode}</strong></p>`
+                    html: output,
                   };
                   smtpTransport.sendMail(mailOptions, function (err) {
                     console.log('mail sent');
@@ -155,7 +159,6 @@ router.post('/employers/register', async (req, res) => {
                 })
                 .catch(err => {
                   console.log(err);
-                  return;
                 });
             });
           });
@@ -171,8 +174,15 @@ router.get('/employer/activate/:id', (req, res) => {
         employer,
       })
     } else {
-      req.flash('error_msg', 'invalid user or secret code has expired.');
-      return res.redirect('back');
+      User.findOne({ _id: req.params.id }, function (err, regUser) {
+        if (!regUser) {
+          req.flash('error_msg', 'Invalid user, you can register below');
+          res.redirect(`/auth/employers/register`);
+        } else {
+          req.flash('error_msg', 'Secret code has expired, please reset your code below.');
+          res.redirect(`/auth/employer/code-reset/${req.params.id}`);
+        }
+      });
     }
   })
 });
@@ -180,21 +190,87 @@ router.get('/employer/activate/:id', (req, res) => {
 router.post('/employer/activate/:id', (req, res) => {
   User.findOne({ _id: req.params.id, secretCodeExpires: { $gt: Date.now() } }, function (err, employer) {
     if (!employer) {
-      req.flash('error_msg', 'Password reset token is invalid or has expired.');
-      return res.redirect('back');
+      User.findOne({ _id: req.params.id }, function (err, regUser) {
+        if (!regUser) {
+          req.flash('error_msg', 'Invalid user, you can register below');
+          res.redirect(`/auth/employers/register`);
+        } else {
+          req.flash('error_msg', 'Secret code has expired, please reset your code below.');
+          res.redirect(`/auth/employer/code-reset/${req.params.id}`);
+        }
+      });
     } else {
-      if (req.body.secretCode == employer.secretCode) {
+      var code = req.body.secretCode.toLowerCase();
+      if (code == employer.secretCode) {
         employer.active = true;
         employer.secretCode = undefined;
         employer.secretCodeExpires = undefined;
         employer.save().then(employer => {
-          req.flash('success_msg', 'Account Activated and you can login)');
+          req.flash('success_msg', 'Your Account is activate, you can login now.');
           res.redirect('/auth/employers/login')
         })
-      } else {
-        req.flash('error_msg', 'invalid secret code.');
-        return res.redirect('back');
+      } else if (code != employer.secretCode) {
+        req.flash('error_msg', 'invalid secret code, please check your code and try again');
+        res.redirect(`/auth/employer/activate/${req.params.id}`);
       }
+    }
+  });
+});
+
+router.get('/employer/code-reset/:id', (req, res) => {
+  User.findOne({ _id: req.params.id }, function (err, employer) {
+    res.render('employers/codeReset', {
+      employer,
+    })
+  });
+});
+
+router.post('/employer/code-reset/:id', (req, res) => {
+  User.findOne({ _id: req.params.id }, function (err, employer) {
+    if (!employer) {
+      req.flash('error_msg', 'Invalid user');
+      res.redirect(`/`);
+    } else {
+      let sCode = Math.random().toString(36).substring(7);
+      let sCodeExpires = Date.now() + 3600000; // 1 hour
+      employer.secretCode = sCode;
+      employer.secretCodeExpires = sCodeExpires;
+      employer.save()
+        .then(employer => {
+          var code = employer.secretCode.toUpperCase();
+          var smtpTransport = nodemailer.createTransport({
+            host: 'smtp.office365.com', // Office 365 server
+            port: 587,     // secure SMTP
+            secure: false, // false for TLS - as a boolean not string - but the default is false so just remove this completely
+            auth: {
+              user: keys.outlook.user,
+              pass: keys.outlook.pass
+            },
+            tls: {
+              ciphers: 'SSLv3'
+            }
+          });
+          const output = `
+        <p>Hello ${employer.name}</p>
+        <h4>PLease activate your account</h4>
+        <h5>SECRET CODE : ${code}</h5>
+        <p>this code is valid for 1 hour only</p>
+      `;
+          var mailOptions = {
+            to: employer.email,
+            from: '"account@TL" <hello@talentliken.com>',
+            subject: 'Talentliken : New Secret Code ☺️',
+            html: output,
+          };
+          smtpTransport.sendMail(mailOptions, function (err) {
+            console.log('mail sent');
+            req.flash('success_msg', 'An e-mail has been sent to ' + employer.email + ' with NEW scret code.');
+            res.redirect(`/auth/employer/activate/${employer._id}`);
+          })
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   });
 
@@ -210,13 +286,12 @@ router.get('/candidate/register', (req, res) => {
     res.render('candidate/register');
   }
 });
-
 // Login Form POST
 router.post('/candidate/login', (req, res, next) => {
   User.findOne({ email: req.body.email }, function (err, user) {
     if (user.role == 'employer') {
       req.flash('error_msg', 'invalid candidate login');
-      return res.redirect('/auth/login');
+      res.redirect('/auth/login');
     } else {
       passport.authenticate('local', {
         successRedirect: '/dashboard',
@@ -227,7 +302,6 @@ router.post('/candidate/login', (req, res, next) => {
     }
   });
 });
-
 // Register Form POST
 router.post('/candidate/register', (req, res) => {
   let errors = [];
@@ -255,10 +329,14 @@ router.post('/candidate/register', (req, res) => {
           req.flash('error_msg', 'Email already regsitered');
           res.redirect('/auth/candidate/register');
         } else {
+          let sCode = Math.random().toString(36).substring(7);
+          let sCodeExpires = Date.now() + 3600000; // 1 hour          
           const newUser = new User({
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
+            secretCode: sCode,
+            secretCodeExpires: sCodeExpires,
           });
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -266,8 +344,36 @@ router.post('/candidate/register', (req, res) => {
               newUser.password = hash;
               newUser.save()
                 .then(candidate => {
-                  req.flash('success_msg', 'You are now registered and can log in');
-                  res.redirect('/auth/login');
+                  var code = candidate.secretCode.toUpperCase();
+                  var smtpTransport = nodemailer.createTransport({
+                    host: 'smtp.office365.com', // Office 365 server
+                    port: 587,     // secure SMTP
+                    secure: false, // false for TLS - as a boolean not string - but the default is false so just remove this completely
+                    auth: {
+                      user: keys.outlook.user,
+                      pass: keys.outlook.pass
+                    },
+                    tls: {
+                      ciphers: 'SSLv3'
+                    }
+                  });
+                  const output = `
+                  <p>Hello ${candidate.name}</p>
+                  <h4>PLease activate your account</h4>
+                  <h5>SECRET CODE : ${code}</h5>
+                  <p>this code is valid for 1 hour only</p>
+                `;
+                  var mailOptions = {
+                    to: candidate.email,
+                    from: '"account@TL" <hello@talentliken.com>',
+                    subject: 'Talentliken : Account Activation ☺️',
+                    html: output,
+                  };
+                  smtpTransport.sendMail(mailOptions, function (err) {
+                    console.log('mail sent');
+                    req.flash('success_msg', 'An e-mail has been sent to ' + candidate.email + ' with the scret code.');
+                    res.redirect(`/auth/candidate/activate/${candidate._id}`);
+                  })
                 })
                 .catch(err => {
                   console.log(err);
@@ -280,8 +386,125 @@ router.post('/candidate/register', (req, res) => {
   }
 });
 
+router.get('/candidate/activate/:id', (req, res) => {
+  User.findOne({ _id: req.params.id, secretCodeExpires: { $gt: Date.now() } }, function (err, candidate) {
+    if (candidate) {
+      res.render('candidate/activate', {
+        candidate,
+      })
+    } else {
+      User.findOne({ _id: req.params.id }, function (err, regUser) {
+        if (!regUser) {
+          req.flash('error_msg', 'Invalid user, you can register below');
+          res.redirect(`/auth/candidate/register`);
+        } else {
+          req.flash('error_msg', 'Secret code has expired, please reset your code below.');
+          res.redirect(`/auth/candidate/code-reset/${req.params.id}`);
+        }
+      });
+    }
+  })
+});
+
+router.post('/candidate/activate/:id', (req, res) => {
+  User.findOne({ _id: req.params.id, secretCodeExpires: { $gt: Date.now() } }, function (err, candidate) {
+    if (!candidate) {
+      User.findOne({ _id: req.params.id }, function (err, regUser) {
+        if (!regUser) {
+          req.flash('error_msg', 'Invalid user, you can register below');
+          res.redirect(`/auth/candidate/register`);
+        } else {
+          req.flash('error_msg', 'Secret code has expired, please reset your code below.');
+          res.redirect(`/auth/candidate/code-reset/${req.params.id}`);
+        }
+      });
+    } else {
+      var code = req.body.secretCode.toLowerCase();
+      if (code == candidate.secretCode) {
+        candidate.active = true;
+        candidate.secretCode = undefined;
+        candidate.secretCodeExpires = undefined;
+        candidate.save().then(candidate => {
+          req.flash('success_msg', 'Your Account is activate, you can login now.');
+          res.redirect('/auth/login')
+        })
+      } else if (code != candidate.secretCode) {
+        req.flash('error_msg', 'invalid secret code, please check your code and try again');
+        res.redirect(`/auth/candidate/activate/${req.params.id}`);
+      }
+    }
+  });
+});
+
+router.get('/candidate/code-reset/:id', (req, res) => {
+  User.findOne({ _id: req.params.id }, function (err, candidate) {
+    res.render('candidate/codeReset', {
+      candidate,
+    })
+  });
+});
+
+router.post('/candidate/code-reset/:id', (req, res) => {
+  User.findOne({ _id: req.params.id }, function (err, candidate) {
+    if (!candidate) {
+      req.flash('error_msg', 'Invalid user');
+      res.redirect(`/`);
+    } else {
+      let sCode = Math.random().toString(36).substring(7);
+      let sCodeExpires = Date.now() + 3600000; // 1 hour
+      candidate.secretCode = sCode;
+      candidate.secretCodeExpires = sCodeExpires;
+      candidate.save()
+        .then(candidate => {
+          var code = candidate.secretCode.toUpperCase();
+          var smtpTransport = nodemailer.createTransport({
+            host: 'smtp.office365.com', // Office 365 server
+            port: 587,     // secure SMTP
+            secure: false, // false for TLS - as a boolean not string - but the default is false so just remove this completely
+            auth: {
+              user: keys.outlook.user,
+              pass: keys.outlook.pass
+            },
+            tls: {
+              ciphers: 'SSLv3'
+            }
+          });
+          const output = `
+        <p>Hello ${candidate.name}</p>
+        <h4>PLease activate your account</h4>
+        <h5>SECRET CODE : ${code}</h5>
+        <p>this code is valid for 1 hour only</p>
+      `;
+          var mailOptions = {
+            to: candidate.email,
+            from: '"account@TL" <hello@talentliken.com>',
+            subject: 'Talentliken : New Secret Code ☺️',
+            html: output,
+          };
+          smtpTransport.sendMail(mailOptions, function (err) {
+            console.log('mail sent');
+            req.flash('success_msg', 'An e-mail has been sent to ' + candidate.email + ' with NEW scret code.');
+            res.redirect(`/auth/employer/activate/${candidate._id}`);
+          })
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  });
+
+});
+///////////**** Candidate END******////////////////////////////////////
+
+//forgot password
 router.get('/forgot', function (req, res) {
-  res.render('index/forgot');
+  if (req.isAuthenticated()) {
+    req.logout();
+    req.flash('error_msg', 'logged out to reset your password');
+    res.redirect('/auth/forgot');
+  } else {
+    res.render('index/forgot');
+  }
 });
 
 router.post('/forgot', function (req, res, next) {
@@ -309,10 +532,15 @@ router.post('/forgot', function (req, res, next) {
     },
     function (token, user, done) {
       var smtpTransport = nodemailer.createTransport({
-        service: "Godaddy",
+        host: 'smtp.office365.com', // Office 365 server
+        port: 587,     // secure SMTP
+        secure: false, // false for TLS - as a boolean not string - but the default is false so just remove this completely
         auth: {
           user: keys.outlook.user,
           pass: keys.outlook.pass
+        },
+        tls: {
+          ciphers: 'SSLv3'
         }
       });
       var mailOptions = {
@@ -380,10 +608,15 @@ router.post('/reset/:token', function (req, res) {
     },
     function (user, done) {
       var smtpTransport = nodemailer.createTransport({
-        service: "Godaddy",
+        host: 'smtp.office365.com', // Office 365 server
+        port: 587,     // secure SMTP
+        secure: false, // false for TLS - as a boolean not string - but the default is false so just remove this completely
         auth: {
           user: keys.outlook.user,
           pass: keys.outlook.pass
+        },
+        tls: {
+          ciphers: 'SSLv3'
         }
       });
       var mailOptions = {
@@ -399,7 +632,7 @@ router.post('/reset/:token', function (req, res) {
       });
     }
   ], function (err) {
-    res.redirect('/dashboard');
+    res.redirect('/');
   });
 });
 

@@ -35,6 +35,7 @@ module.exports = function (passport) {
           const newUser = new User();
           newUser.email = profile._json.email;
           newUser.facebook = profile.id;
+          newUser.active = true;
           newUser.tokens.push({ kind: 'facebook', token: token });
           newUser.name = profile.displayName;
           newUser.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
@@ -56,6 +57,7 @@ module.exports = function (passport) {
     const image = profile.photos[0].value.substring(0, profile.photos[0].value.indexOf('?'));
     const newUser = {
       email: profile.emails[0].value,
+      active : true,
       googleID: profile.id,
       name: profile.name.givenName + " " + profile.name.familyName,
       picture: image
